@@ -1,0 +1,245 @@
+.box-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 0;
+}
+
+.common-flip-style,
+.card {
+    width: 250px; /* 320px no original */
+    height: 350px; /* 452px no original */
+    cursor: pointer;
+    position: relative;
+}
+
+.common-box-style,
+.card {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transition: transform 0.6s ease-in-out;
+    border-radius: 10px; /* 8px no original */
+    overflow: hidden;
+}
+
+.flip-box,
+.card {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+.box-front,
+.box-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.box-front {
+    transform: rotateY(0deg);
+    z-index: 2;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.box-back {
+    transform: rotateY(180deg);
+    z-index: 1;
+}
+
+.flip-box.flipped .box-front {
+    transform: rotateY(-180deg);
+}
+
+.flip-box.flipped .box-back {
+    transform: rotateY(0deg);
+}
+
+.card {
+    background-color: #211799;
+    background-image: url(https://images.pokemontcg.io/xy2/12_hires.png);
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow:
+        -3px -3px 3px 0 rgba(#26e6f7, 0.6),
+        3px 3px 3px 0 rgba(#f759e4, 0.6),
+        0 0 6px 2px rgba(#ffe759, 0.6),
+        0 35px 25px -15px rgba(0, 0, 0, 0.5);
+    margin: 20px 10px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.card > span {
+    position: relative;
+    top: 45%;
+}
+
+.card:before,
+.card:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-image: linear-gradient(
+        115deg,
+        transparent 0%,
+        rgb(0, 231, 255) 30%,
+        rgb(255, 0, 231) 70%,
+        transparent 100%
+    );
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+    background-size: 300% 300%;
+    mix-blend-mode: color-dodge;
+    opacity: 0;
+    z-index: 1;
+    transform: translate3d(0, 0, 0);
+    animation: holoGradient 15s ease infinite;
+}
+
+.card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+    pointer-events: painted;
+    opacity: 0; /* Inicialmente invisível */
+}
+
+.card:after {
+    background-image: url("../public/sparkles.gif");
+    background-position: center;
+    background-size: 180%;
+    mix-blend-mode: color-dodge;
+    opacity: 0;
+    z-index: 2;
+    animation: holoSparkle 20s ease infinite;
+}
+
+.card.active:before {
+    opacity: 0.5;
+    animation: none;
+    transition: none;
+    background-image: linear-gradient(
+        115deg,
+        transparent 0%,
+        transparent 25%,
+        rgb(0, 231, 255) 45%,
+        rgb(255, 0, 231) 55%,
+        transparent 70%,
+        transparent 100%
+    );
+}
+
+/* .card {
+    width: 160px;
+    height: 226px;
+    box-shadow:
+        0 0 1px 1px rgba(white, 0.4),
+        0 25px 15px -10px rgba(0, 0, 0, 0.5);
+} */
+
+.card {
+    &:before,
+    &:after {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+.card:nth-of-type(1) {
+    &:before,
+    &:after {
+        display: none;
+    }
+}
+
+.card:nth-of-type(2) {
+    background: none;
+    &:before {
+        display: none;
+    }
+}
+
+@keyframes holoSparkle {
+    0% {
+        opacity: 0;
+    }
+    12% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 0.5;
+    }
+    95% {
+        opacity: 0.2;
+    }
+}
+
+@keyframes holoGradient {
+    3% {
+        opacity: 0;
+    }
+    5% {
+        background-position: 0% 0%;
+    }
+    7% {
+        opacity: 0.5;
+    }
+    9% {
+        background-position: 100% 100%;
+    }
+    11% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+        background-position: 100% 100%;
+    }
+    55% {
+        opacity: 0.3;
+    }
+    70% {
+        opacity: 0;
+        background-position: 0% 0%;
+    }
+}
+
+.card-wrapper {
+    perspective: 1000px;
+  }
+  
+  .flip-box {
+    transition: transform 0.2s;
+  }
+  
+  .flip-box.tilt {
+    transform: rotateY(0deg) rotateX(0deg);
+  }
+  
+  .flip-box.tilt .box-front,
+  .flip-box.tilt .box-back {
+    transition: transform 1s;
+  }
+  
+  .box-front.tilted,
+  .box-back.tilted {
+    transform: rotateY(calc(var(--tilt-x) * 1deg)) rotateX(calc(var(--tilt-y) * 1deg));
+  }
+  
+  

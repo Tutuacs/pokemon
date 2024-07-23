@@ -5,24 +5,28 @@ import Image from "next/image";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/authOptions";
 import { redirect } from "next/navigation";
+import PokemonCard from "@/components/PokeCard";
+// import "./styles.css";
 
 export default async function Home() {
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
 
-  if (!session) {
-    redirect("/login");
-  }
+  // if (!session) {
+  //   redirect("/login");
+  // }
+
+  const data = {
+    number: 1,
+    imageUrl: "https://images.pokemontcg.io/swsh12pt5/160_hires.png",
+  };
 
   return (
     <main>
-      <div className="flex flex-col min-h-full mb-10">
-        <section className="w-full">
-          <div className="flex flex-col items-center bg-gray-200">
-            <h1 className="mb-10 text-6xl font-bold text-center text-black animate-pulse">
-              Home
-            </h1>
-          </div>
-        </section>
+      <div className="flex justify-center items-center h-screen bg-gray-800">
+        <PokemonCard
+          frontImage="https://images.pokemontcg.io/swsh12pt5/160_hires.png"
+          backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
+        />
       </div>
     </main>
   );
