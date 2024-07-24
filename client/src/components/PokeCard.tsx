@@ -2,20 +2,33 @@
 
 import React, { useState } from "react";
 import "../app/styles.css";
-import { CardBody, CardContainer } from "./ui/3d-card";
+import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 
 interface PokemonCardProps {
   frontImage: string;
   backImage: string;
+  titleText?: string;
+  subText?: string;
   width?: number; // Optional prop to control width
   height?: number; // Optional prop to control height
+  rarity:
+    | "normal"
+    | "rare"
+    | "super-rare"
+    | "epic"
+    | "mythic"
+    | "legendary"
+    | "shine";
 }
 
 const PokemonCard: React.FC<PokemonCardProps> = ({
   frontImage,
   backImage,
-  width = 250, // Default width
-  height = 350, // Default height
+  width = 250,
+  height = 350,
+  rarity,
+  titleText = "",
+  subText = "",
 }) => {
   const [flipped, setFlipped] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
@@ -24,71 +37,76 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
     if (!isFlipping) {
       setIsFlipping(true);
       setFlipped(!flipped);
-      setTimeout(() => setIsFlipping(false), 1000); // Duration of the flip animation
+      setTimeout(() => setIsFlipping(false), 100); // Adjusted to match animation duration
     }
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    const { clientX, clientY, currentTarget } = e;
-    const { left, top, width, height } = currentTarget.getBoundingClientRect();
-
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-
-    const tiltX = ((clientX - centerX) / width) * 10; // Adjust tilt factor
-    const tiltY = ((clientY - centerY) / height) * -10; // Adjust tilt factor
-
-    const card = currentTarget.querySelector(".flip-box") as HTMLElement;
-
-    if (card) {
-      card.style.setProperty("--tilt-x", tiltX.toFixed(2));
-      card.style.setProperty("--tilt-y", tiltY.toFixed(2));
-    }
-  };
-
-  const handleMouseLeave = (e: React.MouseEvent<HTMLDivElement>) => {
-    const card = e.currentTarget.querySelector(".flip-box") as HTMLElement;
-
-    if (card) {
-      card.style.removeProperty("--tilt-x");
-      card.style.removeProperty("--tilt-y");
-    }
-  };
+  const isShiny = rarity === "shine";
 
   return (
-    <CardContainer className="box-panel mb-20 inter">
-      <CardBody className="widget-container card-wrapper">
-        <div
-          className={`flip-box ${isFlipping ? "flipping" : ""} ${
-            flipped ? "flipped" : ""
-          } tilt`}
-          onClick={handleCardClick}
-          onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave}
-        >
+    <CardContainer className={`box-panel inter ${isShiny ? "shine" : ""}`}>
+      <CardBody className="card-wrapper flex flex-col justify-between">
+        <CardItem className="cursor-pointer" onClick={handleCardClick}>
           <div
-            className="box-front common-box-style card"
-            data-rarity="rare holo"
-            style={{
-              backgroundImage: `url(${backImage})`,
-              width: `${width}px`,
-              height: `${height}px`,
-            }}
+            className={`flip-box ${isFlipping ? "flipping" : ""} ${
+              flipped ? "flipped" : ""
+            } mx-1 my-1`}
           >
-            <div className="box-content-wrapper">
-              {/* Conteúdo adicional para a frente do cartão pode ser adicionado aqui */}
+            <div
+              className={`box-front common-box-style ${rarity} bg-gray-800 text-white`}
+              data-rarity={rarity}
+              style={{
+                width: `${isShiny ? width + 10 : width}px`,
+                height: `${isShiny ? height + 10 : height}px`,
+              }}
+            >
+              <img
+                src={backImage}
+                alt="The back of a Pokemon Card"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "10px",
+                }}
+              />
+            </div>
+            <div
+              className={`box-back card ${rarity}`}
+              style={{ width: `${width}px`, height: `${height}px` }}
+            >
+              <img
+                src={frontImage}
+                alt="Pokemon image not-found"
+                style={{
+                  width: "100%",
+                  height: "100%",
+                  borderRadius: "10px",
+                }}
+              />
             </div>
           </div>
-          <div
-            className="box-back common-box-style card"
-            style={{ width: `${width}px`, height: `${height}px` }}
+        </CardItem>
+        <div
+          onClick={handleCardClick}
+          className={`flex flex-col justify-between h-full w-full cursor-pointer ${
+            titleText && subText ? "" : "hidden"
+          }`}
+        >
+          <CardBody
+            className={`flex flex-col justify-between h-full w-full cursor-pointer ${
+              titleText && subText ? "" : "hidden"
+            }`}
           >
-            <img
-              src={frontImage}
-              alt="The back of a Pokemon Card"
-              style={{ width: "100%", height: "100%", borderRadius: "10px" }}
-            />
-          </div>
+            <CardItem translateZ={50} className="text-xl font-bold text-white">
+              {flipped ? titleText : ""}
+            </CardItem>
+            <CardItem
+              translateZ={40}
+              className="text-xl font-bold text-white mt-auto flip-box"
+            >
+              {flipped ? subText : ""}
+            </CardItem>
+          </CardBody>
         </div>
       </CardBody>
     </CardContainer>
