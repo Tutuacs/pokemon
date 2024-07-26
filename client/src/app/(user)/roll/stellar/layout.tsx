@@ -8,16 +8,16 @@ interface PrivateLayoutProps {
 }
 
 export default async function UserLayout({ children }: PrivateLayoutProps) {
-  const session = await getServerSession(authOptions);
+  // const session = await getServerSession(authOptions);
 
-  if (!session) {
-    redirect("/");
-  }
+  // if (!session) {
+  //   redirect("/");
+  // }
 
   return (
     <>
       <main>
-        <Navbar type={session.profile.role} logged={Boolean(session)} />
+        <Navbar type={2} logged={Boolean(true)} />
         {children}
       </main>
     </>
