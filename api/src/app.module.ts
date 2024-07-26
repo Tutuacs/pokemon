@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { BagModule } from './bag/bag.module';
-import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { RollModule } from './roll/roll.module';
+import { AuthModule } from './auth/auth.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { ProfileModule } from './profile/profile.module';
 import { PokemonModule } from './pokemon/pokemon.module';
@@ -12,7 +12,7 @@ import { UserPokemonModule } from './user-pokemon/user-pokemon.module';
     ConfigModule.forRoot({
       isGlobal: true,
     }),
-    BagModule,
+    RollModule,
     AuthModule,
     PrismaModule,
     ProfileModule,

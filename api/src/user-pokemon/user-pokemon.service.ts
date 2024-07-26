@@ -1,26 +1,30 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserPokemonDto } from './dto/create-user-pokemon.dto';
 import { UpdateUserPokemonDto } from './dto/update-user-pokemon.dto';
+import { UserPokemonFunctionService } from './user-pokemon-function/user-pokemon-function.service';
 
 @Injectable()
 export class UserPokemonService {
-  create(createUserPokemonDto: CreateUserPokemonDto) {
-    return 'This action adds a new userPokemon';
+
+  constructor(private readonly userPokemonFunction: UserPokemonFunctionService) {}
+
+  create(data: CreateUserPokemonDto) {
+    return this.userPokemonFunction.create(data);
   }
 
   findAll() {
-    return `This action returns all userPokemon`;
+    return this.userPokemonFunction.list();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} userPokemon`;
+  findOne(id: string) {
+    return this.userPokemonFunction.findById(id);
   }
 
-  update(id: number, updateUserPokemonDto: UpdateUserPokemonDto) {
-    return `This action updates a #${id} userPokemon`;
+  update(id: string, data: UpdateUserPokemonDto) {
+    return this.userPokemonFunction.update(id, data);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} userPokemon`;
+  remove(id: string) {
+    return this.userPokemonFunction.remove(id);
   }
 }

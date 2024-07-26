@@ -30,8 +30,7 @@ export default function Register() {
       return;
     }
     
-    router.replace('/login');
-    redirect('/login');
+    router.push('/login');
   }
 
   return (

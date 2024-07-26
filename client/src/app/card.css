@@ -1,0 +1,459 @@
+/* Container Styles */
+.box-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 35px 0;
+}
+
+/* Card Container Styles */
+.card-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+
+/* Card Glow Styles */
+.card-container::before {
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at var(--x) var(--y), var(--glow-color) 10%, transparent 20%);
+    border-radius: 10px;
+    opacity: 0;
+    transition: opacity 0.2s ease-in-out;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.card-container.glow::before {
+    opacity: 1;
+}
+
+.card-container.shine::before {
+    background: none;
+}
+
+/* Flip Box and Card Styles */
+.common-flip-style,
+.card {
+    width: 250px;
+    height: 350px;
+    cursor: pointer;
+    position: relative;
+}
+
+.common-box-style {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    position: absolute;
+    width: 96%;
+    height: 96%;
+    transition: transform 0.6s ease-in-out;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.card {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    transition: transform 0.6s ease-in-out;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.flip-box,
+.card {
+    perspective: 1000px;
+    transform-style: preserve-3d;
+}
+
+/* Flip Box Styles */
+.flip-box {
+    transition: transform 0.2s;
+}
+
+.flip-box.flipped .box-front {
+    transform: rotateY(-180deg);
+}
+
+.flip-box.flipped .box-back {
+    transform: rotateY(0deg);
+}
+
+/* Box Front and Back Styles */
+.box-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+.box-front {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    transform: rotateY(0deg);
+    z-index: 2;
+    background-position: center center;
+    background-size: cover;
+    padding: 5px;
+    background-repeat: no-repeat;
+}
+
+.box-back {
+    transform: rotateY(180deg);
+    z-index: 1;
+}
+
+/* Card Glow and Shine Effects */
+.card {
+    background-color: #211799;
+    background-size: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    box-shadow: 0 0 10px var(--shadow-color, rgba(0, 0, 0, 0.5));
+    margin: 2px 2px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 10px;
+}
+
+.card:before,
+.card:after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-image: linear-gradient(
+        115deg,
+        transparent 0%,
+        rgb(0, 231, 255) 30%,
+        rgb(255, 0, 231) 70%,
+        transparent 100%
+    );
+    background-position: 0% 0%;
+    background-repeat: no-repeat;
+    background-size: 300% 300%;
+    mix-blend-mode: color-dodge;
+    opacity: 0;
+    z-index: 1;
+    transform: translate3d(0, 0, 0);
+    animation: holoGradient 15s ease infinite;
+}
+
+.card::before {
+    border-radius: 10px;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    transition:
+        transform 0.3s ease,
+        opacity 0.3s ease;
+    pointer-events: none;
+    opacity: 0;
+}
+
+.card.shine::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background-image: url("../public/sparkles.gif");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    mix-blend-mode: color-dodge;
+    opacity: 1;
+    z-index: 1;
+    animation: shineAnimation 2s infinite;
+}
+
+/* Define a pulse animation for the box-shadow */
+@keyframes pulse {
+    0% {
+        box-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
+    }
+    50% {
+        box-shadow: 1px 1px 30px rgba(255, 255, 255, 0.9);
+    }
+    100% {
+        box-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
+    }
+}
+
+@keyframes pulse-green {
+    0% {
+        box-shadow: 1px 1px 20px rgba(0, 255, 0, 1);
+    }
+    50% {
+        box-shadow: 1px 1px 30px rgba(0, 255, 0, 0.9);
+    }
+    100% {
+        box-shadow: 1px 1px 20px rgba(0, 255, 0, 1);
+    }
+}
+
+@keyframes pulse-lightblue {
+    0% {
+        box-shadow: 1px 1px 20px rgba(95, 207, 245, 1);
+    }
+    50% {
+        box-shadow: 1px 1px 30px rgba(95, 207, 245, 0.9);
+    }
+    100% {
+        box-shadow: 1px 1px 20px rgba(95, 207, 245, 1);
+    }
+}
+
+@keyframes pulse-purple {
+    0% {
+        box-shadow: 1px 1px 20px rgba(128, 0, 128, 1);
+    }
+    50% {
+        box-shadow: 1px 1px 30px rgba(128, 0, 128, 0.9);
+    }
+    100% {
+        box-shadow: 1px 1px 20px rgba(128, 0, 128, 1);
+    }
+}
+
+@keyframes pulse-yellow {
+    0% {
+        box-shadow: 1px 1px 20px rgba(255, 255, 0, 1);
+    }
+    50% {
+        box-shadow: 1px 1px 30px rgba(255, 255, 0, 0.9);
+    }
+    100% {
+        box-shadow: 1px 1px 20px rgba(255, 255, 0, 1);
+    }
+}
+
+@keyframes pulse-red {
+    0% {
+        box-shadow: 1px 1px 20px rgba(255, 0, 0, 1);
+    }
+    50% {
+        box-shadow: 1px 1px 30px rgba(255, 0, 0, 0.9);
+    }
+    100% {
+        box-shadow: 1px 1px 20px rgba(255, 0, 0, 1);
+    }
+}
+
+/* Apply the animation to each rarity class */
+.normal {
+    padding: 0px;
+    box-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
+    animation: pulse 1.5s infinite;
+}
+
+.rare {
+    padding: 0px;
+    box-shadow: 1px 1px 20px rgba(0, 255, 0, 1);
+    animation: pulse-green 1.5s infinite;
+}
+
+.super-rare {
+    padding: 0px;
+    box-shadow: 1px 1px 20px rgb(95, 207, 245);
+    animation: pulse-lightblue 1.5s infinite;
+}
+
+.epic {
+    padding: 0px;
+    box-shadow: 1px 1px 20px rgba(128, 0, 128, 1);
+    animation: pulse-purple 1.5s infinite;
+}
+
+.legendary {
+    padding: 0px;
+    box-shadow: 1px 1px 20px rgba(255, 255, 0);
+    animation: pulse-yellow 1.5s infinite;
+}
+
+.mythic {
+    padding: 0px;
+    box-shadow: 1px 1px 20px rgba(255, 0, 0);
+    animation: pulse-red 1.5s infinite;
+}
+
+.common-box-style.shine::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background-image: url("../public/sparkles.gif");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    mix-blend-mode: screen;
+    opacity: 0.5;
+    z-index: -1;
+    animation: shineAnimation 10s infinite;
+}
+
+@keyframes rotateText {
+    0% {
+      opacity: 0;
+      transform: rotateY(180deg);
+    }
+    50% {
+      opacity: 1;
+      transform: rotateY(0deg);
+    }
+    100% {
+      opacity: 0;
+      transform: rotateY(-180deg);
+    }
+  }
+  
+  /* Apply the rotation animation to text */
+  .card-text {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: white;
+    font-size: 1.5rem;
+    backface-visibility: hidden;
+    transition: opacity 0.6s ease-in-out;
+  }
+  
+  /* Hide text when card is flipped */
+  .card-text.hidden {
+    opacity: 0;
+  }
+
+@keyframes shineAnimation {
+    0% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+}
+
+@keyframes shadowAnimation {
+    0% {
+        box-shadow: 1px 1px 20px;
+        transform: scale(1);
+    }
+    50% {
+        opacity: 1;
+        transform: scale(1.1);
+    }
+    100% {
+        opacity: 0.5;
+        transform: scale(1);
+    }
+}
+
+.card.shine::after {
+    background-image: url("../public/sparkles.gif");
+    background-position: center;
+    background-size: 180%;
+    mix-blend-mode: screen;
+    opacity: 0.5;
+    z-index: 2;
+    animation: newHoloSparkle 20s ease infinite;
+}
+
+@keyframes newHoloSparkle {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+.card.shine.active:before {
+    opacity: 0.8;
+    animation: none;
+    transition: none;
+    background-image: linear-gradient(
+        115deg,
+        transparent 0%,
+        transparent 25%,
+        rgb(0, 231, 255) 45%,
+        rgb(255, 0, 231) 55%,
+        transparent 70%,
+        transparent 100%
+    );
+}
+
+.card.shine {
+    &:before,
+    &:after {
+        animation: none;
+        opacity: 1;
+    }
+}
+
+.card:nth-of-type(1):before,
+.card:nth-of-type(1):after {
+    display: none;
+}
+
+.card:nth-of-type(2) {
+    background: none;
+}
+
+.card:nth-of-type(2):before {
+    display: none;
+}
+
+@keyframes holoGradient {
+    3% {
+        opacity: 0;
+    }
+    5% {
+        background-position: 0% 0%;
+    }
+    7% {
+        opacity: 0.5;
+    }
+    9% {
+        background-position: 100% 100%;
+    }
+    11% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 0;
+        background-position: 100% 100%;
+    }
+    55% {
+        opacity: 0.3;
+    }
+    70% {
+        opacity: 0;
+        background-position: 0% 0%;
+    }
+}

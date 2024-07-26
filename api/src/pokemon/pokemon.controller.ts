@@ -17,6 +17,11 @@ export class PokemonController {
     return this.pokemonService.findAll();
   }
 
+  @Get("rarity/:rarity")
+  filterByRarity(@Param('id') id: string) {
+    return this.pokemonService.filterByRarity(+id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.pokemonService.findOne(+id);

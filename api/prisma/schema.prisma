@@ -14,27 +14,39 @@ datasource db {
 }
 
 model Profile {
-  id       String        @id @default(uuid())
-  name     String?
-  email    String?       @unique
-  password String?
-  role     Int           @default(0)
-  Pokemon  UserPokemon[]
-}
-
-model Bag {
-  id         String @id @default(uuid())
-  food       Int
-  gold       Int
-  pokePoints Int
-  pokeStars  Int
+  id              String        @id @default(uuid())
+  name            String?
+  email           String?       @unique
+  password        String?
+  role            Int           @default(0)
+  // Bag Proprieties
+  pokePoints      Int           @default(0)
+  pokeStars       Int           @default(0)
+  food            Int           @default(0)
+  gold            Int           @default(0)
+  normalRolls     Int           @default(0)
+  specialRolls    Int           @default(0)
+  Pokemon         UserPokemon[]
+  // Roll Proprieties
+  toEpic          Int           @default(0)
+  toMithyc        Int           @default(0)
+  toLegendary     Int           @default(0)
+  normalChance    Float         @default(0.5)
+  rareChance      Float         @default(0.4)
+  superRareChance Float         @default(0.3)
+  epicChance      Float         @default(0.2)
+  mithycChance    Float         @default(0.1)
+  legendaryChance Float         @default(0.5)
+  shinyChance     Float         @default(0.6)
 }
 
 model Pokemon {
   id               Int           @id @default(autoincrement())
   name             String
-  description      String
+  description      String?
   image            String
+  shinyImage       String?
+  rarity           Int           @default(0)
   evolveFood       Int
   evolvePokePoints Int
   Evolution        Pokemon?      @relation("Evolution", fields: [evolutionId], references: [id])
@@ -46,7 +58,8 @@ model Pokemon {
 model UserPokemon {
   id        String  @id @default(uuid())
   name      String
-  food      Int
+  shiny     Boolean @default(false)
+  food      Int     @default(0)
   Pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
   pokemonId Int
   Profile   Profile @relation(fields: [profileId], references: [id])

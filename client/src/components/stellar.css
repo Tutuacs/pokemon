@@ -1,0 +1,63 @@
+/* stellar.css */
+
+canvas {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.stellar-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.stellar-content {
+  position: relative;
+  z-index: 2; /* Ensure content is above the canvas */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #fff;
+  font-size: 2em;
+  opacity: 0;
+  animation: appear 3s 3s forwards; /* Delay the animation by 3s */
+}
+
+@keyframes appear {
+  0% {
+    opacity: 0;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Navbar CSS */
+.navbar {
+  position: fixed;
+  top: -100px; /* Inicialmente fora da tela */
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  background: rgba(40, 40, 40, 0.90); /* Semi-transparent background */
+  color: #ffffff;
+  font: bold;
+  z-index: 3; /* Mais alto que canvas e stellar-content */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+  transition: top 0.5s ease-in-out; /* Transição suave para a animação */
+}
+
+.navbar.visible {
+  top: 0; /* Navbar visível na tela */
+}

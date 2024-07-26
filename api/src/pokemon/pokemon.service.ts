@@ -1,26 +1,34 @@
 import { Injectable } from '@nestjs/common';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
+import { RARITY } from 'src/decorators/rarity.enum';
+import { PokemonFunctionService } from './pokemon-function/pokemon-function.service.ts.service';
 
 @Injectable()
 export class PokemonService {
-  create(createPokemonDto: CreatePokemonDto) {
-    return 'This action adds a new pokemon';
+  constructor(private readonly pokemonFunction: PokemonFunctionService) {}
+
+  create(data: CreatePokemonDto) {
+    return this.pokemonFunction.create(data);
   }
 
   findAll() {
-    return `This action returns all pokemon`;
+    return this.pokemonFunction.list();
+  }
+
+  filterByRarity(id: RARITY) {
+    return this.pokemonFunction.findByRarity(id);
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} pokemon`;
+    return this.pokemonFunction.findById(id);
   }
 
-  update(id: number, updatePokemonDto: UpdatePokemonDto) {
-    return `This action updates a #${id} pokemon`;
+  update(id: number, data: UpdatePokemonDto) {
+    return this.pokemonFunction.update(id, data);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} pokemon`;
+    return this.pokemonFunction.remove(id);
   }
 }

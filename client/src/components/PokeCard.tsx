@@ -1,14 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
-import "../app/styles.css";
+import React, { useState, useEffect } from "react";
+import "../app/card.css";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
+import { usePathname } from "next/navigation";
 
 interface PokemonCardProps {
   frontImage: string;
   backImage: string;
   titleText?: string;
   subText?: string;
+  invert?: boolean;
+  isShiny?: boolean;
   width?: number; // Optional prop to control width
   height?: number; // Optional prop to control height
   rarity:
@@ -27,21 +30,44 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   width = 250,
   height = 350,
   rarity,
+  invert = false,
+  isShiny = false,
   titleText = "",
   subText = "",
 }) => {
   const [flipped, setFlipped] = useState(false);
   const [isFlipping, setIsFlipping] = useState(false);
+  const pathname = usePathname();
 
   const handleCardClick = () => {
+    if (invert) return;
     if (!isFlipping) {
       setIsFlipping(true);
       setFlipped(!flipped);
       setTimeout(() => setIsFlipping(false), 100); // Adjusted to match animation duration
+      toggleNavbar(); // Toggle navbar visibility
     }
   };
 
-  const isShiny = rarity === "shine";
+  const toggleNavbar = () => {
+    const navbar = document.querySelector('.navbar');
+    if (navbar) {
+      navbar.classList.add('visible');
+    }
+  };
+
+  useEffect(() => {
+    const navbar = document.querySelector('.navbar');
+    if (navbar && pathname === "/roll/stellar") {
+      navbar.classList.remove('visible');
+    }
+  }, []);
+
+  if (invert) {
+    const aux = frontImage;
+    frontImage = backImage;
+    backImage = aux;
+  }
 
   return (
     <CardContainer className={`box-panel inter ${isShiny ? "shine" : ""}`}>
@@ -53,7 +79,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             } mx-1 my-1`}
           >
             <div
-              className={`box-front common-box-style ${rarity} bg-gray-800 text-white`}
+              className={`box-front common-box-style ${isShiny ? `shine`: rarity} bg-gray-800 text-white`}
               data-rarity={rarity}
               style={{
                 width: `${isShiny ? width + 10 : width}px`,
@@ -71,7 +97,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
               />
             </div>
             <div
-              className={`box-back card ${rarity}`}
+              className={`box-back card ${isShiny ? `${rarity} shine`: rarity}  `}
               style={{ width: `${width}px`, height: `${height}px` }}
             >
               <img
@@ -98,13 +124,13 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
             }`}
           >
             <CardItem translateZ={50} className="text-xl font-bold text-white">
-              {flipped ? titleText : ""}
+              {flipped || invert ? titleText : ""}
             </CardItem>
             <CardItem
               translateZ={40}
               className="text-xl font-bold text-white mt-auto flip-box"
             >
-              {flipped ? subText : ""}
+              {flipped || invert ? subText : ""}
             </CardItem>
           </CardBody>
         </div>
