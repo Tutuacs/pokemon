@@ -18,7 +18,7 @@ export default async function UserLayout({ children }: PrivateLayoutProps) {
   return (
     <>
       <main>
-        <Navbar  type={session.profile.role} logged={Boolean(session)}/>
+        <Navbar  type={session.profile.role || 2} logged={Boolean(true)}/>
         {children}
       </main>
     </>
