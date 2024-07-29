@@ -18,10 +18,12 @@ export const CardContainer = ({
   children,
   className,
   containerClassName,
+  position = 10,
 }: {
   children?: React.ReactNode;
   className?: string;
   containerClassName?: string;
+  position?: number
 }) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const [isMouseEntered, setIsMouseEntered] = useState(false);
@@ -30,8 +32,8 @@ export const CardContainer = ({
     if (!containerRef.current) return;
     const { left, top, width, height } =
       containerRef.current.getBoundingClientRect();
-    const x = (e.clientX - left - width / 2) / 10;
-    const y = (e.clientY - top - height / 2) / 10;
+    const x = (e.clientX - left - width / 2) / (position == 10? position : 30);
+    const y = (e.clientY - top - height / 2) / position;
     containerRef.current.style.transform = `rotateY(${x}deg) rotateX(${y}deg)`;
   };
 
@@ -80,15 +82,19 @@ export const CardBody = ({
   children,
   className,
   onClick,
+  height = 354,
+  width = 254,
 }: {
   children: React.ReactNode;
   className?: string;
   onClick?: (e: React.MouseEvent<HTMLDivElement>) => void;
+  height?: number;
+  width?: number;
 }) => {
   return (
     <div
       className={cn(
-        "h-[354px] w-[254px] [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d]",
+        `h-[${height}px] w-[${width}px] [transform-style:preserve-3d]  [&>*]:[transform-style:preserve-3d]`,
         className,
         onClick,
       )}

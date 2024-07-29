@@ -1,0 +1,94 @@
+/* BannerCard.module.css */
+.bannerContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  
+  .cardWrapper {
+    perspective: 1000px;
+  }
+  
+  .card {
+    width: 800px;
+    height: 500px;
+    transition: transform 0.3s ease;
+  }
+  
+  .card:hover {
+    transform: scale(1.05);
+  }
+
+  .reset {
+    /* Resete algumas propriedades que podem estar causando conflitos */
+    box-shadow: none;
+    transform: none;
+  }
+
+  .custom-button {
+    position: relative;
+    padding: 12px 24px;
+    color: #fff;
+    background-image: url("../public/sparkles.gif"); /* Ensure the path is correct */
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    overflow: hidden;
+    transition: background-color 0.3s, transform 0.3s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .custom-button::before {
+    content: "";
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background-image: url("../public/sparkles.gif"); /* Ensure the path is correct */
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    opacity: 0;
+    z-index: 0;
+    transition: opacity 0.4s;
+  }
+  
+  .custom-button:hover::before {
+    opacity: 1;
+    animation: shineAnimation 2s infinite;
+  }
+  
+  .custom-button:hover {
+    background-color: #555;
+    transform: scale(1.05);
+  }
+  
+  .custom-button span {
+    position: relative;
+    z-index: 1;
+  }
+  
+  /* Shine Animation */
+  @keyframes shineAnimation {
+    0% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+    100% {
+      opacity: 0.5;
+      transform: scale(1);
+    }
+  }
+  
+  
+  /* Add other styles specific to BannerCard */
+  

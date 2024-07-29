@@ -1,9 +1,9 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import "../app/card.css";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import { usePathname } from "next/navigation";
+import "./cardShine.css";
 
 interface PokemonCardProps {
   frontImage: string;
@@ -70,6 +70,313 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   }
 
   return (
+    <>
+      <style jsx>{`
+        /* Container Styles */
+        .box-panel {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 35px 0;
+        }
+
+        /* Card Container Styles */
+        .card-container {
+          position: relative;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          overflow: hidden;
+          width: 100%;
+          height: 100%;
+        }
+
+        /* Card Glow Styles */
+
+        .card-container.glow::before {
+          opacity: 1;
+        }
+        .card-container.shine::before {
+          background: none;
+        }
+
+        /* Flip Box and Card Styles */
+        .common-flip-style,
+        .card {
+          width: 250px;
+          height: 350px;
+          cursor: pointer;
+          position: relative;
+        }
+
+        .common-box-style {
+          transform-style: preserve-3d;
+          backface-visibility: hidden;
+          position: absolute;
+          width: 96%;
+          height: 96%;
+          transition: transform 0.6s ease-in-out;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+
+        .card {
+          transform-style: preserve-3d;
+          backface-visibility: hidden;
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          background-color: white;
+          transition: transform 0.6s ease-in-out;
+          border-radius: 10px;
+          overflow: hidden;
+        }
+
+        .flip-box,
+        .card {
+          perspective: 1000px;
+          transform-style: preserve-3d;
+        }
+
+        /* Flip Box Styles */
+        .flip-box {
+          transition: transform 0.2s;
+        }
+
+        .flip-box.flipped .box-front {
+          transform: rotateY(-180deg);
+        }
+
+        .flip-box.flipped .box-back {
+          transform: rotateY(0deg);
+        }
+
+        /* Box Front and Back Styles */
+        .box-back {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+        }
+
+        .box-front {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          transform: rotateY(0deg);
+          z-index: 2;
+          background-position: center center;
+          background-size: cover;
+          padding: 5px;
+          background-repeat: no-repeat;
+        }
+
+        .box-back {
+          transform: rotateY(180deg);
+          z-index: 1;
+        }
+
+        /* Define a pulse animation for the box-shadow */
+        @keyframes pulse {
+          0% {
+            box-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
+          }
+          50% {
+            box-shadow: 1px 1px 30px rgba(255, 255, 255, 0.9);
+          }
+          100% {
+            box-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
+          }
+        }
+
+        @keyframes pulse-green {
+          0% {
+            box-shadow: 1px 1px 20px rgba(0, 255, 0, 1);
+          }
+          50% {
+            box-shadow: 1px 1px 30px rgba(0, 255, 0, 0.9);
+          }
+          100% {
+            box-shadow: 1px 1px 20px rgba(0, 255, 0, 1);
+          }
+        }
+
+        @keyframes pulse-lightblue {
+          0% {
+            box-shadow: 1px 1px 20px rgba(95, 207, 245, 1);
+          }
+          50% {
+            box-shadow: 1px 1px 30px rgba(95, 207, 245, 0.9);
+          }
+          100% {
+            box-shadow: 1px 1px 20px rgba(95, 207, 245, 1);
+          }
+        }
+
+        @keyframes pulse-purple {
+          0% {
+            box-shadow: 1px 1px 20px rgba(128, 0, 128, 1);
+          }
+          50% {
+            box-shadow: 1px 1px 30px rgba(128, 0, 128, 0.9);
+          }
+          100% {
+            box-shadow: 1px 1px 20px rgba(128, 0, 128, 1);
+          }
+        }
+
+        @keyframes pulse-yellow {
+          0% {
+            box-shadow: 1px 1px 20px rgba(255, 255, 0, 1);
+          }
+          50% {
+            box-shadow: 1px 1px 30px rgba(255, 255, 0, 0.9);
+          }
+          100% {
+            box-shadow: 1px 1px 20px rgba(255, 255, 0, 1);
+          }
+        }
+
+        @keyframes pulse-red {
+          0% {
+            box-shadow: 1px 1px 20px rgba(255, 0, 0, 1);
+          }
+          50% {
+            box-shadow: 1px 1px 30px rgba(255, 0, 0, 0.9);
+          }
+          100% {
+            box-shadow: 1px 1px 20px rgba(255, 0, 0, 1);
+          }
+        }
+
+        /* Apply the animation to each rarity class */
+        .normal {
+          padding: 0px;
+          box-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
+          animation: pulse 1.5s infinite;
+        }
+
+        .rare {
+          padding: 0px;
+          box-shadow: 1px 1px 20px rgba(0, 255, 0, 1);
+          animation: pulse-green 1.5s infinite;
+        }
+
+        .super-rare {
+          padding: 0px;
+          box-shadow: 1px 1px 20px rgb(95, 207, 245);
+          animation: pulse-lightblue 1.5s infinite;
+        }
+
+        .epic {
+          padding: 0px;
+          box-shadow: 1px 1px 20px rgba(128, 0, 128, 1);
+          animation: pulse-purple 1.5s infinite;
+        }
+
+        .legendary {
+          padding: 0px;
+          box-shadow: 1px 1px 20px rgba(255, 255, 0);
+          animation: pulse-yellow 1.5s infinite;
+        }
+
+        .mythic {
+          padding: 0px;
+          box-shadow: 1px 1px 20px rgba(255, 0, 0);
+          animation: pulse-red 1.5s infinite;
+        }
+
+        @keyframes rotateText {
+          0% {
+            opacity: 0;
+            transform: rotateY(180deg);
+          }
+          50% {
+            opacity: 1;
+            transform: rotateY(0deg);
+          }
+          100% {
+            opacity: 0;
+            transform: rotateY(-180deg);
+          }
+        }
+
+        /* Apply the rotation animation to text */
+        .card-text {
+          position: absolute;
+          width: 100%;
+          height: 100%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
+          color: white;
+          font-size: 1.5rem;
+          backface-visibility: hidden;
+          transition: opacity 0.6s ease-in-out;
+        }
+
+        /* Hide text when card is flipped */
+        .card-text.hidden {
+          opacity: 0;
+        }
+
+        @keyframes shadowAnimation {
+          0% {
+            box-shadow: 1px 1px 20px;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.1);
+          }
+          100% {
+            opacity: 0.5;
+            transform: scale(1);
+          }
+        }
+
+        .card:nth-of-type(1):before,
+        .card:nth-of-type(1):after {
+          display: none;
+        }
+
+        .card:nth-of-type(2) {
+          background: none;
+        }
+
+        .card:nth-of-type(2):before {
+          display: none;
+        }
+
+        @keyframes holoGradient {
+          3% {
+            opacity: 0;
+          }
+          5% {
+            background-position: 0% 0%;
+          }
+          7% {
+            opacity: 0.5;
+          }
+          9% {
+            background-position: 100% 100%;
+          }
+          11% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 0;
+            background-position: 100% 100%;
+          }
+          55% {
+            opacity: 0.3;
+          }
+          70% {
+            opacity: 0;
+            background-position: 0% 0%;
+          }
+        }
+      `}</style>
     <CardContainer className={`box-panel inter ${isShiny ? "shine" : ""}`}>
       <CardBody className="card-wrapper flex flex-col justify-between">
         <CardItem className="cursor-pointer" onClick={handleCardClick}>
@@ -87,6 +394,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
               }}
             >
               <img
+              className=""
                 src={backImage}
                 alt="The back of a Pokemon Card"
                 style={{
@@ -136,6 +444,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
         </div>
       </CardBody>
     </CardContainer>
+    </>
   );
 };
 

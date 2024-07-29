@@ -2,7 +2,7 @@ import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/utils/authOptions";
 import Navbar from "@/components/Navbar";
-import "../../components/navbar.css"
+import "../../components/navbar.css";
 
 interface PrivateLayoutProps {
   children: React.ReactNode;
@@ -18,8 +18,8 @@ export default async function UserLayout({ children }: PrivateLayoutProps) {
   return (
     <>
       <main>
-        <Navbar  type={2} logged={Boolean(true)}/>
-        {children}
+        <Navbar type={2} logged={Boolean(true)} />
+        <div className="mt-28">{children}</div>
       </main>
     </>
   );

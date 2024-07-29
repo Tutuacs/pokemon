@@ -13,8 +13,8 @@ export default function Navbar({
   return (
     <nav className="navbar">
       <div className="flex items-center">
-        <Link className="p-2" href="/">
-          <Image src="https://img.artiz.ai/ai/20240727/66a3fd0976eaa.jpg" alt="home" width={200} height={50} />
+        <Link className="p-0" href="/">
+          <Image src="https://img.artiz.ai/ai/20240729/66a7953cf0bff.jpg" alt="home" width={60} height={60} className="rounded-lg" />
         </Link>
       </div>
       <div className="flex items-center">
@@ -29,8 +29,11 @@ export default function Navbar({
             <Link className="p-2" href="/pokemon">
               Pokemons
             </Link>
-            <Link className="p-2" href="/roll/stellar">
+            {/* <Link className="p-2" href="/roll/stellar">
               Star Roll
+            </Link> */}
+            <Link className="p-2" href="/roll">
+              Roll
             </Link>
           </>
         ) : type == ROLE.USER ? (
@@ -41,8 +44,11 @@ export default function Navbar({
             <Link className="p-2" href="/pokemon">
               Pokemons
             </Link>
-            <Link className="p-2" href="/roll/stellar">
+            {/* <Link className="p-2" href="/roll/stellar">
               Star Roll
+            </Link> */}
+            <Link className="p-2" href="/roll">
+              Roll
             </Link>
           </>
         ) : (
@@ -56,8 +62,11 @@ export default function Navbar({
             <Link className="p-2" href="/register">
               Register
             </Link>
-            <Link className="p-2" href="/roll/stellar">
+            {/* <Link className="p-2" href="/roll/stellar">
               Star Roll
+            </Link> */}
+            <Link className="p-2" href="/roll">
+              Roll
             </Link>
           </>
         )}
