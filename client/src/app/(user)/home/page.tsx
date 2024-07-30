@@ -5,11 +5,11 @@ import "../../../components/navbar.css"
 
 export default async function HomePage() {
 
-    const session = await getServerSession(authOptions);
+    // const session = await getServerSession(authOptions);
 
-    if (!session) {
-      redirect("/");
-    }
+    // if (!session) {
+    //   redirect("/");
+    // }
 
   return (
     <main className="h-full w-full">

@@ -26,9 +26,7 @@ const StellarAnimation = ({ children }: { children: React.ReactNode }) => {
       width: number,
       height: number;
     let stars: { x: number; y: number; z: number }[] = [];
-    let pointerX, pointerY;
     let velocity = { x: 0, y: 0, tx: 0, ty: 0, z: INITIAL_Z };
-    let touchInput = false;
     let startTime = Date.now(); // Record the start time
 
     const generate = () => {

@@ -44,24 +44,24 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
     if (!isFlipping) {
       setIsFlipping(true);
       setFlipped(!flipped);
-      setTimeout(() => setIsFlipping(false), 100); // Adjusted to match animation duration
-      toggleNavbar(); // Toggle navbar visibility
+      setTimeout(() => setIsFlipping(false), 600); // Ajustado para coincidir com a duração da animação
+      toggleNavbar(); // Alterna a visibilidade da navbar
     }
   };
 
   const toggleNavbar = () => {
-    const navbar = document.querySelector('.navbar');
+    const navbar = document.querySelector(".navbar");
     if (navbar) {
-      navbar.classList.add('visible');
+      navbar.classList.add("visible");
     }
   };
 
   useEffect(() => {
-    const navbar = document.querySelector('.navbar');
+    const navbar = document.querySelector(".navbar");
     if (navbar && pathname === "/roll/stellar") {
-      navbar.classList.remove('visible');
+      navbar.classList.remove("visible");
     }
-  }, []);
+  }, [pathname]);
 
   if (invert) {
     const aux = frontImage;
@@ -72,110 +72,123 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   return (
     <>
       <style jsx>{`
-        /* Container Styles */
-        .box-panel {
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          padding: 35px 0;
+        .card {
+          background-color: transparent;
+          background-size: 100%;
+          background-repeat: no-repeat;
+          background-position: center;
+          box-shadow: 0 0 10px var(--shadow-color, rgba(0, 0, 0, 0.5));
+          margin: 2px 2px;
+          display: inline-block;
+          vertical-align: middle;
+          border-radius: 10px;
         }
 
-        /* Card Container Styles */
+        .card:before,
+        .card:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          top: 0;
+          background-image: linear-gradient(
+            115deg,
+            transparent 0%,
+            rgb(0, 231, 255) 30%,
+            rgb(255, 0, 231) 70%,
+            transparent 100%
+          );
+          background-position: 0% 0%;
+          background-repeat: no-repeat;
+          background-size: 300% 300%;
+          mix-blend-mode: color-dodge;
+          opacity: 0;
+          z-index: 1;
+          transform: translate3d(0, 0, 0);
+          animation: holoGradient 15s ease infinite;
+        }
+
+        .card::before {
+          border-radius: 10px;
+          box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+          transition: transform 0.3s ease, opacity 0.3s ease;
+          pointer-events: none;
+          opacity: 0;
+        }
+
+        @keyframes holoGradient {
+          3% {
+            opacity: 0;
+          }
+          5% {
+            background-position: 0% 0%;
+          }
+          7% {
+            opacity: 0.5;
+          }
+          9% {
+            background-position: 100% 100%;
+          }
+          11% {
+            opacity: 0;
+          }
+          50% {
+            opacity: 0;
+            background-position: 100% 100%;
+          }
+          55% {
+            opacity: 0.3;
+          }
+          70% {
+            opacity: 0;
+            background-position: 0% 0%;
+          }
+        }
+
         .card-container {
-          position: relative;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          overflow: hidden;
-          width: 100%;
-          height: 100%;
-        }
-
-        /* Card Glow Styles */
-
-        .card-container.glow::before {
-          opacity: 1;
-        }
-        .card-container.shine::before {
-          background: none;
-        }
-
-        /* Flip Box and Card Styles */
-        .common-flip-style,
-        .card {
-          width: 250px;
-          height: 350px;
-          cursor: pointer;
-          position: relative;
-        }
-
-        .common-box-style {
-          transform-style: preserve-3d;
-          backface-visibility: hidden;
-          position: absolute;
-          width: 96%;
-          height: 96%;
-          transition: transform 0.6s ease-in-out;
-          border-radius: 10px;
-          overflow: hidden;
-        }
-
-        .card {
-          transform-style: preserve-3d;
-          backface-visibility: hidden;
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          background-color: white;
-          transition: transform 0.6s ease-in-out;
-          border-radius: 10px;
-          overflow: hidden;
-        }
-
-        .flip-box,
-        .card {
           perspective: 1000px;
-          transform-style: preserve-3d;
+          position: relative;
         }
 
-        /* Flip Box Styles */
         .flip-box {
-          transition: transform 0.2s;
+          width: ${width}px;
+          height: ${height}px;
+          position: relative;
+          transform-style: preserve-3d;
+          transition: transform 0.6s ease-in-out;
         }
 
-        .flip-box.flipped .box-front {
-          transform: rotateY(-180deg);
+        .flipped {
+          transform: rotateY(180deg);
         }
 
-        .flip-box.flipped .box-back {
-          transform: rotateY(0deg);
-        }
-
-        /* Box Front and Back Styles */
+        .box-front,
         .box-back {
           position: absolute;
           width: 100%;
           height: 100%;
+          backface-visibility: hidden;
+          border-radius: 10px;
+          overflow: hidden;
         }
 
         .box-front {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          transform: rotateY(0deg);
-          z-index: 2;
           background-position: center center;
           background-size: cover;
-          padding: 5px;
           background-repeat: no-repeat;
+          z-index: 2;
+          transform: rotateY(0deg);
         }
 
         .box-back {
-          transform: rotateY(180deg);
+          background-position: center center;
+          background-size: cover;
+          background-repeat: no-repeat;
           z-index: 1;
+          transform: rotateY(180deg);
         }
 
-        /* Define a pulse animation for the box-shadow */
         @keyframes pulse {
           0% {
             box-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
@@ -248,202 +261,116 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
           }
         }
 
-        /* Apply the animation to each rarity class */
         .normal {
-          padding: 0px;
           box-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
           animation: pulse 1.5s infinite;
         }
 
         .rare {
-          padding: 0px;
           box-shadow: 1px 1px 20px rgba(0, 255, 0, 1);
           animation: pulse-green 1.5s infinite;
         }
 
         .super-rare {
-          padding: 0px;
-          box-shadow: 1px 1px 20px rgb(95, 207, 245);
+          box-shadow: 1px 1px 20px rgba(95, 207, 245, 1);
           animation: pulse-lightblue 1.5s infinite;
         }
 
         .epic {
-          padding: 0px;
           box-shadow: 1px 1px 20px rgba(128, 0, 128, 1);
           animation: pulse-purple 1.5s infinite;
         }
 
         .legendary {
-          padding: 0px;
-          box-shadow: 1px 1px 20px rgba(255, 255, 0);
+          box-shadow: 1px 1px 20px rgba(255, 255, 0, 1);
           animation: pulse-yellow 1.5s infinite;
         }
 
         .mythic {
-          padding: 0px;
-          box-shadow: 1px 1px 20px rgba(255, 0, 0);
+          box-shadow: 1px 1px 20px rgba(255, 0, 0, 1);
           animation: pulse-red 1.5s infinite;
         }
-
-        @keyframes rotateText {
-          0% {
-            opacity: 0;
-            transform: rotateY(180deg);
-          }
-          50% {
-            opacity: 1;
-            transform: rotateY(0deg);
-          }
-          100% {
-            opacity: 0;
-            transform: rotateY(-180deg);
-          }
-        }
-
-        /* Apply the rotation animation to text */
-        .card-text {
-          position: absolute;
-          width: 100%;
-          height: 100%;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          color: white;
-          font-size: 1.5rem;
-          backface-visibility: hidden;
-          transition: opacity 0.6s ease-in-out;
-        }
-
-        /* Hide text when card is flipped */
-        .card-text.hidden {
-          opacity: 0;
-        }
-
-        @keyframes shadowAnimation {
-          0% {
-            box-shadow: 1px 1px 20px;
-            transform: scale(1);
-          }
-          50% {
-            opacity: 1;
-            transform: scale(1.1);
-          }
-          100% {
-            opacity: 0.5;
-            transform: scale(1);
-          }
-        }
-
-        .card:nth-of-type(1):before,
-        .card:nth-of-type(1):after {
-          display: none;
-        }
-
-        .card:nth-of-type(2) {
-          background: none;
-        }
-
-        .card:nth-of-type(2):before {
-          display: none;
-        }
-
-        @keyframes holoGradient {
-          3% {
-            opacity: 0;
-          }
-          5% {
-            background-position: 0% 0%;
-          }
-          7% {
-            opacity: 0.5;
-          }
-          9% {
-            background-position: 100% 100%;
-          }
-          11% {
-            opacity: 0;
-          }
-          50% {
-            opacity: 0;
-            background-position: 100% 100%;
-          }
-          55% {
-            opacity: 0.3;
-          }
-          70% {
-            opacity: 0;
-            background-position: 0% 0%;
-          }
-        }
       `}</style>
-    <CardContainer className={`box-panel inter ${isShiny ? "shine" : ""}`}>
-      <CardBody className="card-wrapper flex flex-col justify-between">
-        <CardItem className="cursor-pointer" onClick={handleCardClick}>
-          <div
-            className={`flip-box ${isFlipping ? "flipping" : ""} ${
-              flipped ? "flipped" : ""
-            } mx-1 my-1`}
-          >
-            <div
-              className={`box-front common-box-style ${isShiny ? `shine`: rarity} bg-gray-800 text-white`}
-              data-rarity={rarity}
-              style={{
-                width: `${isShiny ? width + 10 : width}px`,
-                height: `${isShiny ? height + 10 : height}px`,
-              }}
-            >
-              <img
-              className=""
-                src={backImage}
-                alt="The back of a Pokemon Card"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "10px",
-                }}
-              />
-            </div>
-            <div
-              className={`box-back card ${isShiny ? `${rarity} shine`: rarity}  `}
-              style={{ width: `${width}px`, height: `${height}px` }}
-            >
-              <img
-                src={frontImage}
-                alt="Pokemon image not-found"
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: "10px",
-                }}
-              />
-            </div>
-          </div>
-        </CardItem>
-        <div
-          onClick={handleCardClick}
-          className={`flex flex-col justify-between h-full w-full cursor-pointer ${
-            titleText && subText ? "" : "hidden"
-          }`}
-        >
-          <CardBody
-            className={`flex flex-col justify-between h-full w-full cursor-pointer ${
-              titleText && subText ? "" : "hidden"
-            }`}
-          >
-            <CardItem translateZ={50} className="text-xl font-bold text-white">
-              {flipped || invert ? titleText : ""}
+      <div className="flex justify-center items-center">
+        <CardContainer className={`box-panel inter`}>
+          <CardBody className="card-wrapper flex flex-col justify-between">
+            <CardItem className="cursor-pointer" onClick={handleCardClick}>
+              <div
+                className={`flip-box ${isFlipping ? "flipping" : ""} ${
+                  flipped ? "flipped" : ""
+                } mx-1 my-1`}
+              >
+                <div
+                  className={`box-front common-box-style ${
+                    isShiny ? `shine` : rarity
+                  } text-white`}
+                  data-rarity={rarity}
+                  style={{
+                    width: `${isShiny ? width + 10 : width}px`,
+                    height: `${isShiny ? height + 10 : height}px`,
+                    backgroundColor: "radial-gradient(circle at top right, rgba(121, 68, 154, 0.13), transparent), radial-gradient(circle at 20% 80%, rgba(41, 196, 255, 0.13), transparent)"
+                  }}
+                >
+                  <img
+                    className={`${isShiny ?  "m-1" :""}`}
+                    src={backImage}
+                    alt="The back of a Pokemon Card"
+                    style={{
+                      width: `${width}px`,
+                      height: `${height}px`,
+                      borderRadius: "10px",
+                    }}
+                  />
+                  parte de tras/pokebola
+                </div>
+                <div
+                  className={`box-back card ${
+                    isShiny ? `${rarity}` : rarity
+                  }  `}
+                  style={{ width: `${width}px`, height: `${height}px`, backgroundImage: `${isShiny? frontImage : ""}` }}
+                >
+                  <img
+                    src={`${!isShiny? frontImage : ""}`}
+                    alt="Pokemon image not-found"
+                    style={{
+                      width: "100%",
+                      height: "100%",
+                      borderRadius: "10px",
+                    }}
+                  />
+                  {isShiny && <div className="sparkles"></div>}
+                  teste
+                </div>
+              </div>
             </CardItem>
-            <CardItem
-              translateZ={40}
-              className="text-xl font-bold text-white mt-auto flip-box"
+            <div
+              onClick={handleCardClick}
+              className={`flex flex-col justify-between h-full w-full cursor-pointer ${
+                titleText && subText ? "" : "hidden"
+              }`}
             >
-              {flipped || invert ? subText : ""}
-            </CardItem>
+              <CardBody
+                className={`flex flex-col justify-between h-full w-full cursor-pointer ${
+                  titleText && subText ? "" : "hidden"
+                }`}
+              >
+                <CardItem
+                  translateZ={50}
+                  className="text-xl font-bold text-white"
+                >
+                  {flipped || invert ? titleText : ""}
+                </CardItem>
+                <CardItem
+                  translateZ={40}
+                  className="text-xl font-bold text-white mt-auto flip-box"
+                >
+                  {flipped || invert ? subText : ""}
+                </CardItem>
+              </CardBody>
+            </div>
           </CardBody>
-        </div>
-      </CardBody>
-    </CardContainer>
+        </CardContainer>
+      </div>
     </>
   );
 };
