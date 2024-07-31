@@ -1,0 +1,53 @@
+/* form.css */
+
+body {
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    background-image: radial-gradient(circle at top right, rgba(121, 68, 154, 0.13), transparent),
+      radial-gradient(circle at 20% 80%, rgba(41, 196, 255, 0.13), transparent);
+  }
+  
+  .create-pokemon-page {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 2rem;
+    gap: 2rem;
+  }
+  
+  .form-container {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px rgb(255, 184, 3);
+  }
+  
+  .form-input,
+  .form-textarea,
+  .form-select,
+  .form-checkbox {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 0.25rem;
+  }
+  
+  .form-textarea {
+    resize: vertical;
+  }
+  
+  .form-checkbox {
+    width: auto;
+  }
+  
+  .preview-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0 15px rgb(255, 184, 3);
+  }
+  

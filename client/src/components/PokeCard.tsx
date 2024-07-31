@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import { usePathname } from "next/navigation";
 import "./cardShine.css";
+import sparkles from "../public/sparkles.gif";
 
 interface PokemonCardProps {
   frontImage: string;
@@ -308,11 +309,12 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
                   style={{
                     width: `${isShiny ? width + 10 : width}px`,
                     height: `${isShiny ? height + 10 : height}px`,
-                    backgroundColor: "radial-gradient(circle at top right, rgba(121, 68, 154, 0.13), transparent), radial-gradient(circle at 20% 80%, rgba(41, 196, 255, 0.13), transparent)"
+                    backgroundColor:
+                      "radial-gradient(circle at top right, rgba(121, 68, 154, 0.13), transparent), radial-gradient(circle at 20% 80%, rgba(41, 196, 255, 0.13), transparent)",
                   }}
                 >
                   <img
-                    className={`${isShiny ?  "m-1" :""}`}
+                    className={`${isShiny ? "m-1" : ""}`}
                     src={backImage}
                     alt="The back of a Pokemon Card"
                     style={{
@@ -327,19 +329,31 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
                   className={`box-back card ${
                     isShiny ? `${rarity}` : rarity
                   }  `}
-                  style={{ width: `${width}px`, height: `${height}px`, backgroundImage: `${isShiny? frontImage : ""}` }}
+                  style={{
+                    width: `${width}px`,
+                    height: `${height}px`,
+                    backgroundImage: `${isShiny ? frontImage : ""}`,
+                  }}
                 >
-                  <img
-                    src={`${!isShiny? frontImage : ""}`}
-                    alt="Pokemon image not-found"
+                  <div
                     style={{
                       width: "100%",
                       height: "100%",
                       borderRadius: "10px",
+                      backgroundImage: `url(${frontImage})`,
+                      backgroundSize: "cover",
+                      mixBlendMode: "color-dodge",
+                    }}
+                  >
+                  <div
+                    className={`${isShiny ? "sparkles": ""}`}
+                    style={{
+                      width: "110%",
+                      height: "110%",
+                      borderRadius: "10px",
                     }}
                   />
-                  {isShiny && <div className="sparkles"></div>}
-                  teste
+                </div>
                 </div>
               </div>
             </CardItem>
