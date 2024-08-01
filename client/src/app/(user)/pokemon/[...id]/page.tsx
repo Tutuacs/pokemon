@@ -74,7 +74,7 @@ export default function PokemonIdPage() {
             Evolve PokePoints:
             <input type="number" name="evolvePokePoints" value={formData.evolvePokePoints} onChange={handleInputChange} className="form-input" />
           </label>
-          <label className="block flex items-center">
+          <label className="block items-center">
             Shiny:
             <input type="checkbox" checked={isShiny} onChange={handleShinyChange} className="form-checkbox ml-2" />
           </label>

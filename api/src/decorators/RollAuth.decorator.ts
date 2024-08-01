@@ -8,11 +8,17 @@ export const RollAuth = createParamDecorator(
   (filterData: string, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest();
 
-    if (request.profile.rolls) {
+    if (request.rolls) {
       if (filterData) {
-        return request.profile.rolls[filterData];
+        if(filterData === 'chances'){
+          const chances: Chances = {
+            ...request.rolls
+          }
+          return chances;
+        }
+        return request.rolls[filterData];
       } else {
-        return request.profile.rolls;
+        return request.rolls;
       }
     } else {
       throw new ForbiddenException(
@@ -27,7 +33,7 @@ export type Chances = {
   rareChance: number;
   superRareChance: number;
   epicChance: number;
-  mythicChance: number;
+  mithycChance: number;
   legendaryChance: number;
   shinyChance: number;
 };

@@ -19,6 +19,31 @@ export class AuthGuard implements CanActivate {
       const profile = await this.authFunctions.profileInfo(data.id);
 
       request.profile = profile;
+      request.roll = {
+        profileId: profile.id,
+        normalChance: profile.normalChance,
+        rareChance: profile.rareChance,
+        superRareChance: profile.superRareChance,
+        epicChance: profile.epicChance,
+        mithycChance: profile.mithycChance,
+        legendaryChance: profile.legendaryChance,
+        shinyChance: profile.shinyChance,
+        normalRolls: profile.normalRolls,
+      }
+
+      if (profile.normalRolls <= 5) {
+        // const time is the time btween the last roll and now
+        const time = new Date().getTime() - profile.lastChargeNormalRoll.getTime();
+        const hour = time.valueOf() / 1000 / 60 / 60;
+
+        const rollsCharged = Math.floor(hour / 4);
+        
+        if (rollsCharged < 5 && profile.normalRolls + rollsCharged < 5) {
+          await this.authFunctions.updateRolls(profile.id, profile.normalRolls + rollsCharged);
+        } else if (rollsCharged >= 5 && profile.normalRolls < 5) {
+          await this.authFunctions.updateRolls(profile.id, 5);
+      }
+    }
 
       return true;
     } catch {

@@ -66,6 +66,28 @@ export class AuthFunctionsService extends PrismaService {
         name: true,
         email: true,
         role: true,
+        normalChance: true,
+        rareChance: true,
+        superRareChance: true,
+        epicChance: true,
+        mithycChance: true,
+        legendaryChance: true,
+        shinyChance: true,
+        lastNormalRoll: true,
+        lastChargeNormalRoll: true,
+        normalRolls: true,
+      },
+    });
+  }
+
+  updateRolls(id: string, normalRolls: number) {
+    return this.profile.update({
+      data: {
+        normalRolls,
+        lastChargeNormalRoll: new Date(),
+      },
+      where: {
+        id,
       },
     });
   }

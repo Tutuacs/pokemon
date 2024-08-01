@@ -1,20 +1,26 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { RARITY } from 'src/decorators/rarity.enum';
 import { CHANCES } from 'src/decorators/chances.enum';
 import { Chances } from 'src/decorators';
+import { UserPokemonService } from 'src/user-pokemon/user-pokemon.service';
+import { RollFunctionService } from './roll-function/roll-function.service';
 
 @Injectable()
 export class RollService {
+  constructor(
+    private readonly userPokemon: UserPokemonService,
+    private readonly rollFunction: RollFunctionService,
+  ) {}
 
-  chances = {
-    normalChance: 0.6,
-    rareChance: 0.4,
-    superRareChance: 0.3,
-    epicChance: 0.2,
-    mythicChance: 0.1,
-    legendaryChance: 0.05,
-    shinyChance: 0.01,
-  };
+  // chances = {
+  //   normalChance: 0.6,
+  //   rareChance: 0.4,
+  //   superRareChance: 0.3,
+  //   epicChance: 0.2,
+  //   mithycChance: 0.1,
+  //   legendaryChance: 0.05,
+  //   shinyChance: 0.01,
+  // };
 
   rollChance(
     chances: Chances,
@@ -48,7 +54,7 @@ export class RollService {
         }
         return this.rollChance(chances, RARITY.MITHYC);
       case RARITY.MITHYC:
-        if (random <= chances.mythicChance) {
+        if (random <= chances.mithycChance) {
           console.log('MITICO');
           return this.rollShiny(chances, RARITY.MITHYC);
         }
@@ -104,7 +110,7 @@ export class RollService {
       case RARITY.MITHYC:
         chances = this.adjustChances(chances, 0.06);
         chances.normalChance = CHANCES.NORMAL;
-        chances.mythicChance = CHANCES.MITHYC;
+        chances.mithycChance = CHANCES.MITHYC;
         break;
       case RARITY.LEGENDARY:
         chances = this.adjustChances(chances, 0.07);
@@ -128,7 +134,7 @@ export class RollService {
       rareChance: Math.min(1, chances.rareChance + increaseAmount),
       superRareChance: Math.min(1, chances.superRareChance + increaseAmount),
       epicChance: Math.min(1, chances.epicChance + increaseAmount),
-      mythicChance: Math.min(1, chances.mythicChance + increaseAmount),
+      mithycChance: Math.min(1, chances.mithycChance + increaseAmount),
       legendaryChance: Math.min(1, chances.legendaryChance + increaseAmount),
       shinyChance: Math.min(1, chances.shinyChance + increaseAmount / 10),
     };
@@ -141,16 +147,25 @@ export class RollService {
       rareChance: parseFloat(chances.rareChance.toFixed(3)),
       superRareChance: parseFloat(chances.superRareChance.toFixed(3)),
       epicChance: parseFloat(chances.epicChance.toFixed(3)),
-      mythicChance: parseFloat(chances.mythicChance.toFixed(3)),
+      mithycChance: parseFloat(chances.mithycChance.toFixed(3)),
       legendaryChance: parseFloat(chances.legendaryChance.toFixed(3)),
       shinyChance: parseFloat(chances.shinyChance.toFixed(3)),
     };
   }
 
-  rollPokemon(): { shine: boolean; rarity: RARITY } {
-    const roll = this.rollChance(this.chances);
-    this.chances = this.increaseChances(this.chances, roll);
-    console.log(this.chances);
-    return roll;
+  async rollPokemon(profileId: string, chances: Chances, normalRolls: number) {
+    if(normalRolls <= 0){
+      throw new NotFoundException('No rolls left');
+    }
+    const roll = this.rollChance(chances);
+    const newChances: Chances = this.increaseChances(chances, roll);
+    await this.rollFunction.updateChances(profileId, newChances);
+    const pokemon = await this.rollFunction.getPokemon(roll.rarity);
+    return this.userPokemon.create({
+      name: pokemon.name,
+      pokemonId: pokemon.id,
+      profileId,
+      shiny: roll.shine,
+    });
   }
 }

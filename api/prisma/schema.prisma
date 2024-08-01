@@ -14,30 +14,34 @@ datasource db {
 }
 
 model Profile {
-  id              String        @id @default(uuid())
-  name            String?
-  email           String?       @unique
-  password        String?
-  role            Int           @default(0)
+  id                   String        @id @default(uuid())
+  name                 String?
+  email                String?       @unique
+  password             String?
+  lastNormalRoll       DateTime?
+  lastChargeNormalRoll DateTime?     @default(now())
+  role                 Int           @default(0)
   // Bag Proprieties
-  pokePoints      Int           @default(0)
-  pokeStars       Int           @default(0)
-  food            Int           @default(0)
-  gold            Int           @default(0)
-  normalRolls     Int           @default(0)
-  specialRolls    Int           @default(0)
-  Pokemon         UserPokemon[]
+  pokePoints           Int           @default(0)
+  pokeStars            Int           @default(0)
+  food                 Int           @default(0)
+  gold                 Int           @default(0)
+  normalRolls          Int           @default(5)
+  specialRolls         Int           @default(0)
+  Pokemon              UserPokemon[]
   // Roll Proprieties
-  toEpic          Int           @default(0)
-  toMithyc        Int           @default(0)
-  toLegendary     Int           @default(0)
-  normalChance    Float         @default(0.5)
-  rareChance      Float         @default(0.4)
-  superRareChance Float         @default(0.3)
-  epicChance      Float         @default(0.2)
-  mithycChance    Float         @default(0.1)
-  legendaryChance Float         @default(0.5)
-  shinyChance     Float         @default(0.6)
+  toEpic               Int           @default(0)
+  toMithyc             Int           @default(0)
+  toLegendary          Int           @default(0)
+  normalChance         Float         @default(0.5)
+  rareChance           Float         @default(0.4)
+  superRareChance      Float         @default(0.3)
+  epicChance           Float         @default(0.2)
+  mithycChance         Float         @default(0.1)
+  legendaryChance      Float         @default(0.5)
+  shinyChance          Float         @default(0.6)
+  createdAt            DateTime      @default(now())
+  updatedAt            DateTime      @updatedAt
 }
 
 model Pokemon {
@@ -53,15 +57,19 @@ model Pokemon {
   evolutionId      Int?
   UserPokemon      UserPokemon[]
   RelatedPokemons  Pokemon[]     @relation("Evolution")
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
 }
 
 model UserPokemon {
-  id        String  @id @default(uuid())
+  id        String   @id @default(uuid())
   name      String
-  shiny     Boolean @default(false)
-  food      Int     @default(0)
-  Pokemon   Pokemon @relation(fields: [pokemonId], references: [id])
+  shiny     Boolean  @default(false)
+  food      Int      @default(0)
+  Pokemon   Pokemon  @relation(fields: [pokemonId], references: [id])
   pokemonId Int
-  Profile   Profile @relation(fields: [profileId], references: [id])
+  Profile   Profile  @relation(fields: [profileId], references: [id])
   profileId String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }

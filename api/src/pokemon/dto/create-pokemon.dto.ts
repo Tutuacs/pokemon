@@ -29,6 +29,12 @@ export class CreatePokemonDto {
     @IsNumber()
     evolvePokePoints: number; 
 
+    @IsOptional()
+    @IsNotEmpty()
+    @Type(() => Number)
+    @IsNumber()
+    evolutionId: number; 
+
     @IsNotEmpty()
     @Type(() => Number)
     @IsNumber()

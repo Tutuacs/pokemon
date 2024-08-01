@@ -9,5 +9,6 @@ import { PrismaModule } from 'src/prisma/prisma.module';
   imports: [AuthModule, PrismaModule],
   controllers: [UserPokemonController],
   providers: [UserPokemonService, UserPokemonFunctionService],
+  exports: [UserPokemonService, UserPokemonFunctionService],
 })
 export class UserPokemonModule {}

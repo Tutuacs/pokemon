@@ -8,7 +8,7 @@ export class UserPokemonService {
 
   constructor(private readonly userPokemonFunction: UserPokemonFunctionService) {}
 
-  create(data: CreateUserPokemonDto) {
+  create(data: {pokemonId: number, profileId: string, name: string, shiny: boolean}) {
     return this.userPokemonFunction.create(data);
   }
 

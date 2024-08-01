@@ -8,6 +8,7 @@ import {
 } from 'class-validator';
 
 export class CreateUserPokemonDto {
+  
   @IsNotEmpty()
   @IsString()
   name: string;
