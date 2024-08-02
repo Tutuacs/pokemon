@@ -21,14 +21,36 @@ export class AuthFunctionsService extends PrismaService {
         name: true,
         password: true,
         role: true,
+        normalRolls: true,
+        normalChance: true,
+        lastNormalRoll: true,
+        lastChargeNormalRoll: true,
+        food: true,
+        gold: true,
+        pokePoints: true,
+        pokeStars: true,
+        _count: {
+          select: {
+            Pokemon: true,
+          }
+        },
       },
     });
+    console.log(profile._count.Pokemon)
     if (profile && (await bcrypt.compare(login.password, profile.password))) {
       return {
         id: profile.id,
         email: profile.email,
         role: profile.role,
         name: profile.name,
+        normalRolls: profile.normalRolls,
+        lastNormalRoll: profile.lastNormalRoll,
+        lastChargeNormalRoll: profile.lastChargeNormalRoll,
+        food: profile.food,
+        gold: profile.gold,
+        pokePoints: profile.pokePoints,
+        pokeStars: profile.pokeStars,
+        pokemons: profile._count.Pokemon,
       };
     } else {
       throw new UnauthorizedException('Usuário ou senha incorretos');

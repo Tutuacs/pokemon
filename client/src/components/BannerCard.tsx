@@ -49,7 +49,7 @@ export default function BannerCard({
             >
               <div className="flex justify-end p-4">
                 <Link 
-                  href="/roll/stellar" 
+                  href="/roll/stellar"
                   className="custom-button text-white rounded-lg button"
                 >
                   <span>Roletar pokemon</span>

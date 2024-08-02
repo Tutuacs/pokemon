@@ -38,6 +38,13 @@ export class AuthService {
     email: string;
     role: number;
     name: string;
+    normalRolls: number;
+    lastChargeNormalRoll: Date;
+    food: number;
+    gold: number;
+    pokePoints: number;
+    pokeStars: number;
+    pokemons: number;
   }) {
     return {
       token: await this.jwt.signAsync(
@@ -46,9 +53,16 @@ export class AuthService {
           email: profile.email,
           role: profile.role,
           name: profile.name,
+          normalRolls: profile.normalRolls,
+          lastChargeNormalRoll: profile.lastChargeNormalRoll,
+          food: profile.food,
+          gold: profile.gold,
+          pokePoints: profile.pokePoints,
+          pokeStars: profile.pokeStars,
+          pokemons: profile.pokemons
         },
         {
-          expiresIn: '20s',
+          expiresIn: '7d',
           subject: profile.id,
           issuer: this.issuer,
           audience: this.audience,
@@ -57,6 +71,19 @@ export class AuthService {
       ),
     };
   }
+
+  // id: profile.id,
+  // email: profile.email,
+  // role: profile.role,
+  // name: profile.name,
+  // normalRolls: profile.normalRolls,
+  // lastNormalRoll: profile.lastNormalRoll,
+  // lastChargeNormalRoll: profile.lastChargeNormalRoll,
+  // food: profile.food,
+  // gold: profile.gold,
+  // pokePoints: profile.pokePoints,
+  // pokeStars: profile.pokeStars,
+  // pokemons: profile._count.Pokemon,
 
   async createRefreshToken(profile: {
     id: string;
@@ -88,6 +115,14 @@ export class AuthService {
     email: string;
     role: number;
     name: string;
+    normalRolls: number;
+    lastNormalRoll: Date;
+    lastChargeNormalRoll: Date;
+    food: number;
+    gold: number;
+    pokePoints: number;
+    pokeStars: number;
+    pokemons: number;
   }) {
     const token = (await this.createToken(profile)).token;
     const refreshToken = (await this.createRefreshToken(profile)).token;
@@ -109,6 +144,14 @@ export class AuthService {
     email: string;
     role: number;
     name: string;
+    normalRolls: number;
+    lastNormalRoll: Date;
+    lastChargeNormalRoll: Date;
+    food: number;
+    gold: number;
+    pokePoints: number;
+    pokeStars: number;
+    pokemons: number;
   }) {
     const token = (await this.createToken(profile)).token;
     const refreshToken = (await this.createRefreshToken(profile)).token;

@@ -11,15 +11,15 @@ export default function ButtonLogout() {
       redirect: false,
     });
 
-    router.push("/");
+    router.push("/login");
   }
 
   return (
     <button
       onClick={logout}
-      className="w-40 p-2 border border-gray-300 rounded-md"
+      className=" ml-10 p-2 border border-gray-300 rounded-md hover:bg-red-500"
     >
-      Sair
+      Logout
     </button>
   );
 }

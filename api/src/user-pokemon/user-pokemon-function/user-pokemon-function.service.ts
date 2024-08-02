@@ -4,7 +4,12 @@ import { UpdateUserPokemonDto } from '../dto/update-user-pokemon.dto';
 
 @Injectable()
 export class UserPokemonFunctionService extends PrismaService {
-  create(data: {pokemonId: number, profileId: string, name: string, shiny: boolean}) {
+  create(data: {
+    pokemonId: number;
+    profileId: string;
+    name: string;
+    shiny: boolean;
+  }) {
     return this.userPokemon.create({
       data: {
         name: data.name,
@@ -15,14 +20,24 @@ export class UserPokemonFunctionService extends PrismaService {
     });
   }
 
-  list() {
-    return this.userPokemon.findMany();
+  list(profileId: string) {
+    return this.userPokemon.findMany({
+      where: {
+        profileId,
+      },
+      orderBy: {
+        createdAt: 'desc',
+      },
+    });
   }
 
   findById(id: string) {
     return this.userPokemon.findUnique({
       where: {
         id,
+      },
+      include: {
+        Pokemon: true,
       },
     });
   }
@@ -38,6 +53,19 @@ export class UserPokemonFunctionService extends PrismaService {
 
   remove(id: string) {
     return this.userPokemon.delete({
+      where: {
+        id,
+      },
+    });
+  }
+
+  updatePokePoints(id: string, pokePoints: number) {
+    return this.profile.update({
+      data: {
+        pokePoints: {
+          increment: pokePoints,
+        },
+      },
       where: {
         id,
       },

@@ -11,7 +11,7 @@ export default async function UserLayout({ children }: PrivateLayoutProps) {
   // const session = await getServerSession(authOptions);
 
   // if (!session) {
-  //   redirect("/");
+  //   redirect("/login");
   // }
 
   return (

@@ -9,16 +9,47 @@ interface PrivateLayoutProps {
 }
 
 export default async function UserLayout({ children }: PrivateLayoutProps) {
-  // const session = await getServerSession(authOptions);
+  const session = await getServerSession(authOptions);
 
-  // if (!session) {
-  //   redirect("/");
-  // }
+  let role = -1;
+
+  let profile: {
+    id: string;
+    email: string;
+    role: number;
+    name: string;
+    normalRolls: number;
+    lastChargeNormalRoll: Date;
+    food: number;
+    gold: number;
+    pokePoints: number;
+    pokeStars: number;
+    pokemons: number;
+  } = {
+    id: "0c8dfa6d-8dd1-46da-a680-86ad6ba02b85",
+    email: "admin@admin.com",
+    role: 0,
+    name: "admin",
+    normalRolls: 5,
+    lastChargeNormalRoll: new Date("2024-08-02T17:05:03.691Z"),
+    food: 0,
+    gold: 0,
+    pokePoints: 0,
+    pokeStars: 0,
+    pokemons: 0,
+  };
+  if (session) {
+    role = session!.profile.role!;
+    profile = session!.profile;
+  }
+
+  const type = role;
+  const logged = type !== -1;
 
   return (
     <>
       <main>
-        <Navbar type={2} logged={Boolean(true)} />
+        <Navbar type={type} logged={logged} profile={profile} />
         <div className="mt-28">{children}</div>
       </main>
     </>

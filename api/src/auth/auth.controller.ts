@@ -29,6 +29,14 @@ export class AuthController {
       email: string;
       role: number;
       name: string;
+      normalRolls: number;
+      lastNormalRoll: Date;
+      lastChargeNormalRoll: Date;
+      food: number;
+      gold: number;
+      pokePoints: number;
+      pokeStars: number;
+      pokemons: number;
     },
   ) {
     return this.service.refreshTokens(profile);

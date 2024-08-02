@@ -31,11 +31,11 @@ export default function Login() {
 
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen bg-gray-200">
-      <div className="p-8 bg-white rounded-t-lg w-96">
+    <main className="flex flex-col items-center justify-center min-h-screen ">
+      <div className="p-8 bg-white rounded-t-lg w-96 shadow-lg shadow-white">
         <h1 className="mb-6 text-2xl font-bold text-center">Login</h1>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-4 ">
             <label
               className="block mb-2 text-sm font-bold text-gray-700"
               htmlFor="email"
@@ -80,7 +80,7 @@ export default function Login() {
         </form>
       </div>
       <Link href="/register">
-        <div className="flex p-8 m-auto text-2xl text-white rounded-b-lg hover:bg-slate-800 bg-slate-900 w-96 hover:text-red-400">
+        <div className="flex p-8 m-auto text-2xl text-white rounded-b-lg hover:bg-slate-800 bg-slate-900 w-96 hover:text-red-400 shadow-lg shadow-white">
           <div className="m-auto">Não tenho cadastro</div>
         </div>
       </Link>

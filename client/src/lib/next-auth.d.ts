@@ -3,10 +3,17 @@ import NextAuth from "next-auth";
 declare module "next-auth" {
   interface Session {
     profile: {
-      id: number;
+      id: string;
       email: string;
       role: number;
       name: string;
+      normalRolls: number;
+      lastChargeNormalRoll: Date;
+      food: number;
+      gold: number;
+      pokePoints: number;
+      pokeStars: number;
+      pokemons: number;
     };
 
     tokens: {
@@ -22,10 +29,17 @@ import { JWT } from "next-auth/jwt";
 declare module "next-auth/jwt" {
   interface JWT {
     profile: {
-      id: number;
+      id: string;
       email: string;
       role: number;
       name: string;
+      normalRolls: number;
+      lastChargeNormalRoll: Date;
+      food: number;
+      gold: number;
+      pokePoints: number;
+      pokeStars: number;
+      pokemons: number;
     };
 
     tokens: {
