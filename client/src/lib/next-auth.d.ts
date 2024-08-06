@@ -17,6 +17,19 @@ declare module "next-auth" {
     };
 
     tokens: {
+      profile?: {
+        id: string;
+        email: string;
+        role: number;
+        name: string;
+        normalRolls: number;
+        lastChargeNormalRoll: Date;
+        food: number;
+        gold: number;
+        pokePoints: number;
+        pokeStars: number;
+        pokemons: number;
+      };
       access: string;
       refresh: string;
       expiresIn: number;

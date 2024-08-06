@@ -1,27 +1,20 @@
+// RollTimer.tsx
 "use client";
 
 import { useEffect, useState } from "react";
+import { NavbarProfileProps, useNavbarContext } from "./NavBarProviders";
 
-interface RollTimerProps {
-  normalRolls: number;
-  lastChargeNormalRoll: Date;
-}
-
-export default function RollTimer({
-  normalRolls,
-  lastChargeNormalRoll,
-}: RollTimerProps) {
+export default function RollTimer() {
+  const { profile, setProfile } = useNavbarContext();
   const [timeLeft, setTimeLeft] = useState<number | null>(null);
-  const [rolls, setRolls] = useState(normalRolls);
-  const [lastCharge, setLastCharge] = useState(new Date(lastChargeNormalRoll));
 
   useEffect(() => {
     const updateTimeLeft = () => {
       const now = Date.now();
-      const diff = now - lastCharge.getTime();
+      const diff = now - new Date(profile.lastChargeNormalRoll).getTime();
       const diffHours = diff / (1000 * 60 * 60);
 
-      if (rolls < 5) {
+      if (profile.normalRolls < 5) {
         const hoursLeft = Math.floor(4 - (diffHours % 4));
         const minutesLeft = Math.floor(
           60 - ((diff / (1000 * 60)) % 60)
@@ -34,14 +27,16 @@ export default function RollTimer({
 
         if (diffHours >= 4) {
           const rollsToAdd = Math.floor(diffHours / 4);
-          const newRolls = Math.min(5, rolls + rollsToAdd);
-          setRolls(newRolls);
+          const newRolls = Math.min(5, profile.normalRolls + rollsToAdd);
 
-          if (newRolls > rolls) {
+          if (newRolls > profile.normalRolls) {
             const newLastCharge = new Date(
               now - ((diffHours % 4) * 60 * 60 * 1000)
             );
-            setLastCharge(newLastCharge);
+
+            const newProfile: NavbarProfileProps = { ...profile };
+
+            setProfile(newProfile);
           }
         }
       } else {
@@ -54,12 +49,12 @@ export default function RollTimer({
     const interval = setInterval(updateTimeLeft, 1000);
 
     return () => clearInterval(interval);
-  }, [rolls, lastCharge]);
+  }, [profile.normalRolls, profile.lastChargeNormalRoll]);
 
   return (
     <div className="p-2 border border-white rounded-lg">
-      Normal Rolls: ({rolls}/5)
-      {rolls < 5 && timeLeft !== null && (
+      Normal Rolls: ({profile.normalRolls}/5)
+      {profile.normalRolls < 5 && timeLeft !== null && (
         <span>
           {" - "}
           {Math.floor(timeLeft / 3600)}:

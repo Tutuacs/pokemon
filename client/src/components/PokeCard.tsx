@@ -4,9 +4,8 @@ import React, { useState, useEffect } from "react";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import { usePathname } from "next/navigation";
 import "./cardShine.css";
-import sparkles from "../public/sparkles.gif";
 
-interface PokemonCardProps {
+export interface PokemonCardProps {
   frontImage: string;
   backImage: string;
   titleText?: string;

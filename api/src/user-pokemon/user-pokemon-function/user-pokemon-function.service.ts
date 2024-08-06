@@ -17,6 +17,9 @@ export class UserPokemonFunctionService extends PrismaService {
         pokemonId: data.pokemonId,
         profileId: data.profileId,
       },
+      include: {
+        Pokemon: true,
+      }
     });
   }
 

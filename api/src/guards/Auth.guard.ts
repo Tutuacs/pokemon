@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
       const profile = await this.authFunctions.profileInfo(data.id);
 
       request.profile = profile;
-      request.roll = {
+      request.rolls = {
         profileId: profile.id,
         normalChance: profile.normalChance,
         rareChance: profile.rareChance,
@@ -38,7 +38,7 @@ export class AuthGuard implements CanActivate {
 
         const rollsCharged = Math.floor(hour / 4);
         
-        if (rollsCharged < 5 && profile.normalRolls + rollsCharged < 5) {
+        if (rollsCharged < 5 && profile.normalRolls + rollsCharged <= 5) {
           await this.authFunctions.updateRolls(profile.id, profile.normalRolls + rollsCharged);
         } else if (rollsCharged >= 5 && profile.normalRolls < 5) {
           await this.authFunctions.updateRolls(profile.id, 5);

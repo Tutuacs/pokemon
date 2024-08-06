@@ -72,19 +72,6 @@ export class AuthService {
     };
   }
 
-  // id: profile.id,
-  // email: profile.email,
-  // role: profile.role,
-  // name: profile.name,
-  // normalRolls: profile.normalRolls,
-  // lastNormalRoll: profile.lastNormalRoll,
-  // lastChargeNormalRoll: profile.lastChargeNormalRoll,
-  // food: profile.food,
-  // gold: profile.gold,
-  // pokePoints: profile.pokePoints,
-  // pokeStars: profile.pokeStars,
-  // pokemons: profile._count.Pokemon,
-
   async createRefreshToken(profile: {
     id: string;
     email: string;
@@ -130,6 +117,7 @@ export class AuthService {
     const tokens = {
       profile,
       tokens: {
+        profile,
         access: token,
         refresh: refreshToken,
         expiresIn: new Date().setTime(new Date().getTime() + this.EXPIRE_TIME),
@@ -155,8 +143,10 @@ export class AuthService {
   }) {
     const token = (await this.createToken(profile)).token;
     const refreshToken = (await this.createRefreshToken(profile)).token;
+    const atualizedProfile = await this.authFunctions.profileInfo(profile.id);
 
     return {
+      profile: atualizedProfile,
       access: token,
       refresh: refreshToken,
       expiresIn: new Date().setTime(new Date().getTime() + this.EXPIRE_TIME),

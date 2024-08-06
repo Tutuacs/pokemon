@@ -9,29 +9,31 @@ export class RollFunctionService extends PrismaService {
       where: {
         rarity,
       },
-      skip: count,
+      skip: count > 0 ? count : 0,
     });
   }
 
-  getMaxId(rarity: number) {
-    return this.pokemon.findFirst({
+  getMax(rarity: number) {
+    return this.pokemon.count({
       where: {
         rarity,
-      },
-      select: {
-        id: true,
-      },
-      orderBy: {
-        id: 'desc',
       },
     });
   }
 
   async getPokemon(rarity: number) {
-    const maxId = await this.getMaxId(rarity);
+    const max = await this.getMax(rarity);
     // random is btw 0 and maxId
-    const random = Math.floor(Math.random() * maxId.id);
+    const random = Math.floor(Math.random() * (max-1));
     return this.skipPokemonsByCount(random, rarity);
+  }
+
+  getPokemonRarity(rarity: number) {
+    return this.pokemon.findFirst({
+      where:{
+        rarity,
+      }
+    })
   }
 
   getChances(id: string) {

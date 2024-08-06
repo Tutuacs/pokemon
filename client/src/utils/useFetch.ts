@@ -1,10 +1,12 @@
 import { useSession } from "next-auth/react";
 import { Backend_URL } from "@/lib/Constants";
+import { NavbarProfileProps, useNavbarContext } from "@/components/NavBarProviders";
 // import { useToast } from "@/components/ui/use-toast";
 // import { getToastConfig, toastConfig } from "@/components/ui/toastConfig";
 
 const useFetch = (title?: string) => {
   const { data: session } = useSession();
+  // const { setProfile } = useNavbarContext();
 //   const { toast } = useToast();
   
   const refreshToken = async () => {
@@ -18,6 +20,10 @@ const useFetch = (title?: string) => {
     });
 
     const response = await res.json();
+    session.profile = response.profile;
+    const profile: NavbarProfileProps = {...response.profile};
+
+    // updateNavbarProfile(profile);
     session.tokens = response;
   };
 
@@ -34,7 +40,9 @@ const useFetch = (title?: string) => {
       headers.Authorization = `Bearer ${session.tokens.access}`;
     }
     
-    const res = await fetch(url, { ...options, headers });
+    const res = await fetch(`${Backend_URL}${url}`, { ...options, headers });
+
+    console.log("ResFetch",res);
 
     return handleResponse(res);
   };

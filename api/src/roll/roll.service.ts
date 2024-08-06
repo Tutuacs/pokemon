@@ -154,13 +154,14 @@ export class RollService {
   }
 
   async rollPokemon(profileId: string, chances: Chances, normalRolls: number) {
-    if(normalRolls <= 0){
-      throw new NotFoundException('No rolls left');
-    }
+    // if(normalRolls <= 0){
+    //   throw new NotFoundException('No rolls left');
+    // }
     const roll = this.rollChance(chances);
     const newChances: Chances = this.increaseChances(chances, roll);
     await this.rollFunction.updateChances(profileId, newChances);
     const pokemon = await this.rollFunction.getPokemon(roll.rarity);
+    console.log(pokemon);
     return this.userPokemon.create({
       name: pokemon.name,
       pokemonId: pokemon.id,

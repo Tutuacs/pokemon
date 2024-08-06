@@ -26,7 +26,9 @@ export default function Login() {
       return;
     }
 
-    router.replace('/');
+    setTimeout(() => {
+      router.push('/');
+    }, 100);
   }
 
 

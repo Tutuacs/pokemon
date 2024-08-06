@@ -79,27 +79,58 @@ export class AuthFunctionsService extends PrismaService {
   }
 
   async profileInfo(id: string) {
-    return this.profile.findUnique({
+    const profile = await this.profile.findUnique({
       where: {
         id,
       },
       select: {
         id: true,
-        name: true,
         email: true,
+        name: true,
+        password: true,
         role: true,
+        normalRolls: true,
         normalChance: true,
-        rareChance: true,
+        lastNormalRoll: true,
+        lastChargeNormalRoll: true,
         superRareChance: true,
+        rareChance: true,
         epicChance: true,
         mithycChance: true,
         legendaryChance: true,
         shinyChance: true,
-        lastNormalRoll: true,
-        lastChargeNormalRoll: true,
-        normalRolls: true,
+        food: true,
+        gold: true,
+        pokePoints: true,
+        pokeStars: true,
+        _count: {
+          select: {
+            Pokemon: true,
+          }
+        },
       },
     });
+
+    return {
+      id: profile.id,
+      email: profile.email,
+      role: profile.role,
+      name: profile.name,
+      normalRolls: profile.normalRolls,
+      lastChargeNormalRoll: profile.lastChargeNormalRoll,
+      normalChance: profile.normalChance,
+      superRareChance: profile.superRareChance,
+      rareChance: profile.rareChance,
+      epicChance: profile.epicChance,
+      mithycChance: profile.mithycChance,
+      legendaryChance: profile.legendaryChance,
+      shinyChance: profile.shinyChance,
+      food: profile.food,
+      gold: profile.gold,
+      pokePoints: profile.pokePoints,
+      pokeStars: profile.pokeStars,
+      pokemons: profile._count.Pokemon,
+    };
   }
 
   updateRolls(id: string, normalRolls: number) {
