@@ -1,6 +1,5 @@
 import { useSession } from "next-auth/react";
 import { Backend_URL } from "@/lib/Constants";
-import { NavbarProfileProps, useNavbarContext } from "@/components/NavBarProviders";
 // import { useToast } from "@/components/ui/use-toast";
 // import { getToastConfig, toastConfig } from "@/components/ui/toastConfig";
 
@@ -21,9 +20,7 @@ const useFetch = (title?: string) => {
 
     const response = await res.json();
     session.profile = response.profile;
-    const profile: NavbarProfileProps = {...response.profile};
 
-    // updateNavbarProfile(profile);
     session.tokens = response;
   };
 

@@ -1,7 +1,6 @@
-"use client"
-import React, { useContext, createContext, useState } from "react";
-import { getServerSession } from "next-auth";
-import { authOptions } from "@/utils/authOptions";
+"use client";
+import React, { useContext, createContext, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 
 // Define o tipo para as propriedades do perfil da Navbar
 type NavbarProviderProps = {
@@ -26,13 +25,13 @@ export type NavbarProfileProps = {
 };
 
 // Estado inicial padrão para o perfil
-const defaultNav: NavbarProfileProps = {
-  id: "0c8dfa6d-8dd1-46da-a680-86ad6ba02b85",
-  email: "admin@admin.com",
+const initialProfile: NavbarProfileProps = {
+  id: "",
+  email: "",
   role: -1,
-  name: "admin",
-  normalRolls: 5,
-  lastChargeNormalRoll: new Date("2024-08-02T17:05:03.691Z"),
+  name: "",
+  normalRolls: 0,
+  lastChargeNormalRoll: new Date(),
   food: 0,
   gold: 0,
   pokePoints: 0,
@@ -41,21 +40,25 @@ const defaultNav: NavbarProfileProps = {
 };
 
 const NavbarContext = createContext<NavbarProviderProps>({
-  profile: defaultNav,
+  profile: initialProfile,
   setProfile: () => {}, // Função padrão
   updateSession: () => {}, // Função padrão
 });
 
 export function NavbarProvider({ children }: { children: React.ReactNode }) {
-  const [profile, setProfile] = useState(defaultNav);
+  const { data: session } = useSession();
+  const [profile, setProfile] = useState<NavbarProfileProps>(initialProfile);
+
+  useEffect(() => {
+    if (session) {
+      setProfile(session.tokens.profile as NavbarProfileProps);
+    }
+  }, [session]);
 
   const updateSession = async () => {
-    const session = await getServerSession(authOptions);
-
-    if (session?.tokens.profile !== profile) {
-      setProfile(session?.tokens.profile!);
+    if (session && session.tokens.profile !== profile) {
+      setProfile(session.tokens.profile as NavbarProfileProps);
     }
-
     console.log("updating profile");
   };
 
@@ -64,12 +67,6 @@ export function NavbarProvider({ children }: { children: React.ReactNode }) {
       {children}
     </NavbarContext.Provider>
   );
-};
+}
 
 export const useNavbarContext = () => useContext(NavbarContext);
-
-export const getProfile = async () => {
-  const session = await getServerSession(authOptions);
-
-  return session?.tokens.profile!;
-}

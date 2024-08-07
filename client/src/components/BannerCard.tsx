@@ -1,7 +1,6 @@
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
 import "../app/bannerCard.css";
-
-import Link from "next/link";
+import BannerCardButton from "./BannerCardButton";
 
 type BannerCardProps = {
   bannerImage: string;
@@ -47,14 +46,7 @@ export default function BannerCard({
               translateZ={60}
               className="text-xl font-bold text-white mt-[-150px] ml-[-50px] relative w-full h-full text-end"
             >
-              <div className="flex justify-end p-4">
-                <Link 
-                  href="/roll/stellar"
-                  className="custom-button text-white rounded-lg button"
-                >
-                  <span>Roletar pokemon</span>
-                </Link>
-              </div>
+              <BannerCardButton/>
             </CardItem>
           </CardBody>
         </CardContainer>

@@ -4,12 +4,7 @@ import Link from "next/link";
 import "./navbar.css";
 import NavLinks from "./NavLinks";
 
-export default function Navbar({ logged, profile }: { logged: boolean, profile: any }) {
-
-  // const { profile } = useNavbarContext();
-
-  // const newType = profile?.role || -1;
-  // const newLogged = newType !== -1;
+export default function Navbar({ logged }: { logged: boolean; profile?: any }) {
 
   return (
     <nav className="navbar">
@@ -25,7 +20,9 @@ export default function Navbar({ logged, profile }: { logged: boolean, profile: 
         </Link>
       </div>
       <div className="flex items-center">
-        <NavLinks logged={logged} type={profile? profile.role : -1} profile={profile} />
+        <NavLinks
+          logged={logged}
+        />
       </div>
     </nav>
   );

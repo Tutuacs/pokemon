@@ -1,4 +1,3 @@
-// RollTimer.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -11,18 +10,15 @@ export default function RollTimer() {
   useEffect(() => {
     const updateTimeLeft = () => {
       const now = Date.now();
-      const diff = now - new Date(profile.lastChargeNormalRoll).getTime();
+      const lastCharge = new Date(profile.lastChargeNormalRoll).getTime();
+      const diff = now - lastCharge;
       const diffHours = diff / (1000 * 60 * 60);
 
       if (profile.normalRolls < 5) {
         const hoursLeft = Math.floor(4 - (diffHours % 4));
-        const minutesLeft = Math.floor(
-          60 - ((diff / (1000 * 60)) % 60)
-        );
-        const secondsLeft = Math.floor(
-          60 - ((diff / 1000) % 60)
-        );
-        
+        const minutesLeft = Math.floor(60 - ((diff / (1000 * 60)) % 60));
+        const secondsLeft = Math.floor(60 - ((diff / 1000) % 60));
+
         setTimeLeft(hoursLeft * 3600 + minutesLeft * 60 + secondsLeft);
 
         if (diffHours >= 4) {
@@ -31,10 +27,14 @@ export default function RollTimer() {
 
           if (newRolls > profile.normalRolls) {
             const newLastCharge = new Date(
-              now - ((diffHours % 4) * 60 * 60 * 1000)
+              lastCharge + rollsToAdd * 4 * 60 * 60 * 1000
             );
 
-            const newProfile: NavbarProfileProps = { ...profile };
+            const newProfile: NavbarProfileProps = {
+              ...profile,
+              normalRolls: newRolls,
+              lastChargeNormalRoll: newLastCharge,
+            };
 
             setProfile(newProfile);
           }

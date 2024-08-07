@@ -56,13 +56,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
     }
   };
 
-  useEffect(() => {
-    const navbar = document.querySelector(".navbar");
-    if (navbar && pathname === "/roll/stellar") {
-      navbar.classList.remove("visible");
-    }
-  }, [pathname]);
-
   if (invert) {
     const aux = frontImage;
     frontImage = backImage;

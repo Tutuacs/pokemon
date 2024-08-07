@@ -15,20 +15,15 @@ export default async function UserLayout({ children }: PrivateLayoutProps) {
   let role = -1;
 
   if (session) {
-
-    // const profile = useSessionProfile();
-
     role = session.profile!.role || -1;
   }
-
-  console.log("layoutSession", session);
 
   const type = role;
   const logged = type !== -1;
 
   return (
     <main>
-      <Navbar logged={logged} profile={session?.tokens.profile} />
+      <Navbar logged={logged}/>
       <div className="mt-28">{children}</div>
     </main>
   );

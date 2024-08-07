@@ -5,19 +5,17 @@ import { ROLE } from "@/common/role.enums";
 import Link from "next/link";
 import ButtonLogout from "./ButtonLogout";
 import RollTimer from "./RollTimer";
+import { useNavbarContext } from "./NavBarProviders";
 
 export default function NavLinks({
-  type,
   logged,
-  profile,
 }: {
-  type: ROLE;
   logged: boolean;
-  profile: any;
 }) {
 
-  console.log("profile ON NAVLINKS -1 ", profile);
-  // updateSession();
+  const {profile} = useNavbarContext(); 
+
+  const type = profile?.role;
 
   if (type === ROLE.ADMIN) {
     return (
