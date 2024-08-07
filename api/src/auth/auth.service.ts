@@ -50,9 +50,9 @@ export class AuthService {
       token: await this.jwt.signAsync(
         {
           id: profile.id,
+          name: profile.name,
           email: profile.email,
           role: profile.role,
-          name: profile.name,
           normalRolls: profile.normalRolls,
           lastChargeNormalRoll: profile.lastChargeNormalRoll,
           food: profile.food,
@@ -77,14 +77,28 @@ export class AuthService {
     email: string;
     role: number;
     name: string;
+    normalRolls: number;
+    lastChargeNormalRoll: Date;
+    food: number;
+    gold: number;
+    pokePoints: number;
+    pokeStars: number;
+    pokemons: number;
   }) {
     return {
       token: await this.jwt.signAsync(
         {
           id: profile.id,
+          name: profile.name,
           email: profile.email,
           role: profile.role,
-          name: profile.name,
+          normalRolls: profile.normalRolls,
+          lastChargeNormalRoll: profile.lastChargeNormalRoll,
+          food: profile.food,
+          gold: profile.gold,
+          pokePoints: profile.pokePoints,
+          pokeStars: profile.pokeStars,
+          pokemons: profile.pokemons
         },
         {
           expiresIn: '7d',
