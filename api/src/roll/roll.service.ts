@@ -65,9 +65,9 @@ export class RollService {
           return this.rollShiny(chances, RARITY.LEGENDARY);
         }
         console.log('NADA');
-        return { shine: false, rarity: RARITY.SHINY };
+        return { shine: false, rarity: RARITY.NORMAL };
       default:
-        return { shine: false, rarity: RARITY.SHINY };
+        return { shine: false, rarity: RARITY.NORMAL };
     }
   }
 
@@ -161,7 +161,6 @@ export class RollService {
     const newChances: Chances = this.increaseChances(chances, roll);
     await this.rollFunction.updateChances(profileId, newChances);
     const pokemon = await this.rollFunction.getPokemon(roll.rarity);
-    console.log(pokemon);
     return this.userPokemon.create({
       name: pokemon.name,
       pokemonId: pokemon.id,

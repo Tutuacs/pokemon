@@ -18,6 +18,23 @@ export class AuthGuard implements CanActivate {
       const data = await this.authService.checkToken(token);
       const profile = await this.authFunctions.profileInfo(data.id);
 
+      
+      if (profile.normalRolls <= 5) {
+        // const time is the time btween the last roll and now
+        const time = new Date().getTime() - profile.lastChargeNormalRoll.getTime();
+        const hour = time.valueOf() / 1000 / 60 / 60;
+        
+        const rollsCharged = Math.floor(hour / 4);
+        
+        if (rollsCharged < 5 && rollsCharged > 0 && profile.normalRolls + rollsCharged <= 5) {
+          await this.authFunctions.updateRolls(profile.id, profile.normalRolls + rollsCharged);
+          profile.normalRolls += rollsCharged;
+        } else if (rollsCharged >= 5 && profile.normalRolls < 5) {
+          profile.normalRolls = 5;
+          await this.authFunctions.updateRolls(profile.id, 5);
+        }
+      }
+      
       request.profile = profile;
       request.rolls = {
         profileId: profile.id,
@@ -30,20 +47,6 @@ export class AuthGuard implements CanActivate {
         shinyChance: profile.shinyChance,
         normalRolls: profile.normalRolls,
       }
-
-      if (profile.normalRolls <= 5) {
-        // const time is the time btween the last roll and now
-        const time = new Date().getTime() - profile.lastChargeNormalRoll.getTime();
-        const hour = time.valueOf() / 1000 / 60 / 60;
-
-        const rollsCharged = Math.floor(hour / 4);
-        
-        if (rollsCharged < 5 && profile.normalRolls + rollsCharged <= 5) {
-          await this.authFunctions.updateRolls(profile.id, profile.normalRolls + rollsCharged);
-        } else if (rollsCharged >= 5 && profile.normalRolls < 5) {
-          await this.authFunctions.updateRolls(profile.id, 5);
-      }
-    }
 
       return true;
     } catch {

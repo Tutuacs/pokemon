@@ -18,9 +18,9 @@ import { ProfileAuth, ROLE } from 'src/decorators';
 export class UserPokemonController {
   constructor(private readonly userPokemonService: UserPokemonService) {}
 
-  @Get()
-  findAll(@ProfileAuth('id') id: string) {
-    return this.userPokemonService.findAll(id);
+  @Get('page/:page')
+  findAll(@ProfileAuth('id') id: string, @Param('page') page: string) {
+    return this.userPokemonService.findAll(id, +page);
   }
 
   @Get(':id')

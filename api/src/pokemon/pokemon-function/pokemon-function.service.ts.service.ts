@@ -12,8 +12,23 @@ export class PokemonFunctionService extends PrismaService {
     });
   }
 
-  list() {
-    return this.pokemon.findMany();
+  async list(page: number) {
+    const pokemons = await this.pokemon.findMany({
+      skip: (page - 1) * 10,
+      take: 10,
+    });
+
+    const count = await this.pokemon.count();
+
+    console.log({
+      pokemons,
+      count,
+    })
+
+    return {
+      pokemons,
+      count,
+    }
   }
 
   findByRarity(rarity: RARITY) {

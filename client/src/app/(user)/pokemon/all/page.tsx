@@ -10,16 +10,16 @@ import Link from "next/link";
 type UserPokemon = {
   id: string;
   name: string;
-  shiny: boolean;
+  description: string;
+  shinyImage: string;
+  image: string;
   food: number;
-  Pokemon: {
-    id: number;
-    name: string;
-    description: string;
-    image: string;
-    shinyImage: string;
-    rarity: number;
-  };
+  rarity: number;
+};
+
+type Response = {
+  pokemon: UserPokemon[];
+  count: number;
 };
 
 const rarityOptions = [
@@ -32,7 +32,7 @@ const rarityOptions = [
   { value: 6, label: "Shine" },
 ];
 
-export default function UserPokemonCollectionPage() {
+export default function PokemonCollectionPage() {
   const [userPokemons, setUserPokemons] = useState<UserPokemon[]>([]);
   const [flip, setFlip] = useState(true);
   const [page, setPage] = useState(1);
@@ -42,11 +42,15 @@ export default function UserPokemonCollectionPage() {
   useEffect(() => {
     const fetchUserPokemons = async () => {
       try {
-        const res = await fetchWithAuth(`/user-pokemon/page/${page}`);
+        const res = await fetchWithAuth(`/pokemon/page/${page}`);
 
         if (res?.status === 200) {
-          setUserPokemons(res.data);
+          const response: Response = res.data;
+          const pokemon: UserPokemon[] = response.pokemon;
+          console.log("responseInside", response);
+          setUserPokemons(pokemon);
         }
+        console.log("response", res);
       } catch (error) {
         console.error("Failed to fetch user pokemons", error);
       }
@@ -75,17 +79,21 @@ export default function UserPokemonCollectionPage() {
   return (
     <main className="flex flex-col min-h-screen">
       <div className="mx-auto h-20 p-4 min-h-10 mt-10 text-center justify-center w-3/4 bg-slate-800 text-white text-2xl font-bold rounded-lg">
-        Minha Coleção de Pokémons
+        Coleção de Pokémons
       </div>
       <section className="mx-auto flex min-h-[800px] w-3/4 mb-1 p-4">
         <div className="flex flex-wrap">
           {userPokemons.length > 0 ? (
             userPokemons.map((userPokemon) => (
-              <Link href={`/pokemon/${userPokemon.id}`} className="mx-auto" key={userPokemon.id}>
+              <Link
+                href={`/pokemon/${userPokemon.id}`}
+                className="mx-auto"
+                key={userPokemon.id}
+              >
                 <PokemonCard
                   rarity={
                     rarityOptions[
-                      Number(userPokemon.Pokemon.rarity)
+                      Number(userPokemon.rarity)
                     ].label.toLowerCase() as
                       | "normal"
                       | "rare"
@@ -96,17 +104,17 @@ export default function UserPokemonCollectionPage() {
                       | "shine"
                   }
                   frontImage={
-                    userPokemon.shiny
-                      ? userPokemon.Pokemon.shinyImage
-                      : userPokemon.Pokemon.image
+                    false
+                      ? userPokemon.shinyImage
+                      : userPokemon.image
                   }
                   flip={flip}
                   fix={true}
                   txt={true}
                   backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
                   titleText={userPokemon.name}
-                  subText={userPokemon.Pokemon.description || ""}
-                  isShiny={userPokemon.shiny}
+                  subText={userPokemon.description || ""}
+                  isShiny={false}
                 />
               </Link>
             ))

@@ -19,11 +19,12 @@ export class UserPokemonService {
     return this.userPokemonFunction.create(data);
   }
 
-  findAll(id: string) {
-    return this.userPokemonFunction.list(id);
+  findAll(id: string, page: number) {
+    return this.userPokemonFunction.list(id, page);
   }
 
   async findOne(id: string, profile: { id: string; role: ROLE }) {
+    console.log('findOne', id, profile);
     const pokemon = await this.userPokemonFunction.findById(id);
     if (profile.role !== ROLE.ADMIN && pokemon.profileId !== profile.id) {
       throw new NotFoundException('You do not have permission to access this resource');

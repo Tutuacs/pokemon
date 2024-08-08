@@ -7,7 +7,7 @@ import NavLinks from "./NavLinks";
 export default function Navbar({ logged }: { logged: boolean; profile?: any }) {
 
   return (
-    <nav className="navbar">
+    <nav className="navbar visible">
       <div className="flex items-center">
         <Link className="p-0" href={logged ? "/home" : "/"}>
           <Image

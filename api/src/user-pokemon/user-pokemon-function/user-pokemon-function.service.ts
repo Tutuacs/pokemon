@@ -23,11 +23,16 @@ export class UserPokemonFunctionService extends PrismaService {
     });
   }
 
-  list(profileId: string) {
+  list(profileId: string, page: number) {
     return this.userPokemon.findMany({
       where: {
         profileId,
       },
+      include: {
+        Pokemon: true,
+      },
+      take: 10,
+      skip: (page - 1) * 10,
       orderBy: {
         createdAt: 'desc',
       },

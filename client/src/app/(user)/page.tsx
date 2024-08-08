@@ -1,6 +1,15 @@
 import PokemonCard from "@/components/PokeCard";
 
 export default function Home() {
+
+  // const navbar = document.querySelector(".navbar");
+  // if (navbar) {
+  //   if(!navbar.classList.contains("visible")){
+  //     console.log("navbar.classList.contains('visible')", navbar.classList.contains("visible"))
+  //     navbar.classList.add("visible")
+  //   }
+  // }
+
   return (
     <main>
       <div className="">
@@ -13,7 +22,7 @@ export default function Home() {
           rarity="legendary"
           titleText="Pokemon Title"
           subText="Pokemon Subtitle"
-          invert={true}
+          fix={true}
           frontImage="https://images.pokemontcg.io/swsh12pt5/160_hires.png"
           backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
         />

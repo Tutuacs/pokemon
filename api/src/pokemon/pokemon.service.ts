@@ -12,8 +12,8 @@ export class PokemonService {
     return this.pokemonFunction.create(data);
   }
 
-  findAll() {
-    return this.pokemonFunction.list();
+  findAll(page: number) {
+    return this.pokemonFunction.list(page);
   }
 
   filterByRarity(id: RARITY) {

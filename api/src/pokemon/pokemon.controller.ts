@@ -12,9 +12,10 @@ export class PokemonController {
     return this.pokemonService.create(createPokemonDto);
   }
 
-  @Get()
-  findAll() {
-    return this.pokemonService.findAll();
+  @Get('page/:page')
+  findAll(@Param('page') page: string) {
+    console.log('page', page);
+    return this.pokemonService.findAll(+page);
   }
 
   @Get("rarity/:rarity")
