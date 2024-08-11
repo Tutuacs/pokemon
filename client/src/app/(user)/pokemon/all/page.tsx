@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from "react";
 import PokemonCard from "@/components/PokeCard";
-import useFetch from "@/utils/useFetch";
-import { useNavbarContext } from "@/components/NavBarProviders";
 import Link from "next/link";
+import { useNavbarContext } from "@/components/NavBarProviders";
+import useFetch from "@/utils/useFetch";
 
 // Defina a interface para o tipo de dados do Pokémon do usuário
-type UserPokemon = {
+type Pokemon = {
   id: string;
   name: string;
   description: string;
@@ -18,7 +18,7 @@ type UserPokemon = {
 };
 
 type Response = {
-  pokemon: UserPokemon[];
+  pokemons: Pokemon[];
   count: number;
 };
 
@@ -33,22 +33,21 @@ const rarityOptions = [
 ];
 
 export default function PokemonCollectionPage() {
-  const [userPokemons, setUserPokemons] = useState<UserPokemon[]>([]);
-  const [flip, setFlip] = useState(true);
+  const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [page, setPage] = useState(1);
   const { fetchWithAuth } = useFetch("Pokémons carregados com sucesso!");
   const { profile } = useNavbarContext();
 
   useEffect(() => {
-    const fetchUserPokemons = async () => {
+    const fetchPokemons = async () => {
       try {
         const res = await fetchWithAuth(`/pokemon/page/${page}`);
 
         if (res?.status === 200) {
           const response: Response = res.data;
-          const pokemon: UserPokemon[] = response.pokemon;
+          const pokemon: Pokemon[] = response.pokemons;
           console.log("responseInside", response);
-          setUserPokemons(pokemon);
+          setPokemons(pokemon);
         }
         console.log("response", res);
       } catch (error) {
@@ -56,7 +55,7 @@ export default function PokemonCollectionPage() {
       }
     };
 
-    fetchUserPokemons();
+    fetchPokemons();
   }, [page]);
 
   // Calculate the total number of pages
@@ -78,22 +77,27 @@ export default function PokemonCollectionPage() {
 
   return (
     <main className="flex flex-col min-h-screen">
+      <div>
+        <Link href="/pokemon" className="bg-green-500 text-white  p-4 fixed top-40 right-10 rounded-lg" >
+            Create new Pokemon
+        </Link>
+      </div>
       <div className="mx-auto h-20 p-4 min-h-10 mt-10 text-center justify-center w-3/4 bg-slate-800 text-white text-2xl font-bold rounded-lg">
         Coleção de Pokémons
       </div>
       <section className="mx-auto flex min-h-[800px] w-3/4 mb-1 p-4">
-        <div className="flex flex-wrap">
-          {userPokemons.length > 0 ? (
-            userPokemons.map((userPokemon) => (
+        {pokemons.length > 0 ? (
+          <div className="flex flex-wrap">
+            {pokemons.map((pokemon) => (
               <Link
-                href={`/pokemon/${userPokemon.id}`}
+                href={`/pokemon/update/${pokemon.id}`}
                 className="mx-auto"
-                key={userPokemon.id}
+                key={pokemon.id}
               >
                 <PokemonCard
                   rarity={
                     rarityOptions[
-                      Number(userPokemon.rarity)
+                      Number(pokemon.rarity)
                     ].label.toLowerCase() as
                       | "normal"
                       | "rare"
@@ -104,26 +108,24 @@ export default function PokemonCollectionPage() {
                       | "shine"
                   }
                   frontImage={
-                    false
-                      ? userPokemon.shinyImage
-                      : userPokemon.image
+                    false ? pokemon.shinyImage : pokemon.image
                   }
-                  flip={flip}
+                  flip={true}
                   fix={true}
                   txt={true}
                   backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
-                  titleText={userPokemon.name}
-                  subText={userPokemon.description || ""}
+                  titleText={pokemon.name}
+                  subText={pokemon.description || ""}
                   isShiny={false}
                 />
               </Link>
-            ))
-          ) : (
-            <p className="text-center p-4 col-span-4">
-              Nenhum Pokémon encontrado.
-            </p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-5xl animate-pulse p-4 w-full my-auto">
+            Nenhum Pokemon encontrado.
+          </p>
+        )}
       </section>
       <div className="flex justify-between items-center mx-auto w-3/4">
         <button

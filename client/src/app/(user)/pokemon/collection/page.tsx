@@ -34,7 +34,6 @@ const rarityOptions = [
 
 export default function UserPokemonCollectionPage() {
   const [userPokemons, setUserPokemons] = useState<UserPokemon[]>([]);
-  const [flip, setFlip] = useState(true);
   const [page, setPage] = useState(1);
   const { fetchWithAuth } = useFetch("Pokémons carregados com sucesso!");
   const { profile } = useNavbarContext();
@@ -75,13 +74,17 @@ export default function UserPokemonCollectionPage() {
   return (
     <main className="flex flex-col min-h-screen">
       <div className="mx-auto h-20 p-4 min-h-10 mt-10 text-center justify-center w-3/4 bg-slate-800 text-white text-2xl font-bold rounded-lg">
-        Minha Coleção de Pokémons
+        Minha Coleção de Pokemons
       </div>
       <section className="mx-auto flex min-h-[800px] w-3/4 mb-1 p-4">
-        <div className="flex flex-wrap">
-          {userPokemons.length > 0 ? (
-            userPokemons.map((userPokemon) => (
-              <Link href={`/pokemon/${userPokemon.id}`} className="mx-auto" key={userPokemon.id}>
+        {userPokemons.length > 0 ? (
+          <div className="flex flex-wrap">
+            {userPokemons.map((userPokemon) => (
+              <Link
+                href={`/pokemon/${userPokemon.id}`}
+                className="mx-auto"
+                key={userPokemon.id}
+              >
                 <PokemonCard
                   rarity={
                     rarityOptions[
@@ -100,8 +103,9 @@ export default function UserPokemonCollectionPage() {
                       ? userPokemon.Pokemon.shinyImage
                       : userPokemon.Pokemon.image
                   }
-                  flip={flip}
-                  fix={true}
+                  fix={false}
+                  flip={true}
+                  flipOneTime={true}
                   txt={true}
                   backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
                   titleText={userPokemon.name}
@@ -109,13 +113,13 @@ export default function UserPokemonCollectionPage() {
                   isShiny={userPokemon.shiny}
                 />
               </Link>
-            ))
-          ) : (
-            <p className="text-center p-4 col-span-4">
-              Nenhum Pokémon encontrado.
-            </p>
-          )}
-        </div>
+            ))}
+          </div>
+        ) : (
+          <p className="text-center text-5xl animate-pulse p-4 w-full my-auto">
+            Nenhum Pokemon encontrado.
+          </p>
+        )}
       </section>
       <div className="flex justify-between items-center mx-auto w-3/4">
         <button

@@ -2,21 +2,14 @@ import PokemonCard from "@/components/PokeCard";
 
 export default function Home() {
 
-  // const navbar = document.querySelector(".navbar");
-  // if (navbar) {
-  //   if(!navbar.classList.contains("visible")){
-  //     console.log("navbar.classList.contains('visible')", navbar.classList.contains("visible"))
-  //     navbar.classList.add("visible")
-  //   }
-  // }
-
   return (
     <main>
-      <div className="">
+      <div className="grid-cols-3 gap-4">
           <PokemonCard
             rarity="mythic"
             frontImage="https://cdn.pixabay.com/photo/2020/08/29/16/08/pikachu-5527377_960_720.jpg"
             backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
+            flipOneTime={false}
           />
         <PokemonCard
           rarity="legendary"

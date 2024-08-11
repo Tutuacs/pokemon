@@ -37,7 +37,7 @@ export default function NavLinks({
             <Link className="p-2" href="/profile">
               Users
             </Link>
-            <Link className="p-2" href="/pokemon">
+            <Link className="p-2" href="/pokemon/all">
               Pokemons
             </Link>
             <ButtonLogout />
@@ -64,7 +64,7 @@ export default function NavLinks({
             <div className="p-2">PokeStars: {profile?.pokeStars}</div>
           </>
         )}
-        <Link className="p-2" href="/pokemon">
+        <Link className="p-2" href="/pokemon/all">
           Pokemons
         </Link>
         <ButtonLogout />

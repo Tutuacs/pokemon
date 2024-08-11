@@ -12,6 +12,7 @@ export interface PokemonCardProps {
   subText?: string;
   txt?: boolean;
   fix?: boolean;
+  flipOneTime?: boolean;
   flip?: boolean;
   isShiny?: boolean;
   width?: number; // Optional prop to control width
@@ -34,6 +35,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   height = 350,
   rarity,
   flip = false,
+  flipOneTime = true,
   fix = false,
   isShiny = false,
   titleText = "",
@@ -50,7 +52,9 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
     if (!isFlipping) {
       setIsFlipping(true);
       setFlipped(!flipped);
-      fix = true;
+      if(flipOneTime) {
+        fix = true;
+      }
       if(!fix){
         setTimeout(() => setIsFlipping(false), 600); // Ajustado para coincidir com a duração da animação
       }
