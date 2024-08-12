@@ -1,0 +1,23 @@
+.normal {
+    border: 2px solid rgba(255, 255, 255, 1);
+}
+
+.rare {
+    border: 2px solid rgba(0, 255, 0, 1);
+}
+
+.super-rare {
+    border: 2px solid rgba(95, 207, 245, 1);
+}
+
+.epic {
+    border: 2px solid rgba(128, 0, 128, 1);
+}
+
+.legendary {
+    border: 2px solid rgba(255, 255, 0, 1);
+}
+
+.mythic {
+    border: 2px solid rgba(255, 0, 0, 1);
+}

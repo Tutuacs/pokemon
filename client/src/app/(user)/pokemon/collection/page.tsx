@@ -77,9 +77,9 @@ export default function UserPokemonCollectionPage() {
         Minha Coleção de Pokemons
       </div>
       <section className="mx-auto flex min-h-[800px] w-3/4 mb-1 p-4">
-        {userPokemons.length > 0 ? (
-          <div className="flex flex-wrap">
-            {userPokemons.map((userPokemon) => (
+        <div className="flex flex-wrap">
+          {userPokemons.length > 0 ? (
+            userPokemons.map((userPokemon) => (
               <Link
                 href={`/pokemon/${userPokemon.id}`}
                 className="mx-auto"
@@ -103,7 +103,7 @@ export default function UserPokemonCollectionPage() {
                       ? userPokemon.Pokemon.shinyImage
                       : userPokemon.Pokemon.image
                   }
-                  fix={false}
+                  fix={true}
                   flip={true}
                   flipOneTime={true}
                   txt={true}
@@ -113,13 +113,13 @@ export default function UserPokemonCollectionPage() {
                   isShiny={userPokemon.shiny}
                 />
               </Link>
-            ))}
-          </div>
-        ) : (
-          <p className="text-center text-5xl animate-pulse p-4 w-full my-auto">
-            Nenhum Pokemon encontrado.
-          </p>
-        )}
+            ))
+          ) : (
+            <p className="text-center text-5xl animate-pulse p-4 w-full my-auto">
+              Nenhum Pokemon encontrado.
+            </p>
+          )}
+        </div>
       </section>
       <div className="flex justify-between items-center mx-auto w-3/4">
         <button

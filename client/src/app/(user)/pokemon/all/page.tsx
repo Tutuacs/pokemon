@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react";
 import PokemonCard from "@/components/PokeCard";
 import Link from "next/link";
-import { useNavbarContext } from "@/components/NavBarProviders";
 import useFetch from "@/utils/useFetch";
+import { useNavbarContext } from "@/components/NavBarProviders";
+import { ROLE } from "@/common/role.enums";
 
 // Defina a interface para o tipo de dados do Pokémon do usuário
 type Pokemon = {
@@ -35,6 +36,7 @@ const rarityOptions = [
 export default function PokemonCollectionPage() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
   const { fetchWithAuth } = useFetch("Pokémons carregados com sucesso!");
   const { profile } = useNavbarContext();
 
@@ -46,6 +48,7 @@ export default function PokemonCollectionPage() {
         if (res?.status === 200) {
           const response: Response = res.data;
           const pokemon: Pokemon[] = response.pokemons;
+          setTotalPages(Math.ceil(response.count / 10));
           console.log("responseInside", response);
           setPokemons(pokemon);
         }
@@ -58,8 +61,7 @@ export default function PokemonCollectionPage() {
     fetchPokemons();
   }, [page]);
 
-  // Calculate the total number of pages
-  const totalPages = Math.ceil(profile.pokemons / 10);
+  console.log(totalPages);
 
   // Handle the next page button click
   const handleNextPage = () => {
@@ -77,11 +79,16 @@ export default function PokemonCollectionPage() {
 
   return (
     <main className="flex flex-col min-h-screen">
-      <div>
-        <Link href="/pokemon" className="bg-green-500 text-white  p-4 fixed top-40 right-10 rounded-lg" >
+      {profile?.role === ROLE.ADMIN && (
+        <div>
+          <Link
+            href="/pokemon"
+            className="bg-green-500 text-white  p-4 fixed top-40 right-10 rounded-lg"
+          >
             Create new Pokemon
-        </Link>
-      </div>
+          </Link>
+        </div>
+      )}
       <div className="mx-auto h-20 p-4 min-h-10 mt-10 text-center justify-center w-3/4 bg-slate-800 text-white text-2xl font-bold rounded-lg">
         Coleção de Pokémons
       </div>
@@ -107,9 +114,7 @@ export default function PokemonCollectionPage() {
                       | "legendary"
                       | "shine"
                   }
-                  frontImage={
-                    false ? pokemon.shinyImage : pokemon.image
-                  }
+                  frontImage={false ? pokemon.shinyImage : pokemon.image}
                   flip={true}
                   fix={true}
                   txt={true}

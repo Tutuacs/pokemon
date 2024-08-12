@@ -125,6 +125,7 @@ export default function CreatePokemonPage() {
       formData.image.trim() !== "" &&
       formData.shinyImage.trim() !== "" &&
       formData.rarity !== "" &&
+      (haveEvolution? formData.evolutionId.trim() !== "": true) &&
       formData.evolveFood > 0 &&
       formData.evolvePokePoints > 0
     );

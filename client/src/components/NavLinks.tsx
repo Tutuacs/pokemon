@@ -30,7 +30,7 @@ export default function NavLinks({
             <Link className="p-2" href="/roll">
               <RollTimer />
             </Link>
-            <div className="p-2">Gold: {profile?.gold}</div>
+            <div className="p-2">Food: {profile?.food}</div>
             <Link href="/pokemon/collection" className="p-2">Collection: {profile?.pokemons}</Link>
             <div className="p-2">PokePoints: {profile?.pokePoints}</div>
             <div className="p-2">PokeStars: {profile?.pokeStars}</div>
@@ -58,7 +58,7 @@ export default function NavLinks({
             <Link className="p-2" href="/roll">
               <RollTimer />
             </Link>
-            <div className="p-2">Gold: {profile?.gold}</div>
+            <div className="p-2">Food: {profile?.food}</div>
             <Link href="/pokemon/collection" className="p-2">Collection: {profile?.pokemons}</Link>
             <div className="p-2">PokePoints: {profile?.pokePoints}</div>
             <div className="p-2">PokeStars: {profile?.pokeStars}</div>

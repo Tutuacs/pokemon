@@ -7,6 +7,7 @@ import { useNavbarContext } from "@/components/NavBarProviders";
 import { ROLE } from "@/common/role.enums";
 import useFetch from "@/utils/useFetch";
 import { useRouter } from "next/navigation";
+import FreePokemonButton from "@/components/FreePokemonButton";
 
 type Props = {
   params: {
@@ -48,10 +49,6 @@ export default function PokemonIdPage(props: Props) {
   const [pokemonData, setPokemonData] = useState<UserPokemon | null>(null);
   const [isShiny, setIsShiny] = useState(false);
 
-  useEffect(() => {
-    fetchPokemon();
-  }, []);
-
   const fetchPokemon = async () => {
     try {
       const response = await fetchWithAuth(`/user-pokemon/${props.params.id}`);
@@ -75,13 +72,17 @@ export default function PokemonIdPage(props: Props) {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  useEffect(() => {
+    fetchPokemon();
+  }, [fetchPokemon]);
+
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleShinyChange = () => {
-    setIsShiny(!isShiny);
   };
 
   const handleFeedPokemon = () => {
@@ -107,7 +108,10 @@ export default function PokemonIdPage(props: Props) {
     : 0;
 
   const pokePointsProgress = pokemonData
-    ? Math.min((profile.pokePoints / pokemonData.Pokemon.evolvePokePoints) * 100, 100)
+    ? Math.min(
+        (profile.pokePoints / pokemonData.Pokemon.evolvePokePoints) * 100,
+        100
+      )
     : 0;
 
   return (
@@ -177,7 +181,10 @@ export default function PokemonIdPage(props: Props) {
               <div className="block">
                 <label>Evolve Food:</label>
                 <div className="progress-bar-container">
-                  <div className="progress-bar bg-red-500" style={{ width: `${foodProgress}%` }} />
+                  <div
+                    className="progress-bar bg-red-500"
+                    style={{ width: `${foodProgress}%` }}
+                  />
                 </div>
                 <button
                   type="button"
@@ -185,7 +192,7 @@ export default function PokemonIdPage(props: Props) {
                   className="bg-blue-500 text-white px-4 py-2 mt-2 rounded"
                   disabled={foodProgress >= 100}
                 >
-                  Feed Pokémon
+                  Feed Pokemon
                 </button>
                 <span>
                   {pokemonData?.food} / {pokemonData?.Pokemon.evolveFood}
@@ -194,7 +201,10 @@ export default function PokemonIdPage(props: Props) {
               <div className="block">
                 <label>Evolve PokePoints:</label>
                 <div className="progress-bar-container">
-                  <div className="progress-bar bg-yellow-500 glitter-effect" style={{ width: `${pokePointsProgress}%` }} />
+                  <div
+                    className="progress-bar bg-yellow-500 glitter-effect"
+                    style={{ width: `${pokePointsProgress}%` }}
+                  />
                 </div>
                 <span>
                   {profile.pokePoints} / {pokemonData?.Pokemon.evolvePokePoints}
@@ -202,6 +212,11 @@ export default function PokemonIdPage(props: Props) {
               </div>
             </>
           )}
+          {
+            pokemonData && formData && (
+              <FreePokemonButton id={props.params.id} isShiny={pokemonData!.shiny} name={pokemonData!.name} rarity={Number(formData.rarity)} />
+            )
+          }
         </form>
       </div>
       <div className="preview-container w-1/3 p-6 flex items-center justify-center">
@@ -217,6 +232,8 @@ export default function PokemonIdPage(props: Props) {
               | "shine"
           }
           frontImage={isShiny ? formData.shinyImage : formData.image}
+          flip={true}
+          flipOneTime={false}
           backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
           titleText={formData.name}
           subText={formData.description}

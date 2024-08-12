@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import Link from "next/link";
 import PokemonCard from '@/components/PokeCard';
+import FreePokemonButton from '@/components/FreePokemonButton';
 
 // Mock user data (replace with actual data fetching)
 const mockUserData = {
@@ -150,7 +151,7 @@ export default function UserProfilePage(props: Props) {
               ))}
             </div>
           </div>
-          <div className="col-span-1 mt-[-90px]">
+          <div className="col-span-1">
           {selectedPokemon && (
           <div className="mt-6 flex justify-center">
             <PokemonCard
@@ -175,6 +176,8 @@ export default function UserProfilePage(props: Props) {
               frontImage={selectedPokemon.isShiny ? selectedPokemon.shinyImage : selectedPokemon.image}
               backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
               titleText={selectedPokemon.name}
+              flip={true}
+              flipOneTime={false}
               subText={selectedPokemon.description}
               isShiny={selectedPokemon.isShiny}
             />

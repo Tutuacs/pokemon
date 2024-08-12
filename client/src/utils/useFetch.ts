@@ -39,7 +39,7 @@ const useFetch = (title?: string) => {
     
     const res = await fetch(`${Backend_URL}${url}`, { ...options, headers });
 
-    console.log("ResFetch",res);
+    console.log("res", res);
 
     return handleResponse(res);
   };
@@ -48,9 +48,11 @@ const useFetch = (title?: string) => {
     const data = await res.json();
     // const config = getToastConfig(res.status.toString());
 
-    if (res.status === 200 || res.status === 201) {
-      data.message = title;
-    }
+    // if (res.status === 200 || res.status === 201) {
+    //   data.message = title;
+    // }
+
+    console.log("data", data);
 
     // toast({ title: config!.title, description: data!.message, variant: config!.variant });
 
