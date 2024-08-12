@@ -44,6 +44,9 @@ export class PokemonFunctionService extends PrismaService {
       where: {
         id,
       },
+      include: {
+        Evolution: true,
+      },
     });
   }
 

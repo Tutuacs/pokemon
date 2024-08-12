@@ -99,6 +99,7 @@ export class AuthFunctionsService extends PrismaService {
         mithycChance: true,
         legendaryChance: true,
         shinyChance: true,
+        createdAt: true,
         food: true,
         gold: true,
         pokePoints: true,

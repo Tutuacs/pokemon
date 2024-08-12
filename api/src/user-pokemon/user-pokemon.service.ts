@@ -41,28 +41,10 @@ export class UserPokemonService {
     const pokemon = await this.findOne(id, profile);
     pokemon.Pokemon.rarity
 
-    let pokePoints = 0;
-
-    if (pokemon.Pokemon.rarity === RARITY.LEGENDARY ) {
-      pokePoints += 100;
-    } else if (pokemon.Pokemon.rarity === RARITY.MITHYC ) {
-      pokePoints += 80;
-    } else if (pokemon.Pokemon.rarity === RARITY.EPIC ) {
-      pokePoints += 60;
-    } else if (pokemon.Pokemon.rarity === RARITY.SUPER_RARE ) {
-      pokePoints += 40;
-    } else if (pokemon.Pokemon.rarity === RARITY.RARE ) {
-      pokePoints += 20;
-    } else {
-      pokePoints += 10;
-    }
-
-    if (pokemon.shiny) {
-      pokePoints *= 5;
-    }
-
-    await this.userPokemonFunction.updatePokePoints(profile.id, pokePoints);
-
+    const pokePoints = 100 * (pokemon.Pokemon.rarity + 1) * (pokemon.shiny ? 2 : 1);
+    const pokeStars = pokemon.Pokemon.rarity + 1 * (pokemon.shiny ? 2 : 1);
+    const food = 200 * (pokemon.Pokemon.rarity + 1) * (pokemon.shiny ? 2 : 1);
+    await this.userPokemonFunction.updatePokePoints(profile.id, pokePoints, pokeStars, food);
     return this.userPokemonFunction.remove(id);
   }
   
