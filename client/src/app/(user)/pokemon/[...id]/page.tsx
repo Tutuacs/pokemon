@@ -74,7 +74,7 @@ export default function PokemonIdPage(props: Props) {
 
   useEffect(() => {
     fetchPokemon();
-  }, [fetchPokemon]);
+  }, []);
 
   const handleInputChange = (
     e: React.ChangeEvent<

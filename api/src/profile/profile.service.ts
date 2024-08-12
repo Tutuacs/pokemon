@@ -28,38 +28,10 @@ export class ProfileService {
       take: 10,
     });
 
-    if (profile.role === ROLE.USER) {
-      const rolls = await this.prisma.userPokemon.findMany({
-        where: {
-          profileId: profile.id,
-        },
-        orderBy: {
-          createdAt: 'desc',
-        },
-        select: {
-          id: true,
-          shiny: true,
-          createdAt: true,
-          Pokemon: {
-            select: {
-              id: true,
-              name: true,
-              rarity: true,
-              createdAt: true,
-            },
-          },
-        },
-        take: 10,
-      });
+    if (profile.role === ROLE.DEFAULT) {
       return {
-        rolls,
-        newPokemons,
-      };
-    }
-
-    if (profile.role !== ROLE.ADMIN) {
-      return {
-        newUsers: [{ ...profile }],
+        newUsers: [],
+        rolls: [],
         newPokemons,
       };
     }
@@ -86,6 +58,15 @@ export class ProfileService {
       },
       take: 10,
     });
+
+    if (profile.role !== ROLE.ADMIN) {
+      return {
+        newUsers: [{ ...profile, }],
+        rolls,
+        newPokemons,
+      };
+    }
+
     const newUsers = await this.prisma.profile.findMany({
       take: 10,
       orderBy: {
@@ -141,7 +122,7 @@ export class ProfileService {
       pokeStars: number;
     },
   ) {
-    if (profile.role === ROLE.USER) {
+    if (profile.role === ROLE.USER ) {
       return await this.prisma.profile.findUnique({
         where: {
           id: profile.id,
@@ -152,6 +133,15 @@ export class ProfileService {
           name: true,
           createdAt: true,
           pokePoints: true,
+          food: true,
+          gold: true,
+          normalChance: true,
+          rareChance: true,
+          superRareChance: true,
+          epicChance: true,
+          mithycChance: true,
+          legendaryChance: true,
+          shinyChance: true,
           pokeStars: true,
           _count: {
             select: {
@@ -172,6 +162,15 @@ export class ProfileService {
         name: true,
         createdAt: true,
         pokePoints: true,
+        food: true,
+        gold: true,
+        normalChance: true,
+        rareChance: true,
+        superRareChance: true,
+        epicChance: true,
+        mithycChance: true,
+        legendaryChance: true,
+        shinyChance: true,
         pokeStars: true,
         _count: {
           select: {

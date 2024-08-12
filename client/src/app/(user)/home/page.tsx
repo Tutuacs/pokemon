@@ -48,7 +48,7 @@ export default function AdminDashboard() {
       if (response!.status === 200 || response!.status === 201) {
         const data: Response = await response!.data;
         setNewPokemons(data.newPokemons!);
-        if (profile.role === ROLE.ADMIN) {
+        if (profile.role !== ROLE.DEFAULT) {
           setNewUsers(data.newUsers!);
         }
         if (profile.role !== ROLE.DEFAULT) {
@@ -81,9 +81,15 @@ export default function AdminDashboard() {
                 className="bg-slate-700 text-white p-4 text-center shadow rounded-t-lg"
                 style={{ background: "rgba(40, 40, 40, 0.95)" }}
               >
-                <h3 className="text-xl font-bold mb-2">Novos Usuários</h3>
+                <h3 className="text-xl font-bold mb-2">
+                  {profile.role === ROLE.DEFAULT
+                    ? "Cadastre-se para ver seu perfil"
+                    : profile.role === ROLE.USER
+                    ? "Veja seu perfil"
+                    : "Novos usuários"}
+                </h3>
               </div>
-              <div className="bg-white p-4 shadow rounded-b-lg max-h-[800px] overflow-y-auto">
+              <div className="bg-white p-4 shadow rounded-b-lg max-h-[600px] overflow-y-auto">
                 {newUsers.map((user) => (
                   <div
                     key={user.id}
@@ -91,7 +97,10 @@ export default function AdminDashboard() {
                   >
                     <div>
                       <h2 className="text-xl font-bold">{user.name}</h2>
-                      <p>Data: {formatDate(user.createdAt)}</p>
+                      {profile.role !== ROLE.DEFAULT &&
+                        profile.role !== ROLE.USER && (
+                          <p>Data: {formatDate(user.createdAt)}</p>
+                        )}
                     </div>
                     <div className="flex items-center">
                       <Link
@@ -114,7 +123,7 @@ export default function AdminDashboard() {
             >
               <h3 className="text-xl font-bold mb-2">Novos Pokemons</h3>
             </div>
-            <div className="bg-white p-4 shadow rounded-b-lg max-h-[800px] overflow-y-auto">
+            <div className="bg-white p-4 shadow rounded-b-lg max-h-[600px] overflow-y-auto">
               {newPokemons.map((pokemon) => (
                 <div
                   key={pokemon.id}
@@ -129,7 +138,7 @@ export default function AdminDashboard() {
                   </div>
                   <div className="flex items-center">
                     <Link
-                      href={`/pokemon/${pokemon.id}`}
+                      href={`/pokemon/details/${pokemon.id}`}
                       className="p-2 text-md bg-blue-600 rounded-lg hover:bg-blue-500 text-white"
                     >
                       Ver Detalhes
@@ -148,7 +157,7 @@ export default function AdminDashboard() {
               >
                 <h3 className="text-xl font-bold mb-2">Últimos Rolls</h3>
               </div>
-              <div className="bg-white p-4 shadow rounded-b-lg max-h-[800px] overflow-y-auto">
+              <div className="bg-white p-4 shadow rounded-b-lg max-h-[600px] overflow-y-auto">
                 {newRolls.map((roll) => (
                   <div
                     key={roll.id}
@@ -164,9 +173,12 @@ export default function AdminDashboard() {
                       )}
                     </div>
                     <div className="flex items-center">
-                      <div className="p-2 text-md bg-blue-600 rounded-lg hover:bg-blue-500 text-white">
+                      <Link
+                        href={`pokemon/${roll.id}`}
+                        className="p-2 text-md bg-blue-600 rounded-lg hover:bg-blue-500 text-white"
+                      >
                         Ver Detalhes
-                      </div>
+                      </Link>
                     </div>
                   </div>
                 ))}

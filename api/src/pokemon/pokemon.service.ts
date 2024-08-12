@@ -20,8 +20,10 @@ export class PokemonService {
     return this.pokemonFunction.findByRarity(id);
   }
 
-  findOne(id: number) {
-    return this.pokemonFunction.findById(id);
+  async findOne(id: number) {
+    const pokemon = await this.pokemonFunction.findById(id);
+    console.log("Uniqpokemon: ", pokemon)
+    return pokemon;
   }
 
   update(id: number, data: UpdatePokemonDto) {
