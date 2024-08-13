@@ -21,9 +21,7 @@ export class PokemonService {
   }
 
   async findOne(id: number) {
-    const pokemon = await this.pokemonFunction.findById(id);
-    console.log("Uniqpokemon: ", pokemon)
-    return pokemon;
+    return await this.pokemonFunction.findById(id);
   }
 
   update(id: number, data: UpdatePokemonDto) {

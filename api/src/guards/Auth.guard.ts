@@ -2,6 +2,7 @@ import { CanActivate, Injectable, ExecutionContext } from '@nestjs/common';
 import { Request } from 'express';
 import { AuthFunctionsService } from 'src/auth/auth-functions/auth-functions.service';
 import { AuthService } from 'src/auth/auth.service';
+import { ROLLS } from 'src/decorators/rolls.enum';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -19,19 +20,19 @@ export class AuthGuard implements CanActivate {
       const profile = await this.authFunctions.profileInfo(data.id);
 
       
-      if (profile.normalRolls <= 5) {
+      if (profile.normalRolls <= ROLLS.TOTAL_NORMAL) {
         // const time is the time btween the last roll and now
         const time = new Date().getTime() - profile.lastChargeNormalRoll.getTime();
         const hour = time.valueOf() / 1000 / 60 / 60;
         
         const rollsCharged = Math.floor(hour / 4);
         
-        if (rollsCharged < 5 && rollsCharged > 0 && profile.normalRolls + rollsCharged <= 5) {
+        if (rollsCharged < ROLLS.TOTAL_NORMAL && rollsCharged > 0 && profile.normalRolls + rollsCharged <= ROLLS.TOTAL_NORMAL) {
           await this.authFunctions.updateRolls(profile.id, profile.normalRolls + rollsCharged);
           profile.normalRolls += rollsCharged;
-        } else if (rollsCharged >= 5 && profile.normalRolls < 5) {
-          profile.normalRolls = 5;
-          await this.authFunctions.updateRolls(profile.id, 5);
+        } else if (rollsCharged >= ROLLS.TOTAL_NORMAL && profile.normalRolls < ROLLS.TOTAL_NORMAL) {
+          profile.normalRolls = ROLLS.TOTAL_NORMAL;
+          await this.authFunctions.updateRolls(profile.id, ROLLS.TOTAL_NORMAL);
         }
       }
       

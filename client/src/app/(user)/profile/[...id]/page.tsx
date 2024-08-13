@@ -35,6 +35,9 @@ type UserData = {
   epicChance: number;
   mithycChance: number;
   legendaryChance: number;
+  toEpic: number;
+  toMithyc: number;
+  toLegendary: number;
   shinyChance: number;
   Pokemon: UserPokemon[];
 };
@@ -49,13 +52,17 @@ export default function UserProfilePage(props: Props) {
   const { id } = props.params;
   const [user, setUser] = useState<UserData | null>(null);
   const [userPokemons, setUserPokemons] = useState<UserPokemon[]>([]);
-  const [selectedPokemonId, setSelectedPokemonId] = useState<string | null>(null);
+  const [selectedPokemonId, setSelectedPokemonId] = useState<string | null>(
+    null
+  );
   const [page, setPage] = useState(1);
   const itemsPerPage = 10;
+  const [showLegendary, setShowLegendary] = useState(false);
+  const [showMythic, setShowMythic] = useState(false);
+  const [showEpic, setShowEpic] = useState(false);
 
   const { fetchWithAuth } = useFetch("Dados carregados com sucesso!");
   const { profile } = useNavbarContext();
-
 
   const fetchUserPokemons = async () => {
     try {
@@ -78,7 +85,37 @@ export default function UserProfilePage(props: Props) {
         if (response!.status !== 200) {
           throw new Error("Falha ao buscar dados do usuário");
         }
-        setUser(response!.data);
+        const updatedUser = response!.data;
+        Math.floor(updatedUser.toEpic * 100 + 1) > 100
+          ? setShowEpic(true)
+          : setShowEpic(false);
+        Math.floor(updatedUser.toMithyc * 100 + 1) > 100
+          ? setShowMythic(true)
+          : setShowMythic(false);
+        Math.floor(updatedUser.toLegendary * 100 + 1) > 100
+          ? setShowLegendary(true)
+          : setShowLegendary(false);
+
+        if (updatedUser.toEpic == updatedUser.toLegendary) {
+          updatedUser.toEpic -= 1;
+        }
+
+        if (updatedUser.toMithyc == updatedUser.toLegendary) {
+          updatedUser.toMithyc -= 1;
+        }
+
+        if (updatedUser.toEpic == updatedUser.toMithyc) {
+          updatedUser.toEpic -= 1;
+        }
+
+        if (updatedUser.toEpic == 11) {
+          updatedUser.toEpic -= 1;
+        }
+        else if (updatedUser.toEpic == 12) {
+          updatedUser.toEpic -= 2;
+        }
+
+        setUser(updatedUser);
       } catch (error) {
         console.error("Erro ao buscar dados do usuário:", error);
       }
@@ -158,13 +195,43 @@ export default function UserProfilePage(props: Props) {
               </div>
               <div className="mt-4">
                 <label className="block font-bold mb-2">Chances:</label>
-                <p>Normal: {user.normalChance}%</p>
-                <p>Rare: {user.rareChance}%</p>
-                <p>Super Rare: {user.superRareChance}%</p>
-                <p>Epic: {user.epicChance}%</p>
-                <p>Mythic: {user.mithycChance}%</p>
-                <p>Legendary: {user.legendaryChance}%</p>
-                <p>Shiny: {user.shinyChance}%</p>
+                <p>Normal: {Math.floor(user.normalChance * 100)}%</p>
+                <p>Rare: {Math.floor(user.rareChance * 100)}%</p>
+                <p>Super Rare: {Math.floor(user.superRareChance * 100)}%</p>
+                <p>
+                  Epic: {Math.floor(user.epicChance * 100)}%
+                  <br />
+                  {showEpic && (
+                    <span className="font-bold text-purple-400">
+                      {user.toEpic == 10
+                        ? "Sua próxima tentativa é garantida!"
+                        : `${10 - user.toEpic} tentativas até o garantido`}
+                    </span>
+                  )}
+                </p>
+                <p>
+                  Mythic: {Math.floor(user.mithycChance * 100)}%
+                  <br />
+                  {showMythic && (
+                    <span className="font-bold text-red-400">
+                      {user.toMithyc == 10
+                        ? "Sua próxima tentativa é garantida!"
+                        : `${10 - user.toMithyc} tentativas até o garantido`}
+                    </span>
+                  )}
+                </p>
+                <p>
+                  Legendary: {Math.floor(user.legendaryChance * 100)}%
+                  <br />
+                  {showLegendary && (
+                    <span className="font-bold text-orange-400">
+                      {user.toLegendary == 10
+                        ? "Sua próxima tentativa é garantida!"
+                        : `${10 - user.toLegendary} tentativas até o garantido`}
+                    </span>
+                  )}
+                </p>
+                <p>Shiny: {Math.floor(user.shinyChance * 100)}%</p>
               </div>
             </div>
           </div>
@@ -201,7 +268,9 @@ export default function UserProfilePage(props: Props) {
                   Página {page} de {totalPages}
                 </span>
                 <button
-                  onClick={() => setPage((prev) => Math.min(prev + 1, totalPages))}
+                  onClick={() =>
+                    setPage((prev) => Math.min(prev + 1, totalPages))
+                  }
                   disabled={page === totalPages}
                   className="bg-slate-800 text-white px-4 py-2 rounded disabled:opacity-50"
                 >

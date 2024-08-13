@@ -20,11 +20,6 @@ export class PokemonFunctionService extends PrismaService {
 
     const count = await this.pokemon.count();
 
-    console.log({
-      pokemons,
-      count,
-    })
-
     return {
       pokemons,
       count,

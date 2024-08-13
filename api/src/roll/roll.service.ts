@@ -4,6 +4,7 @@ import { CHANCES } from 'src/decorators/chances.enum';
 import { Chances } from 'src/decorators';
 import { UserPokemonService } from 'src/user-pokemon/user-pokemon.service';
 import { RollFunctionService } from './roll-function/roll-function.service';
+import { TO_RARITY } from 'src/decorators/toRarity.enum';
 
 @Injectable()
 export class RollService {
@@ -11,16 +12,6 @@ export class RollService {
     private readonly userPokemon: UserPokemonService,
     private readonly rollFunction: RollFunctionService,
   ) {}
-
-  // chances = {
-  //   normalChance: 0.6,
-  //   rareChance: 0.4,
-  //   superRareChance: 0.3,
-  //   epicChance: 0.2,
-  //   mithycChance: 0.1,
-  //   legendaryChance: 0.05,
-  //   shinyChance: 0.01,
-  // };
 
   rollChance(
     chances: Chances,
@@ -153,13 +144,67 @@ export class RollService {
     };
   }
 
+  // Nova função para determinar a raridade desejada
+  determineRarity(toRarity: any): RARITY | null {
+    if (toRarity.toLegendary >= TO_RARITY.DEFAULT) {
+      return RARITY.LEGENDARY;
+    }
+    if (toRarity.toMithyc >= TO_RARITY.DEFAULT) {
+      return RARITY.MITHYC;
+    }
+    if (toRarity.toEpic >= TO_RARITY.DEFAULT) {
+      return RARITY.EPIC;
+    }
+    return null;
+  }
+
   async rollPokemon(profileId: string, chances: Chances, normalRolls: number) {
     // if(normalRolls <= 0){
     //   throw new NotFoundException('No rolls left');
     // }
-    const roll = this.rollChance(chances);
+    const toRarity = await this.rollFunction.getProfileToRarity(profileId);
+
+    // Verifica se deve forçar uma raridade específica
+    const forcedRarity = this.determineRarity(toRarity);
+    let roll: { shine: boolean; rarity: RARITY };
+
+    roll = this.rollChance(chances);
+    if (forcedRarity) {
+      console.log(`Forçando raridade: ${forcedRarity}`);
+      roll = this.rollShiny(chances, forcedRarity);
+      // Reseta o contador para a raridade forçada
+      if (forcedRarity === RARITY.LEGENDARY) {
+        toRarity.toLegendary = 0;
+      } else if (forcedRarity === RARITY.MITHYC) {
+        toRarity.toMithyc = 0;
+      } else if (forcedRarity === RARITY.EPIC) {
+        toRarity.toEpic = 0;
+      }
+    }
+    
     const newChances: Chances = this.increaseChances(chances, roll);
-    await this.rollFunction.updateChances(profileId, newChances);
+
+    if(roll.rarity !== RARITY.LEGENDARY && newChances.legendaryChance == 1){
+      toRarity.toLegendary++;
+    }else if(roll.rarity === RARITY.LEGENDARY && toRarity.toLegendary > 0){
+      toRarity.toLegendary = 0;
+    }
+
+    if (roll.rarity !== RARITY.MITHYC && newChances.mithycChance == 1) {
+      toRarity.toMithyc++;
+    }else if (roll.rarity === RARITY.MITHYC && toRarity.toMithyc > 0){
+      toRarity.toMithyc = 0;
+    }
+
+    if (roll.rarity !== RARITY.EPIC && newChances.epicChance == 1) {
+      toRarity.toEpic++;
+    }else if (roll.rarity === RARITY.EPIC && toRarity.toEpic > 0){
+      toRarity.toEpic = 0;
+    }
+
+    console.log(newChances);
+
+    await this.rollFunction.updateChances(profileId, newChances, toRarity);
     const pokemon = await this.rollFunction.getPokemon(roll.rarity);
     return this.userPokemon.create({
       name: pokemon.name,
@@ -169,3 +214,4 @@ export class RollService {
     });
   }
 }
+

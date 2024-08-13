@@ -37,6 +37,7 @@ export default function FreePokemonButton(pokemon: {
             pokePoints: profile.pokePoints + pokePoints,
             pokeStars: profile.pokeStars + ((pokemon.rarity + 1) * (pokemon.isShiny ? 2 : 1)),
             food: profile.food + food,
+            pokemons: profile.pokemons - 1,
         });
     }
   }

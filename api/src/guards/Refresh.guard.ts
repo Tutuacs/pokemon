@@ -7,6 +7,7 @@ import {
 import { Request } from 'express';
 import { AuthFunctionsService } from 'src/auth/auth-functions/auth-functions.service';
 import { AuthService } from 'src/auth/auth.service';
+import { ROLLS } from 'src/decorators/rolls.enum';
 
 @Injectable()
 export class RefreshJwtGuard implements CanActivate {
@@ -27,7 +28,7 @@ export class RefreshJwtGuard implements CanActivate {
       // Certifique-se de que lastChargeNormalRoll seja uma instância de Date
       const lastChargeNormalRollDate = new Date(profile.lastChargeNormalRoll);
 
-      if (profile.normalRolls <= 5) {
+      if (profile.normalRolls <= ROLLS.TOTAL_NORMAL) {
         // Calcular o tempo entre a última carga e agora
         const time = new Date().getTime() - lastChargeNormalRollDate.getTime();
         const hour = time / (1000 * 60 * 60);
@@ -36,7 +37,7 @@ export class RefreshJwtGuard implements CanActivate {
 
 
         if (rollsCharged > 0) {
-          const newRolls = Math.min(5, profile.normalRolls + rollsCharged);
+          const newRolls = Math.min(ROLLS.TOTAL_NORMAL, profile.normalRolls + rollsCharged);
 
           if (newRolls > profile.normalRolls) {
             await this.authFunctions.updateRolls(profile.id, newRolls);

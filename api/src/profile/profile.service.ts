@@ -141,6 +141,9 @@ export class ProfileService {
           epicChance: true,
           mithycChance: true,
           legendaryChance: true,
+          toEpic: true,
+          toMithyc: true,
+          toLegendary: true,
           shinyChance: true,
           pokeStars: true,
           _count: {

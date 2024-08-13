@@ -24,7 +24,6 @@ export class UserPokemonService {
   }
 
   async findOne(id: string, profile: { id: string; role: ROLE }) {
-    console.log('findOne', id, profile);
     const pokemon = await this.userPokemonFunction.findById(id);
     if (profile.role !== ROLE.ADMIN && pokemon.profileId !== profile.id) {
       throw new NotFoundException('You do not have permission to access this resource');
@@ -34,6 +33,7 @@ export class UserPokemonService {
 
   async update(id: string, data: UpdateUserPokemonDto, profile: { id: string; role: ROLE }) {
     await this.findOne(id, profile);
+    console.log(data)
     return this.userPokemonFunction.update(id, data);
   }
   

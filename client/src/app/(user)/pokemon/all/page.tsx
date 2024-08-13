@@ -97,7 +97,7 @@ export default function PokemonCollectionPage() {
           <div className="flex flex-wrap">
             {pokemons.map((pokemon) => (
               <Link
-                href={`/pokemon/update/${pokemon.id}`}
+                href={ profile.role !== ROLE.ADMIN ? `/pokemon/details/${pokemon.id}`: `/pokemon/update/${pokemon.id}`}
                 className="mx-auto"
                 key={pokemon.id}
               >

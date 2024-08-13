@@ -14,7 +14,6 @@ export class PokemonController {
 
   @Get('page/:page')
   findAll(@Param('page') page: string) {
-    console.log('page', page);
     return this.pokemonService.findAll(+page);
   }
 
@@ -30,7 +29,6 @@ export class PokemonController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updatePokemonDto: UpdatePokemonDto) {
-    console.log(updatePokemonDto);
     return this.pokemonService.update(+id, updatePokemonDto);
   }
 
