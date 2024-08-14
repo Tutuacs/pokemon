@@ -1,0 +1,71 @@
+import { PrismaService } from 'src/prisma/prisma.service';
+import { LoginDto, RegisterDto } from '../Validation';
+export declare class AuthFunctionsService extends PrismaService {
+    findLogin(login: LoginDto): Promise<{
+        id: string;
+        email: string;
+        role: number;
+        name: string;
+        normalRolls: number;
+        lastNormalRoll: Date;
+        lastChargeNormalRoll: Date;
+        food: number;
+        gold: number;
+        pokePoints: number;
+        pokeStars: number;
+        pokemons: number;
+    }>;
+    register(register: RegisterDto): Promise<{
+        name: string;
+        id: string;
+        email: string;
+        role: number;
+    }>;
+    profileInfo(id: string): Promise<{
+        id: string;
+        email: string;
+        role: number;
+        name: string;
+        normalRolls: number;
+        lastChargeNormalRoll: Date;
+        normalChance: number;
+        superRareChance: number;
+        rareChance: number;
+        epicChance: number;
+        mithycChance: number;
+        legendaryChance: number;
+        shinyChance: number;
+        food: number;
+        gold: number;
+        pokePoints: number;
+        pokeStars: number;
+        pokemons: number;
+    }>;
+    updateRolls(id: string, normalRolls: number): import("@prisma/client").Prisma.Prisma__ProfileClient<{
+        id: string;
+        name: string | null;
+        email: string | null;
+        password: string | null;
+        lastNormalRoll: Date | null;
+        lastChargeNormalRoll: Date | null;
+        role: number;
+        pokePoints: number;
+        pokeStars: number;
+        food: number;
+        gold: number;
+        normalRolls: number;
+        specialRolls: number;
+        toEpic: number;
+        toMithyc: number;
+        toLegendary: number;
+        normalChance: number;
+        rareChance: number;
+        superRareChance: number;
+        epicChance: number;
+        mithycChance: number;
+        legendaryChance: number;
+        shinyChance: number;
+        createdAt: Date;
+        updatedAt: Date;
+    }, never, import("@prisma/client/runtime/library").DefaultArgs>;
+}

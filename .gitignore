@@ -89,7 +89,6 @@ out
 
 # Nuxt.js build / generate output
 .nuxt
-dist
 
 # Gatsby files
 .cache/
@@ -129,7 +128,6 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-/api/dist
 /api/node_modules
 /api/prisma/migrations
 
