@@ -150,9 +150,9 @@ export class RollService {
   }
 
   async rollPokemon(profileId: string, chances: Chances, normalRolls: number) {
-    // if(normalRolls <= 0){
-    //   throw new NotFoundException('No rolls left');
-    // }
+    if(normalRolls <= 0){
+      throw new NotFoundException('No rolls left');
+    }
     const toRarity = await this.rollFunction.getProfileToRarity(profileId);
 
     // Verifica se deve forçar uma raridade específica

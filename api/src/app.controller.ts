@@ -5,7 +5,7 @@ export class AppController {
 
   @Get()
   home() {
-    console.log("Back-home")
+    return "BackAPI-home"
   }
 
 }

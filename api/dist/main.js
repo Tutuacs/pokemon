@@ -15,7 +15,7 @@ async function bootstrap() {
         transform: true,
         transformOptions: { enableImplicitConversion: true },
     }));
-    await app.listen(3000);
+    await app.listen(3333);
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

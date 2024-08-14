@@ -4,6 +4,7 @@ exports.ProfileAuth = void 0;
 const common_1 = require("@nestjs/common");
 exports.ProfileAuth = (0, common_1.createParamDecorator)((filterData, context) => {
     const request = context.switchToHttp().getRequest();
+    console.log(request.profile);
     if (request.profile) {
         if (filterData) {
             return request.profile[filterData];

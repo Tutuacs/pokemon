@@ -4,12 +4,8 @@ import { ROLE } from 'src/decorators';
 export declare class ProfileController {
     private readonly profileService;
     constructor(profileService: ProfileService);
-    homeBuilder(profile: {
-        role: number;
+    homeBuilder(param: {
         id: string;
-        createdAt: Date;
-        name: string;
-        email: string;
     }): Promise<{
         rolls: {
             shiny: boolean;

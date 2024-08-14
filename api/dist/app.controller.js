@@ -13,7 +13,7 @@ exports.AppController = void 0;
 const common_1 = require("@nestjs/common");
 let AppController = class AppController {
     home() {
-        console.log("Back-home");
+        return "BackAPI-home";
     }
 };
 exports.AppController = AppController;

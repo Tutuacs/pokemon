@@ -43,7 +43,6 @@ let RefreshJwtGuard = class RefreshJwtGuard {
             request.profile = profile;
         }
         catch (error) {
-            console.error("Error in RefreshJwtGuard:", error);
             throw new common_1.UnauthorizedException('Login expired. Please log in again.');
         }
         return true;

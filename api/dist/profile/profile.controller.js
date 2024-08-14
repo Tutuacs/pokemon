@@ -22,8 +22,8 @@ let ProfileController = class ProfileController {
     constructor(profileService) {
         this.profileService = profileService;
     }
-    async homeBuilder(profile) {
-        return await this.profileService.homeBuilder(profile);
+    async homeBuilder(param) {
+        return await this.profileService.homeBuilder(param);
     }
     findAll(page) {
         return this.profileService.findAll(+page);
@@ -37,13 +37,14 @@ let ProfileController = class ProfileController {
 };
 exports.ProfileController = ProfileController;
 __decorate([
-    (0, common_1.Get)('home/builder'),
-    __param(0, (0, decorators_1.ProfileAuth)()),
+    (0, common_1.Get)('home/builder/:id'),
+    __param(0, (0, common_1.Param)()),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [Object]),
     __metadata("design:returntype", Promise)
 ], ProfileController.prototype, "homeBuilder", null);
 __decorate([
+    (0, common_1.UseGuards)(guards_1.AuthGuard, guards_1.RoleGuard),
     (0, decorators_1.Access)(decorators_1.ROLE.ADMIN),
     (0, common_1.Get)('page/:page'),
     __param(0, (0, common_1.Param)('page')),
@@ -52,6 +53,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProfileController.prototype, "findAll", null);
 __decorate([
+    (0, common_1.UseGuards)(guards_1.AuthGuard, guards_1.RoleGuard),
     (0, common_1.Get)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, decorators_1.ProfileAuth)()),
@@ -60,6 +62,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProfileController.prototype, "findOne", null);
 __decorate([
+    (0, common_1.UseGuards)(guards_1.AuthGuard, guards_1.RoleGuard),
     (0, common_1.Patch)(':id'),
     __param(0, (0, common_1.Param)('id')),
     __param(1, (0, common_1.Body)()),
@@ -68,7 +71,6 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProfileController.prototype, "update", null);
 exports.ProfileController = ProfileController = __decorate([
-    (0, common_1.UseGuards)(guards_1.AuthGuard, guards_1.RoleGuard),
     (0, common_1.Controller)('profile'),
     __metadata("design:paramtypes", [profile_service_1.ProfileService])
 ], ProfileController);

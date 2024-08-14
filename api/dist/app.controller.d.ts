@@ -1,3 +1,3 @@
 export declare class AppController {
-    home(): void;
+    home(): string;
 }

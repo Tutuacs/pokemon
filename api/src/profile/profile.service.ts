@@ -8,13 +8,7 @@ import { ROLE } from 'src/decorators';
 export class ProfileService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async homeBuilder(profile: {
-    role: number;
-    id: string;
-    createdAt: Date;
-    name: string;
-    email: string;
-  }) {
+  async homeBuilder(param: {id: string}) {
     const newPokemons = await this.prisma.pokemon.findMany({
       orderBy: {
         createdAt: 'desc',
@@ -28,7 +22,7 @@ export class ProfileService {
       take: 10,
     });
 
-    if (profile.role === ROLE.DEFAULT) {
+    if (Number(param.id) === ROLE.DEFAULT) {
       return {
         newUsers: [],
         rolls: [],
@@ -38,7 +32,7 @@ export class ProfileService {
 
     const rolls = await this.prisma.userPokemon.findMany({
       where: {
-        profileId: profile.id,
+        profileId: param.id,
       },
       orderBy: {
         createdAt: 'desc',
@@ -57,6 +51,19 @@ export class ProfileService {
         },
       },
       take: 10,
+    });
+
+    const profile = await this.prisma.profile.findFirst({
+      where: {
+        id: param.id,
+      },
+      select: {
+        id: true,
+        email: true,
+        name: true,
+        createdAt: true,
+        role: true,
+      },
     });
 
     if (profile.role !== ROLE.ADMIN) {

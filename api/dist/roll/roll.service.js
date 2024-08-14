@@ -137,6 +137,9 @@ let RollService = class RollService {
         return null;
     }
     async rollPokemon(profileId, chances, normalRolls) {
+        if (normalRolls <= 0) {
+            throw new common_1.NotFoundException('No rolls left');
+        }
         const toRarity = await this.rollFunction.getProfileToRarity(profileId);
         const forcedRarity = this.determineRarity(toRarity);
         let roll;

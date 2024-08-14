@@ -48,7 +48,6 @@ export class RefreshJwtGuard implements CanActivate {
       }
       request.profile = profile;
     } catch (error) {
-      console.error("Error in RefreshJwtGuard:", error);
       throw new UnauthorizedException('Login expired. Please log in again.');
     }
 

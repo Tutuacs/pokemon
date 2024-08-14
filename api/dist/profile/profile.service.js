@@ -17,7 +17,7 @@ let ProfileService = class ProfileService {
     constructor(prisma) {
         this.prisma = prisma;
     }
-    async homeBuilder(profile) {
+    async homeBuilder(param) {
         const newPokemons = await this.prisma.pokemon.findMany({
             orderBy: {
                 createdAt: 'desc',
@@ -30,7 +30,7 @@ let ProfileService = class ProfileService {
             },
             take: 10,
         });
-        if (profile.role === decorators_1.ROLE.DEFAULT) {
+        if (Number(param.id) === decorators_1.ROLE.DEFAULT) {
             return {
                 newUsers: [],
                 rolls: [],
@@ -39,7 +39,7 @@ let ProfileService = class ProfileService {
         }
         const rolls = await this.prisma.userPokemon.findMany({
             where: {
-                profileId: profile.id,
+                profileId: param.id,
             },
             orderBy: {
                 createdAt: 'desc',
@@ -58,6 +58,18 @@ let ProfileService = class ProfileService {
                 },
             },
             take: 10,
+        });
+        const profile = await this.prisma.profile.findFirst({
+            where: {
+                id: param.id,
+            },
+            select: {
+                id: true,
+                email: true,
+                name: true,
+                createdAt: true,
+                role: true,
+            },
         });
         if (profile.role !== decorators_1.ROLE.ADMIN) {
             return {
