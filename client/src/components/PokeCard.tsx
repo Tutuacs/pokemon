@@ -45,8 +45,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
   const [isFlipping, setIsFlipping] = useState(false);
   const pathname = usePathname();
 
-  console.log(titleText, subText);
-
   const handleCardClick = () => {
     if (fix) return;
     if (!isFlipping) {

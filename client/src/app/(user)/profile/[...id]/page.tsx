@@ -110,8 +110,7 @@ export default function UserProfilePage(props: Props) {
 
         if (updatedUser.toEpic == 11) {
           updatedUser.toEpic -= 1;
-        }
-        else if (updatedUser.toEpic == 12) {
+        } else if (updatedUser.toEpic == 12) {
           updatedUser.toEpic -= 2;
         }
 
@@ -121,9 +120,11 @@ export default function UserProfilePage(props: Props) {
       }
     };
 
-    fetchUserData();
+    if (page == 1) {
+      fetchUserData();
+    }
     fetchUserPokemons();
-  }, []);
+  }, [page]);
 
   if (!user) {
     return <div>Loading...</div>;
@@ -159,37 +160,37 @@ export default function UserProfilePage(props: Props) {
             <div className="bg-white p-4 shadow rounded-b-lg">
               <div className="mt-4">
                 <label className="block font-bold mb-2">
-                  Nome:
+                  Nome: 
                   <span className="font-normal">{user.name}</span>
                 </label>
               </div>
               <div className="mt-4">
                 <label className="block font-bold mb-2">
-                  Email:
+                  Email: 
                   <span className="font-normal">{user.email}</span>
                 </label>
               </div>
               <div className="mt-4">
                 <label className="block font-bold mb-2">
-                  PokePoints:
+                  PokePoints: 
                   <span className="font-normal">{user.pokePoints}</span>
                 </label>
               </div>
               <div className="mt-4">
                 <label className="block font-bold mb-2">
-                  PokeStars:
+                  PokeStars: 
                   <span className="font-normal">{user.pokeStars}</span>
                 </label>
               </div>
               <div className="mt-4">
                 <label className="block font-bold mb-2">
-                  Food:
+                  Food: 
                   <span className="font-normal">{user.food}</span>
                 </label>
               </div>
               <div className="mt-4">
                 <label className="block font-bold mb-2">
-                  Gold:
+                  Gold: 
                   <span className="font-normal">{user.gold}</span>
                 </label>
               </div>

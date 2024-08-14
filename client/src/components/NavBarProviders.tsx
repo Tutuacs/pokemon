@@ -59,7 +59,6 @@ export function NavbarProvider({ children }: { children: React.ReactNode }) {
     if (session && session.tokens.profile !== profile) {
       setProfile(session.tokens.profile as NavbarProfileProps);
     }
-    console.log("updating profile");
   };
 
   return (

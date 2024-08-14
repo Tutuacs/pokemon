@@ -36,7 +36,6 @@ export class AuthFunctionsService extends PrismaService {
         },
       },
     });
-    console.log(profile._count.Pokemon)
     if (profile && (await bcrypt.compare(login.password, profile.password))) {
       return {
         id: profile.id,

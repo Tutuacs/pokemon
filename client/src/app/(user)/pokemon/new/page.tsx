@@ -181,7 +181,6 @@ export default function CreatePokemonPage() {
         body: JSON.stringify(bodyData),
       });
       if (res?.status === 200 || res?.status === 201) {
-        console.log("Pokémon criado com sucesso");
         setFormData({
           name: "",
           description: "",

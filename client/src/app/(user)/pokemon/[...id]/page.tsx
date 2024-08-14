@@ -57,7 +57,6 @@ export default function PokemonIdPage(props: Props) {
       }
       const pokemon = response!.data as UserPokemon;
       setPokemonData(pokemon);
-      console.log("response", pokemon);
 
       setIsShiny(pokemon.shiny);
 
@@ -73,7 +72,7 @@ export default function PokemonIdPage(props: Props) {
 
   useEffect(() => {
     fetchPokemon();
-  }, []);
+  });
 
   const handleInputChange = (
     e: React.ChangeEvent<
@@ -96,8 +95,6 @@ export default function PokemonIdPage(props: Props) {
         pokemonData.food + increment,
         pokemonData.Pokemon.evolveFood
       );
-
-      console.log(newFood)
 
       setPokemonData({
         ...pokemonData,
@@ -127,7 +124,6 @@ export default function PokemonIdPage(props: Props) {
     if (response?.status !== 200 && response?.status !== 201) {
       router.push("/pokemon/collection");
     }
-    console.log("feeded", response?.data);
   };
 
   const rarityOptions = [
@@ -151,7 +147,7 @@ export default function PokemonIdPage(props: Props) {
     : 0;
 
   return (
-    <main className="create-pokemon-page flex">
+    <main className="create-pokemon-page flex h-screen">
       <div className="form-container w-2/3 p-6 bg-white rounded-lg shadow-lg">
         <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
           <h2 className="text-2xl font-bold mb-4">Create Pokemon</h2>

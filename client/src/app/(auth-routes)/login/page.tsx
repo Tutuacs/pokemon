@@ -22,7 +22,6 @@ export default function Login() {
     });
 
     if (result?.error) {
-      console.log(result);
       return;
     }
 

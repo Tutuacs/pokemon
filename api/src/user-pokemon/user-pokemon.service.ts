@@ -33,7 +33,6 @@ export class UserPokemonService {
 
   async update(id: string, data: UpdateUserPokemonDto, profile: { id: string; role: ROLE }) {
     await this.findOne(id, profile);
-    console.log(data)
     return this.userPokemonFunction.update(id, data);
   }
   

@@ -60,7 +60,7 @@ export default function AdminDashboard() {
 
   useEffect(() => {
     fetchHomeBuilder();
-  }, []);
+  });
 
   // Função para formatar a data
   const formatDate = (dateString: string) => {

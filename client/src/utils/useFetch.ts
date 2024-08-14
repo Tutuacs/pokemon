@@ -39,8 +39,6 @@ const useFetch = (title?: string) => {
     
     const res = await fetch(`${Backend_URL}${url}`, { ...options, headers });
 
-    console.log("res", res);
-
     return handleResponse(res);
   };
 
@@ -51,8 +49,6 @@ const useFetch = (title?: string) => {
     // if (res.status === 200 || res.status === 201) {
     //   data.message = title;
     // }
-
-    console.log("data", data);
 
     // toast({ title: config!.title, description: data!.message, variant: config!.variant });
 

@@ -21,7 +21,6 @@ export default function Forgot() {
     });
 
     if (result?.status !== 200) {
-      console.log(result);
       return;
     }
   }
@@ -38,6 +37,7 @@ export default function Forgot() {
             >
               Email
             </label>
+            AINDA NAO IMPLEMENTAI A PARTE DE RECUPERACAO DE SENHA, CONSULTE O ADM arthursilva.rs1@gmail.com!
             <input
               type="email"
               id="email"
@@ -53,6 +53,7 @@ export default function Forgot() {
           <div className="m-auto">Recuperar</div>
         </div>
       </div>
+    
     </main>
   );
 }

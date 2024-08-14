@@ -26,7 +26,6 @@ export default function Register() {
     });
 
     if (result?.status !== 201) {
-      console.log(result);
       return;
     }
     

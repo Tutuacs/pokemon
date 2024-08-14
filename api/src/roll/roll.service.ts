@@ -18,44 +18,36 @@ export class RollService {
     rarity: RARITY = RARITY.NORMAL,
   ): { shine: boolean; rarity: RARITY } {
     const random = Math.random();
-    console.log(random.toFixed(3));
     switch (rarity) {
       case RARITY.NORMAL:
         if (random <= chances.normalChance) {
-          console.log('NORMAL');
           return this.rollShiny(chances, RARITY.NORMAL);
         }
         return this.rollChance(chances, RARITY.RARE);
       case RARITY.RARE:
         if (random <= chances.rareChance) {
-          console.log('RARO');
           return this.rollShiny(chances, RARITY.RARE);
         }
         return this.rollChance(chances, RARITY.SUPER_RARE);
       case RARITY.SUPER_RARE:
         if (random <= chances.superRareChance) {
-          console.log('SUPER_RARO');
           return this.rollShiny(chances, RARITY.SUPER_RARE);
         }
         return this.rollChance(chances, RARITY.EPIC);
       case RARITY.EPIC:
         if (random <= chances.epicChance) {
-          console.log('EPICO');
           return this.rollShiny(chances, RARITY.EPIC);
         }
         return this.rollChance(chances, RARITY.MITHYC);
       case RARITY.MITHYC:
         if (random <= chances.mithycChance) {
-          console.log('MITICO');
           return this.rollShiny(chances, RARITY.MITHYC);
         }
         return this.rollChance(chances, RARITY.LEGENDARY);
       case RARITY.LEGENDARY:
         if (random <= chances.legendaryChance) {
-          console.log('LEGENDARIO');
           return this.rollShiny(chances, RARITY.LEGENDARY);
         }
-        console.log('NADA');
         return { shine: false, rarity: RARITY.NORMAL };
       default:
         return { shine: false, rarity: RARITY.NORMAL };
@@ -68,7 +60,6 @@ export class RollService {
   ): { shine: boolean; rarity: RARITY } {
     const random = Math.random();
     if (random < chances.shinyChance) {
-      console.log('SHINY');
       chances.shinyChance = 0.01;
       return { shine: true, rarity };
     }
@@ -170,7 +161,6 @@ export class RollService {
 
     roll = this.rollChance(chances);
     if (forcedRarity) {
-      console.log(`Forçando raridade: ${forcedRarity}`);
       roll = this.rollShiny(chances, forcedRarity);
       // Reseta o contador para a raridade forçada
       if (forcedRarity === RARITY.LEGENDARY) {
@@ -201,8 +191,6 @@ export class RollService {
     }else if (roll.rarity === RARITY.EPIC && toRarity.toEpic > 0){
       toRarity.toEpic = 0;
     }
-
-    console.log(newChances);
 
     await this.rollFunction.updateChances(profileId, newChances, toRarity);
     const pokemon = await this.rollFunction.getPokemon(roll.rarity);

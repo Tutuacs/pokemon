@@ -37,7 +37,7 @@ export default function PokemonCollectionPage() {
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
-  const { fetchWithAuth } = useFetch("Pokémons carregados com sucesso!");
+  const { fetchWithAuth } = useFetch();
   const { profile } = useNavbarContext();
 
   useEffect(() => {
@@ -49,19 +49,15 @@ export default function PokemonCollectionPage() {
           const response: Response = res.data;
           const pokemon: Pokemon[] = response.pokemons;
           setTotalPages(Math.ceil(response.count / 10));
-          console.log("responseInside", response);
           setPokemons(pokemon);
         }
-        console.log("response", res);
       } catch (error) {
         console.error("Failed to fetch user pokemons", error);
       }
     };
 
     fetchPokemons();
-  }, [page]);
-
-  console.log(totalPages);
+  }, [page, fetchWithAuth]);
 
   // Handle the next page button click
   const handleNextPage = () => {
@@ -82,7 +78,7 @@ export default function PokemonCollectionPage() {
       {profile?.role === ROLE.ADMIN && (
         <div>
           <Link
-            href="/pokemon"
+            href="/pokemon/new"
             className="bg-green-500 text-white  p-4 fixed top-40 right-10 rounded-lg"
           >
             Create new Pokemon

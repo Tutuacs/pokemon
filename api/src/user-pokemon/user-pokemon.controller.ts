@@ -37,7 +37,6 @@ export class UserPokemonController {
     @Body() updateUserPokemonDto: UpdateUserPokemonDto,
     @ProfileAuth() profile: { id: string; role: ROLE },
   ) {
-    console.log("chegou")
     return this.userPokemonService.update(id, updateUserPokemonDto, profile);
   }
 

@@ -51,8 +51,11 @@ export default function UpdatePokemonPage({ params }: Props) {
 
   const [formData, setFormData] = useState(defaultFormData);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
-  const [selectedEvolution, setSelectedEvolution] = useState<Pokemon>(defaultPokemon);
-  const [pokemonEvolution, setPokemonEvolution] = useState<Pokemon | null>(null);
+  const [selectedEvolution, setSelectedEvolution] =
+    useState<Pokemon>(defaultPokemon);
+  const [pokemonEvolution, setPokemonEvolution] = useState<Pokemon | null>(
+    null
+  );
   const { fetchWithAuth } = useFetch();
 
   const [isShiny, setIsShiny] = useState(false);
@@ -62,7 +65,7 @@ export default function UpdatePokemonPage({ params }: Props) {
 
   useEffect(() => {
     fetchInitialData();
-  }, []);
+  });
 
   useEffect(() => {
     if (haveEvolution) {
@@ -85,7 +88,7 @@ export default function UpdatePokemonPage({ params }: Props) {
         setSelectedEvolution(pokemon); // Definindo a evolução selecionada como o Pokémon atual
         setPokemonEvolution(pokemon.Evolution || null); // Definindo a evolução retornada na resposta
         if (pokemon.Evolution) {
-          setSelectedEvolution({ ...pokemon.Evolution  });
+          setSelectedEvolution({ ...pokemon.Evolution });
         }
       }
     } catch (error) {
@@ -93,7 +96,11 @@ export default function UpdatePokemonPage({ params }: Props) {
     }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
@@ -106,9 +113,13 @@ export default function UpdatePokemonPage({ params }: Props) {
     setHaveEvolution(!haveEvolution);
   };
 
-  const handleEvolutionSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleEvolutionSelectChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     const selectedId = e.target.value;
-    const selected = pokemons.find(pokemon => pokemon.id === Number(selectedId)) || pokemonEvolution;
+    const selected =
+      pokemons.find((pokemon) => pokemon.id === Number(selectedId)) ||
+      pokemonEvolution;
     setSelectedEvolution(selected!);
     setFormData({ ...formData, evolutionId: selectedId });
   };
@@ -123,7 +134,14 @@ export default function UpdatePokemonPage({ params }: Props) {
 
   const rarityOptions: {
     value: number;
-    label: "normal" | "rare" | "super-rare" | "epic" | "mythic" | "legendary" | "shine";
+    label:
+      | "normal"
+      | "rare"
+      | "super-rare"
+      | "epic"
+      | "mythic"
+      | "legendary"
+      | "shine";
   }[] = [
     { value: 0, label: "normal" },
     { value: 1, label: "rare" },
@@ -151,7 +169,9 @@ export default function UpdatePokemonPage({ params }: Props) {
       if (res?.status === 200) {
         const response: Response = res.data;
         const pokemons: Pokemon[] = response.pokemons;
-        const exist = pokemons.find(pokemon => pokemon.id === Number(params.id))
+        const exist = pokemons.find(
+          (pokemon) => pokemon.id === Number(params.id)
+        );
         if (exist) {
           pokemons.splice(pokemons.indexOf(exist), 1);
         }
@@ -185,13 +205,11 @@ export default function UpdatePokemonPage({ params }: Props) {
       };
 
       if (haveEvolution) {
-        console.log("Tem evolução");
         bodyData = {
           ...bodyData,
           evolutionId: formData.evolutionId,
         };
-      }else {
-        console.log("nao");
+      } else {
         bodyData = {
           ...bodyData,
           evolutionId: null,
@@ -206,7 +224,6 @@ export default function UpdatePokemonPage({ params }: Props) {
         body: JSON.stringify(bodyData),
       });
       if (res?.status === 200 || res?.status === 201) {
-        console.log("Pokémon atualizado com sucesso");
         setIsShiny(false);
         setHaveEvolution(false);
         setSelectedEvolution(defaultPokemon);
@@ -220,205 +237,214 @@ export default function UpdatePokemonPage({ params }: Props) {
   };
 
   return (
-    <main className="update-pokemon-page flex">
-      <div className="form-container w-2/3 p-6 bg-white rounded-lg shadow-lg">
-        <form className="space-y-4">
-          <h2 className="text-2xl font-bold mb-4">Atualizar Pokémon</h2>
-          <label className="block">
-            Nome:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
-              className="form-input"
-            />
-          </label>
-          <label className="block">
-            Descrição:
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleInputChange}
-              className="form-textarea"
-            />
-          </label>
-          <label className="block">
-            URL da Imagem:
-            <input
-              type="text"
-              name="image"
-              value={formData.image}
-              onChange={handleInputChange}
-              className="form-input"
-            />
-          </label>
-          <label className="block">
-            URL da Imagem Shiny:
-            <input
-              type="text"
-              name="shinyImage"
-              value={formData.shinyImage}
-              onChange={handleInputChange}
-              className="form-input"
-            />
-          </label>
-          <label className="block">
-            Raridade:
-            <select
-              name="rarity"
-              value={formData.rarity}
-              onChange={handleInputChange}
-              className="form-select"
-            >
-              {rarityOptions.map((option) => (
-                <option key={option.value} value={option.value}>
-                  {option.label}
-                </option>
-              ))}
-            </select>
-          </label>
-          <label className="block">
-            Comida para Evoluir:
-            <input
-              type="number"
-              name="evolveFood"
-              value={formData.evolveFood}
-              onChange={handleInputChange}
-              className="form-input"
-            />
-          </label>
-          <label className="block">
-            PokePoints para Evoluir:
-            <input
-              type="number"
-              name="evolvePokePoints"
-              value={formData.evolvePokePoints}
-              onChange={handleInputChange}
-              className="form-input"
-            />
-          </label>
-          <label className="block items-center">
-            Shiny:
-            <input
-              type="checkbox"
-              checked={isShiny}
-              onChange={handleShinyChange}
-              className="form-checkbox ml-2"
-            />
-          </label>
-          <label className="block">
-            <input
-              type="checkbox"
-              checked={haveEvolution}
-              onChange={handleEvolutionChange}
-              className="form-checkbox"
-            />
-            <span className="ml-2">Tem Evolução</span>
-          </label>
-          {haveEvolution && (
-            <div>
-              <label className="block">
-                Evolução:
-                <select
-                  name="evolutionId"
-                  value={formData.evolutionId}
-                  onChange={handleEvolutionSelectChange}
-                  className="form-select"
-                >
-                  <option value="">Selecione uma evolução</option>
-                  {pokemonEvolution && (
-                    <option value={pokemonEvolution.id} style={{ color: "red" }}>
-                      {pokemonEvolution.name} (Atual)
-                    </option>
-                  )}
-                  {pokemons.map((pokemon) => (
-                    <option key={pokemon.id} value={pokemon.id}>
-                      {pokemon.name}
-                    </option>
-                  ))}
-                </select>
-              </label>
-              <div className="flex justify-between items-center mx-auto w-3/4">
-                <button
-                  onClick={handlePreviousPage}
-                  disabled={page === 1}
-                  className="bg-slate-800 text-white px-4 py-2 rounded disabled:opacity-50 mt-4"
-                >
-                  Página Anterior
-                </button>
-                <span className="text-black mt-4">
-                  Página {page} de {totalPages}
-                </span>
-                <button
-                  onClick={handleNextPage}
-                  disabled={page === totalPages}
-                  className="bg-slate-800 text-white px-4 py-2 rounded disabled:opacity-50 mt-4"
-                >
-                  Próxima Página
-                </button>
+    <main className="h-screen">
+      <div className="flex">
+        <div className="form-container w-2/3 p-6 bg-white rounded-lg shadow-lg">
+          <form className="space-y-4">
+            <h2 className="text-2xl font-bold mb-4">Atualizar Pokémon</h2>
+            <label className="block">
+              Nome:
+              <input
+                type="text"
+                name="name"
+                value={formData.name}
+                onChange={handleInputChange}
+                className="form-input"
+              />
+            </label>
+            <label className="block">
+              Descrição:
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleInputChange}
+                className="form-textarea"
+              />
+            </label>
+            <label className="block">
+              URL da Imagem:
+              <input
+                type="text"
+                name="image"
+                value={formData.image}
+                onChange={handleInputChange}
+                className="form-input"
+              />
+            </label>
+            <label className="block">
+              URL da Imagem Shiny:
+              <input
+                type="text"
+                name="shinyImage"
+                value={formData.shinyImage}
+                onChange={handleInputChange}
+                className="form-input"
+              />
+            </label>
+            <label className="block">
+              Raridade:
+              <select
+                name="rarity"
+                value={formData.rarity}
+                onChange={handleInputChange}
+                className="form-select"
+              >
+                {rarityOptions.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="block">
+              Comida para Evoluir:
+              <input
+                type="number"
+                name="evolveFood"
+                value={formData.evolveFood}
+                onChange={handleInputChange}
+                className="form-input"
+              />
+            </label>
+            <label className="block">
+              PokePoints para Evoluir:
+              <input
+                type="number"
+                name="evolvePokePoints"
+                value={formData.evolvePokePoints}
+                onChange={handleInputChange}
+                className="form-input"
+              />
+            </label>
+            <label className="block items-center">
+              Shiny:
+              <input
+                type="checkbox"
+                checked={isShiny}
+                onChange={handleShinyChange}
+                className="form-checkbox ml-2"
+              />
+            </label>
+            <label className="block">
+              <input
+                type="checkbox"
+                checked={haveEvolution}
+                onChange={handleEvolutionChange}
+                className="form-checkbox"
+              />
+              <span className="ml-2">Tem Evolução</span>
+            </label>
+            {haveEvolution && (
+              <div>
+                <label className="block">
+                  Evolução:
+                  <select
+                    name="evolutionId"
+                    value={formData.evolutionId}
+                    onChange={handleEvolutionSelectChange}
+                    className="form-select"
+                  >
+                    <option value="">Selecione uma evolução</option>
+                    {pokemonEvolution && (
+                      <option
+                        value={pokemonEvolution.id}
+                        style={{ color: "red" }}
+                      >
+                        {pokemonEvolution.name} (Atual)
+                      </option>
+                    )}
+                    {pokemons.map((pokemon) => (
+                      <option key={pokemon.id} value={pokemon.id}>
+                        {pokemon.name}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+                <div className="flex justify-between items-center mx-auto w-3/4">
+                  <button
+                    onClick={handlePreviousPage}
+                    disabled={page === 1}
+                    className="bg-slate-800 text-white px-4 py-2 rounded disabled:opacity-50 mt-4"
+                  >
+                    Página Anterior
+                  </button>
+                  <span className="text-black mt-4">
+                    Página {page} de {totalPages}
+                  </span>
+                  <button
+                    onClick={handleNextPage}
+                    disabled={page === totalPages}
+                    className="bg-slate-800 text-white px-4 py-2 rounded disabled:opacity-50 mt-4"
+                  >
+                    Próxima Página
+                  </button>
+                </div>
               </div>
+            )}
+            <button
+              type="button"
+              onClick={handleUpdatePokemon}
+              className={`bg-orange-500 text-white mb-0 hover:bg-orange-400 px-4 py-2 rounded ${
+                !isFormValid() ? "opacity-50" : ""
+              }`}
+              disabled={!isFormValid()}
+            >
+              Atualizar Pokémon
+            </button>
+          </form>
+        </div>
+        <div className="preview-container w-1/3 p-6 flex items-center justify-center flex-col">
+          <PokemonCard
+            rarity={
+              rarityOptions[Number(formData.rarity)].label.toLowerCase() as
+                | "normal"
+                | "rare"
+                | "super-rare"
+                | "epic"
+                | "mythic"
+                | "legendary"
+                | "shine"
+            }
+            frontImage={isShiny ? formData.shinyImage : formData.image}
+            backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
+            titleText={formData.name}
+            subText={formData.description}
+            isShiny={isShiny}
+            fix={false}
+            flip={true}
+            flipOneTime={false}
+          />
+          {haveEvolution && (
+            <div className="mt-4">
+              <PokemonCard
+                rarity={
+                  rarityOptions[
+                    Number(selectedEvolution.rarity)
+                  ].label.toLowerCase() as
+                    | "normal"
+                    | "rare"
+                    | "super-rare"
+                    | "epic"
+                    | "mythic"
+                    | "legendary"
+                    | "shine"
+                }
+                frontImage={
+                  isShiny
+                    ? selectedEvolution.shinyImage
+                    : selectedEvolution.image
+                }
+                backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
+                titleText={selectedEvolution.name}
+                subText={selectedEvolution.description}
+                isShiny={isShiny}
+                fix={false}
+                flip={true}
+                flipOneTime={false}
+              />
             </div>
           )}
-          <button
-            type="button"
-            onClick={handleUpdatePokemon}
-            className={`bg-orange-500 text-white mb-0 hover:bg-orange-400 px-4 py-2 rounded ${!isFormValid() ? "opacity-50" : ""}`}
-            disabled={!isFormValid()}
-          >
-            Atualizar Pokémon
-          </button>
-        </form>
-      </div>
-      <div className="preview-container w-1/3 p-6 flex items-center justify-center flex-col">
-        <PokemonCard
-          rarity={
-            rarityOptions[Number(formData.rarity)].label.toLowerCase() as
-              | "normal"
-              | "rare"
-              | "super-rare"
-              | "epic"
-              | "mythic"
-              | "legendary"
-              | "shine"
-          }
-          frontImage={isShiny ? formData.shinyImage : formData.image}
-          backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
-          titleText={formData.name}
-          subText={formData.description}
-          isShiny={isShiny}
-          fix={false}
-          flip={true}
-          flipOneTime={false}
-        />
-        {haveEvolution && (
-          <div className="mt-4">
-            <PokemonCard
-              rarity={
-                rarityOptions[
-                  Number(selectedEvolution.rarity)
-                ].label.toLowerCase() as
-                  | "normal"
-                  | "rare"
-                  | "super-rare"
-                  | "epic"
-                  | "mythic"
-                  | "legendary"
-                  | "shine"
-              }
-              frontImage={
-                isShiny ? selectedEvolution.shinyImage : selectedEvolution.image
-              }
-              backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
-              titleText={selectedEvolution.name}
-              subText={selectedEvolution.description}
-              isShiny={isShiny}
-              fix={false}
-              flip={true}
-              flipOneTime={false}
-            />
-          </div>
-        )}
+        </div>
       </div>
     </main>
   );

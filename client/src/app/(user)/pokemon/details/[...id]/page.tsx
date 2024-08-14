@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
 import useFetch from "@/utils/useFetch";
 import PokemonCard from "@/components/PokeCard";
 
@@ -27,11 +26,10 @@ export default function PokemonDetailPage({ params }: Props) {
   const [pokemon, setPokemon] = useState<Pokemon | null>(null);
   const [isShiny, setIsShiny] = useState(false); // Estado para o modo shiny
   const { fetchWithAuth } = useFetch();
-  const router = useRouter();
 
   useEffect(() => {
     fetchPokemonDetails();
-  }, []);
+  });
 
   const fetchPokemonDetails = async () => {
     try {

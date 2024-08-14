@@ -37,7 +37,6 @@ export default function StellarPage() {
   const fetchPokemon = async () => {
     try {
       const response = await fetchWithAuth("/roll/rollPokemon");
-      console.log("response", response);
 
       if (response?.status !== 200 && response?.status !== 201) {
         router.push('/roll');
