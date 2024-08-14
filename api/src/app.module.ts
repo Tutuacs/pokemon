@@ -6,6 +6,7 @@ import { PrismaModule } from './prisma/prisma.module';
 import { ProfileModule } from './profile/profile.module';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { UserPokemonModule } from './user-pokemon/user-pokemon.module';
+import { AppController } from './app.controller';
 
 @Module({
   imports: [
@@ -19,7 +20,7 @@ import { UserPokemonModule } from './user-pokemon/user-pokemon.module';
     PokemonModule,
     UserPokemonModule,
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}
