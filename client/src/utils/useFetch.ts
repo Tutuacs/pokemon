@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import { Backend_URL } from "@/lib/Constants";
+import { ROLE } from "@/common/role.enums";
 // import { useToast } from "@/components/ui/use-toast";
 // import { getToastConfig, toastConfig } from "@/components/ui/toastConfig";
 
@@ -25,7 +26,13 @@ const useFetch = (title?: string) => {
   };
 
   const fetchWithAuth = async (url: string, options: RequestInit = {}) => {
-    if (!session) return;
+    if (!session || session.profile.role === ROLE.DEFAULT) {
+      console.log("Session not found");
+      const res = await fetch(`${Backend_URL}${url}`, { ...options });
+      return handleResponse(res); 
+      
+    };
+    console.log("Session Found???");
 
     const headers = {
       ...options.headers,

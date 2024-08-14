@@ -7,67 +7,56 @@ import ButtonLogout from "./ButtonLogout";
 import RollTimer from "./RollTimer";
 import { useNavbarContext } from "./NavBarProviders";
 
-export default function NavLinks({
-  logged,
-}: {
-  logged: boolean;
-}) {
+export default function NavLinks() {
+  const { profile } = useNavbarContext();
 
-  const {profile} = useNavbarContext(); 
-
-  const type = profile?.role;
-
-  if (type === ROLE.ADMIN) {
+  if (profile.role === ROLE.ADMIN) {
     return (
       <>
-        {!logged && (
-          <Link className="p-2" href="/home">
-            Admin Home
+        <Link className="p-2" href="/home">
+          Admin Home
+        </Link>
+        <>
+          <Link className="p-2" href="/roll">
+            <RollTimer />
           </Link>
-        )}
-        {!logged && (
-          <>
-            <Link className="p-2" href="/roll">
-              <RollTimer />
-            </Link>
-            <div className="p-2">Food: {profile?.food}</div>
-            <Link href="/pokemon/collection" className="p-2">Collection: {profile?.pokemons}</Link>
-            <div className="p-2">PokePoints: {profile?.pokePoints}</div>
-            <div className="p-2">PokeStars: {profile?.pokeStars}</div>
-            <Link className="p-2" href="/profile">
-              Users
-            </Link>
-            <Link className="p-2" href="/pokemon/all">
-              Pokemons
-            </Link>
-            <ButtonLogout />
-          </>
-        )}
-      </>
-    );
-  } else if (type === ROLE.USER) {
-    return (
-      <>
-        {!logged && (
-          <Link className="p-2" href="/home">
-            User Home
+          <div className="p-2">Food: {profile?.food}</div>
+          <Link href="/pokemon/collection" className="p-2">
+            Collection: {profile?.pokemons}
           </Link>
-        )}
-        {!logged && (
-          <>
-            <Link className="p-2" href="/roll">
-              <RollTimer />
-            </Link>
-            <div className="p-2">Food: {profile?.food}</div>
-            <Link href="/pokemon/collection" className="p-2">Collection: {profile?.pokemons}</Link>
-            <div className="p-2">PokePoints: {profile?.pokePoints}</div>
-            <div className="p-2">PokeStars: {profile?.pokeStars}</div>
-          </>
-        )}
-        <Link className="p-2" href="/pokemon/all">
+          <div className="p-2">PokePoints: {profile?.pokePoints}</div>
+          <div className="p-2">PokeStars: {profile?.pokeStars}</div>
+          <Link className="p-2" href="/profile">
+            Users
+          </Link>
+          <Link className="p-2" href="/pokemon/all">
           Pokemons
         </Link>
         <ButtonLogout />
+        </>
+      </>
+    );
+  } else if (profile.role === ROLE.USER) {
+    return (
+      <>
+        <Link className="p-2" href="/home">
+          User Home
+        </Link>
+        <>
+          <Link className="p-2" href="/roll">
+            <RollTimer />
+          </Link>
+          <div className="p-2">Food: {profile?.food}</div>
+          <Link href="/pokemon/collection" className="p-2">
+            Collection: {profile?.pokemons}
+          </Link>
+          <div className="p-2">PokePoints: {profile?.pokePoints}</div>
+          <div className="p-2">PokeStars: {profile?.pokeStars}</div>
+          <Link className="p-2" href="/pokemon/all">
+          Pokemons
+        </Link>
+        <ButtonLogout />
+        </>
       </>
     );
   } else {
@@ -82,7 +71,9 @@ export default function NavLinks({
         <Link className="p-2" href="/roll">
           Roll
         </Link>
-        <ButtonLogout />
+        <Link className="p-2" href="/pokemon/all">
+          Pokemons
+        </Link>
       </>
     );
   }

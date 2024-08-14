@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import PokemonCard from "@/components/PokeCard";
 import useFetch from "@/utils/useFetch";
 import { useRouter } from "next/navigation";
+import "./form.css"
 
 type Pokemon = {
   id: number;
@@ -34,7 +35,7 @@ export default function UpdatePokemonPage({ params }: Props) {
     description: "",
     image: "",
     shinyImage: "",
-    rarity: 4,
+    rarity: 0,
     evolutionId: null,
   };
 
@@ -43,7 +44,7 @@ export default function UpdatePokemonPage({ params }: Props) {
     description: "",
     image: "",
     shinyImage: "",
-    rarity: "1",
+    rarity: "0",
     evolveFood: 0,
     evolvePokePoints: 0,
     evolutionId: "",
@@ -51,6 +52,7 @@ export default function UpdatePokemonPage({ params }: Props) {
 
   const [formData, setFormData] = useState(defaultFormData);
   const [pokemons, setPokemons] = useState<Pokemon[]>([]);
+  const [fetched, setFetched] = useState(false);
   const [selectedEvolution, setSelectedEvolution] =
     useState<Pokemon>(defaultPokemon);
   const [pokemonEvolution, setPokemonEvolution] = useState<Pokemon | null>(
@@ -65,7 +67,7 @@ export default function UpdatePokemonPage({ params }: Props) {
 
   useEffect(() => {
     fetchInitialData();
-  });
+  }, [fetched]);
 
   useEffect(() => {
     if (haveEvolution) {
@@ -90,6 +92,7 @@ export default function UpdatePokemonPage({ params }: Props) {
         if (pokemon.Evolution) {
           setSelectedEvolution({ ...pokemon.Evolution });
         }
+        setFetched(true);
       }
     } catch (error) {
       console.error("Erro ao buscar dados do Pokémon", error);
@@ -238,8 +241,8 @@ export default function UpdatePokemonPage({ params }: Props) {
 
   return (
     <main className="h-screen">
-      <div className="flex">
-        <div className="form-container w-2/3 p-6 bg-white rounded-lg shadow-lg">
+      <div className="update-pokemon-page flex ">
+        <div className="col-span-2 w-1/3 p-6 bg-white rounded-lg shadow-lg preview-container">
           <form className="space-y-4">
             <h2 className="text-2xl font-bold mb-4">Atualizar Pokémon</h2>
             <label className="block">
@@ -366,7 +369,7 @@ export default function UpdatePokemonPage({ params }: Props) {
                     disabled={page === 1}
                     className="bg-slate-800 text-white px-4 py-2 rounded disabled:opacity-50 mt-4"
                   >
-                    Página Anterior
+                    Prev
                   </button>
                   <span className="text-black mt-4">
                     Página {page} de {totalPages}
@@ -376,7 +379,7 @@ export default function UpdatePokemonPage({ params }: Props) {
                     disabled={page === totalPages}
                     className="bg-slate-800 text-white px-4 py-2 rounded disabled:opacity-50 mt-4"
                   >
-                    Próxima Página
+                    Next
                   </button>
                 </div>
               </div>

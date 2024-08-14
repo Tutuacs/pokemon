@@ -28,7 +28,9 @@ export default function PokemonDetailPage({ params }: Props) {
   const { fetchWithAuth } = useFetch();
 
   useEffect(() => {
-    fetchPokemonDetails();
+    if (!pokemon) {
+      fetchPokemonDetails();
+    }
   });
 
   const fetchPokemonDetails = async () => {

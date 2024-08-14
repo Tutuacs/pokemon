@@ -5,7 +5,6 @@ import "./navbar.css";
 import NavLinks from "./NavLinks";
 
 export default function Navbar({ logged }: { logged: boolean; profile?: any }) {
-
   return (
     <nav className="navbar visible">
       <div className="flex items-center">
@@ -20,9 +19,7 @@ export default function Navbar({ logged }: { logged: boolean; profile?: any }) {
         </Link>
       </div>
       <div className="flex items-center">
-        <NavLinks
-          logged={logged}
-        />
+        <NavLinks />
       </div>
     </nav>
   );

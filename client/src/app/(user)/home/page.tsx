@@ -43,8 +43,9 @@ export default function AdminDashboard() {
   const { profile } = useNavbarContext();
 
   const fetchHomeBuilder = async () => {
-    if (profile.role !== -1) {
-      const response = await fetchWithAuth("/profile/home/builder");
+    console.log("Fetching Home Builder");
+    const response = await fetchWithAuth(`/profile/home/builder/${profile.role !== ROLE.DEFAULT ? profile.id: ROLE.DEFAULT }`);
+    console.log("RESPONSE", response);
       if (response!.status === 200 || response!.status === 201) {
         const data: Response = await response!.data;
         setNewPokemons(data.newPokemons!);
@@ -55,11 +56,14 @@ export default function AdminDashboard() {
           setNewRolls(data.rolls);
         }
       }
-    }
   };
 
   useEffect(() => {
-    fetchHomeBuilder();
+    if (newPokemons.length === 0) {
+      fetchHomeBuilder();
+    }else {
+      console.log(newPokemons);
+    }
   });
 
   // Função para formatar a data
@@ -134,7 +138,7 @@ export default function AdminDashboard() {
                   <div>
                     <h2 className="text-xl font-bold">{pokemon.name}</h2>
                     <p>Data: {formatDate(pokemon.createdAt)}</p>
-                    <p>{pokemon.rarity}</p>
+                    <p>{RARITY_MAP[pokemon.rarity as RARITY]}</p>
                   </div>
                   <div className="flex items-center">
                     <Link

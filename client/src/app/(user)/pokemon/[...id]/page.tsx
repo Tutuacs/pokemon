@@ -71,7 +71,9 @@ export default function PokemonIdPage(props: Props) {
   };
 
   useEffect(() => {
-    fetchPokemon();
+    if(!pokemonData){
+      fetchPokemon();
+    }
   });
 
   const handleInputChange = (

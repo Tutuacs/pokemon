@@ -52,7 +52,7 @@ export default function UserPokemonCollectionPage() {
     };
 
     fetchUserPokemons();
-  }, [page, fetchWithAuth]);
+  }, [page]);
 
   // Calculate the total number of pages
   const totalPages = Math.ceil(profile.pokemons / 10);

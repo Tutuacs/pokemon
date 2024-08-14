@@ -33,7 +33,7 @@ export default function BannerCard({
               >
                 <img
                   src={bannerImage}
-                  alt="The back of a Pokemon Card"
+                  alt="The back of a Banner Card"
                   style={{
                     width: "100%",
                     height: "100%",

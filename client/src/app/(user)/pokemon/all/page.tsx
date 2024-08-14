@@ -57,7 +57,7 @@ export default function PokemonCollectionPage() {
     };
 
     fetchPokemons();
-  }, [page, fetchWithAuth]);
+  }, [page]);
 
   // Handle the next page button click
   const handleNextPage = () => {
