@@ -1,1 +1,1 @@
-export const Backend_URL = "https://vercel.com/tutuacs-projects/pokemon-backend";
+export const Backend_URL = "https://pokemon-backend-gules.vercel.app/";

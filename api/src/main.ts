@@ -7,7 +7,7 @@ async function bootstrap() {
 
   app.enableCors(
     {
-      origin: 'https://vercel.com/tutuacs-projects/pokemon-frontend',
+      origin: 'https://pokemon-frontend-gules.vercel.app/',
       credentials: true,
     },
   );
@@ -20,6 +20,6 @@ async function bootstrap() {
     }),
   );
 
-  await app.listen(3333);
+  await app.listen(3000);
 }
 bootstrap();
