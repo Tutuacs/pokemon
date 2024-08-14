@@ -6,10 +6,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   app.enableCors(
-    // {
-    //   origin: 'https://pokemon-frontend-gules.vercel.app/',
-    //   credentials: true,
-    // },
+    {
+      "origin": "*",
+      "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
+    }
   );
   app.useGlobalPipes(
     new ValidationPipe({
