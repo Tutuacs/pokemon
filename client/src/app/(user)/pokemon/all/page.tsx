@@ -26,7 +26,7 @@ type Response = {
 const rarityOptions = [
   { value: 0, label: "Normal" },
   { value: 1, label: "Rare" },
-  { value: 2, label: "Super Rare" },
+  { value: 2, label: "Super-Rare" },
   { value: 3, label: "Epic" },
   { value: 4, label: "Mythic" },
   { value: 5, label: "Legendary" },
