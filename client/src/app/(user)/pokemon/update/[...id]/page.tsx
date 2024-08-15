@@ -5,6 +5,7 @@ import PokemonCard from "@/components/PokeCard";
 import useFetch from "@/utils/useFetch";
 import { useRouter } from "next/navigation";
 import "./form.css"
+import { Link } from "lucide-react";
 
 type Pokemon = {
   id: number;
@@ -241,6 +242,14 @@ export default function UpdatePokemonPage({ params }: Props) {
 
   return (
     <main className="h-screen">
+        <div>
+          <Link
+            href={`/pokemon/details/${params.id}`}
+            className="bg-indigo-600 text-white  p-4 fixed top-40 right-10 rounded-lg"
+          >
+            View Details
+          </Link>
+        </div>
       <div className="update-pokemon-page flex ">
         <div className="col-span-2 w-1/3 p-6 bg-white rounded-lg shadow-lg preview-container">
           <form className="space-y-4">
