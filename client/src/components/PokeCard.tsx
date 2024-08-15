@@ -252,7 +252,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
         }
 
         .normal {
-          box-shadow: 1px 1px 20px rgba(255, 255, 255, 1);
+          box-shadow: 1px 1px 20px rgba(255, 255, 255);
           animation: pulse 1.5s infinite;
         }
 
