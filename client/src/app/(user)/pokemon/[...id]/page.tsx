@@ -8,6 +8,7 @@ import { ROLE } from "@/common/role.enums";
 import useFetch from "@/utils/useFetch";
 import { useRouter } from "next/navigation";
 import FreePokemonButton from "@/components/FreePokemonButton";
+import Link from "next/link";
 
 type Props = {
   params: {
@@ -71,7 +72,7 @@ export default function PokemonIdPage(props: Props) {
   };
 
   useEffect(() => {
-    if(!pokemonData){
+    if (!pokemonData) {
       fetchPokemon();
     }
   });
@@ -111,7 +112,6 @@ export default function PokemonIdPage(props: Props) {
   };
 
   const handleUpdatePokemon = async (newFood: number) => {
-
     const response = await fetchWithAuth(`/user-pokemon/${props.params.id}`, {
       method: "PATCH",
       headers: {
@@ -150,6 +150,16 @@ export default function PokemonIdPage(props: Props) {
 
   return (
     <main className="create-pokemon-page flex h-screen">
+      {pokemonData && (
+        <div>
+          <Link
+            href={`/pokemon/details/${pokemonData.Pokemon.id}`}
+            className="bg-indigo-600 text-white  p-4 fixed top-40 right-10 rounded-lg"
+          >
+            View Details
+          </Link>
+        </div>
+      )}
       <div className="form-container w-2/3 p-6 bg-white rounded-lg shadow-lg">
         <form className="space-y-4" onSubmit={(e) => e.preventDefault()}>
           <h2 className="text-2xl font-bold mb-4">Create Pokemon</h2>
@@ -165,7 +175,8 @@ export default function PokemonIdPage(props: Props) {
             />
             {nameChanged && (
               <p className="text-red-500 mt-2">
-                Alimente para salvar seu pokemon com o nome desejado (atualmente não é possivel alterar quando ele estiver totalmente alimentado)
+                Alimente para salvar seu pokemon com o nome desejado (atualmente
+                não é possivel alterar quando ele estiver totalmente alimentado)
               </p>
             )}
           </label>
