@@ -107,7 +107,7 @@ export default function UserPokemonCollectionPage() {
                   flip={true}
                   flipOneTime={true}
                   txt={true}
-                  backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
+                  backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
                   titleText={userPokemon.name}
                   subText={userPokemon.Pokemon.description || ""}
                   isShiny={userPokemon.shiny}

@@ -5,7 +5,7 @@ import PokemonCard from "@/components/PokeCard";
 import useFetch from "@/utils/useFetch";
 import { useRouter } from "next/navigation";
 import "./form.css"
-import { Link } from "lucide-react";
+import Link from "next/link";
 
 type Pokemon = {
   id: number;
@@ -418,7 +418,7 @@ export default function UpdatePokemonPage({ params }: Props) {
                 | "shine"
             }
             frontImage={isShiny ? formData.shinyImage : formData.image}
-            backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
+            backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
             titleText={formData.name}
             subText={formData.description}
             isShiny={isShiny}
@@ -446,7 +446,7 @@ export default function UpdatePokemonPage({ params }: Props) {
                     ? selectedEvolution.shinyImage
                     : selectedEvolution.image
                 }
-                backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
+                backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
                 titleText={selectedEvolution.name}
                 subText={selectedEvolution.description}
                 isShiny={isShiny}

@@ -309,7 +309,7 @@ export default function UserProfilePage(props: Props) {
                       ? selectedPokemon.Pokemon.shinyImage
                       : selectedPokemon.Pokemon.image
                   }
-                  backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
+                  backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
                   titleText={selectedPokemon.Pokemon.name}
                   flip={true}
                   flipOneTime={false}

@@ -100,7 +100,7 @@ export default function PokemonDetailPage({ params }: Props) {
         <PokemonCard
           rarity={rarityOptions[pokemon.rarity].label}
           frontImage={isShiny ? pokemon.shinyImage : pokemon.image} // Alterar imagem com base no estado shiny
-          backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
+          backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
           titleText={pokemon.name}
           subText={pokemon.description}
           isShiny={isShiny}
@@ -126,7 +126,7 @@ export default function PokemonDetailPage({ params }: Props) {
             <PokemonCard
               rarity={rarityOptions[pokemon.Evolution.rarity].label}
               frontImage={pokemon.Evolution.image}
-              backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
+              backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
               titleText={pokemon.Evolution.name}
               subText={pokemon.Evolution.description}
               isShiny={isShiny}

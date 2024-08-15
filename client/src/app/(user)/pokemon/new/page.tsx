@@ -364,7 +364,7 @@ export default function CreatePokemonPage() {
               | "shine"
           }
           frontImage={isShiny ? formData.shinyImage : formData.image}
-          backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
+          backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
           titleText={formData.name}
           subText={formData.description}
           isShiny={isShiny}
@@ -390,7 +390,7 @@ export default function CreatePokemonPage() {
               frontImage={
                 isShiny ? selectedEvolution.shinyImage : selectedEvolution.image
               }
-              backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
+              backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
               titleText={selectedEvolution.name}
               subText={selectedEvolution.description}
               isShiny={isShiny}
