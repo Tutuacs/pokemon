@@ -86,6 +86,7 @@ export default function UserProfilePage(props: Props) {
           throw new Error("Falha ao buscar dados do usuário");
         }
         const updatedUser = response!.data;
+        console.log(updatedUser);
         Math.floor(updatedUser.toEpic * 100 + 1) > 100
           ? setShowEpic(true)
           : setShowEpic(false);
@@ -95,6 +96,14 @@ export default function UserProfilePage(props: Props) {
         Math.floor(updatedUser.toLegendary * 100 + 1) > 100
           ? setShowLegendary(true)
           : setShowLegendary(false);
+
+          console.log(updatedUser.toEpic);
+          console.log(updatedUser.toMithyc);
+          console.log(updatedUser.toLegendary);
+          console.log(Math.floor(updatedUser.toEpic * 100 + 1) > 100)
+          console.log(Math.floor(updatedUser.toMithyc * 100 + 1) > 100)
+          console.log(Math.floor(updatedUser.toLegendary * 100 + 1) > 100)
+
 
         if (updatedUser.toEpic == updatedUser.toLegendary) {
           updatedUser.toEpic -= 1;
@@ -202,6 +211,7 @@ export default function UserProfilePage(props: Props) {
                 <p>
                   Epic: {Math.floor(user.epicChance * 100)}%
                   <br />
+                </p>
                   {showEpic && (
                     <span className="font-bold text-purple-400">
                       {user.toEpic == 10
@@ -209,10 +219,10 @@ export default function UserProfilePage(props: Props) {
                         : `${10 - user.toEpic} tentativas até o garantido`}
                     </span>
                   )}
-                </p>
                 <p>
                   Mythic: {Math.floor(user.mithycChance * 100)}%
                   <br />
+                </p>
                   {showMythic && (
                     <span className="font-bold text-red-400">
                       {user.toMithyc == 10
@@ -220,7 +230,6 @@ export default function UserProfilePage(props: Props) {
                         : `${10 - user.toMithyc} tentativas até o garantido`}
                     </span>
                   )}
-                </p>
                 <p>
                   Legendary: {Math.floor(user.legendaryChance * 100)}%
                   <br />

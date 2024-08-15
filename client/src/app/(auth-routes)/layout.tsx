@@ -10,7 +10,9 @@ export default async function PrivateLayout({ children }: PrivateLayoutProps) {
   const session = await getServerSession(authOptions);
 
   if (session) {
-    redirect("/");
+    if (!session.tokens.message) {
+      redirect("/");
+    }
   }
 
   return <>{children}</>;

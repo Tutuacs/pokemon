@@ -33,6 +33,9 @@ declare module "next-auth" {
       access: string;
       refresh: string;
       expiresIn: number;
+      message?: string;
+      error?: string;  
+      statusCode?: number;
     };
   }
 }
@@ -59,6 +62,9 @@ declare module "next-auth/jwt" {
       access: string;
       refresh: string;
       expiresIn: number;
+      message?: string;
+      error?: string;  
+      statusCode?: number;
     };
   }
 }

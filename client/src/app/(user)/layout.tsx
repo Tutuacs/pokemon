@@ -14,8 +14,10 @@ export default async function UserLayout({ children }: PrivateLayoutProps) {
 
   let role = -1;
 
-  if (session) {
-    role = session.profile!.role || -1;
+  if (session?.profile) {
+    if (session.profile.role != undefined) {
+      role = session.profile!.role || -1;
+    }
   }
 
   const type = role;

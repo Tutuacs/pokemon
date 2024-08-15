@@ -9,7 +9,7 @@ interface PrivateLayoutProps {
 export default async function LoggedDefaultLayout({ children }: PrivateLayoutProps) {
   const session = await getServerSession(authOptions);
 
-  if (!session) {
+  if (!session?.profile) {
     redirect("/login");
   }
 

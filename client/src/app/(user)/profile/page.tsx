@@ -21,7 +21,7 @@ type ApiResponse = {
 export default function AdminUsersPage() {
   const [users, setUsers] = useState<UserProfile[]>([]);
   const [page, setPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
   const { fetchWithAuth } = useFetch();
 
   // Função para buscar dados da API
@@ -31,7 +31,7 @@ export default function AdminUsersPage() {
       if (response!.status === 200) {
         const data: ApiResponse = await response!.data;
         setUsers(data.profiles);
-        setTotalCount(data.count);
+        setTotalPages(data.count);
       } else {
         console.error("Failed to fetch users:", response!.status);
       }
@@ -39,6 +39,16 @@ export default function AdminUsersPage() {
       console.error("Error fetching users:", error);
     }
   };
+
+  const handlePreviousPage = () => {
+    setPage((prev) => prev - 1);
+  }
+
+  const handleNextPage = () => {
+    setPage((prev) => prev + 1);
+  }
+
+
 
   // Atualizar usuários quando a página mudar
   useEffect(() => {
@@ -61,22 +71,25 @@ export default function AdminUsersPage() {
             ))}
           </div>
         </section>
-        <div className="flex justify-center">
-          <button
-            onClick={() => setPage(page - 1)}
-            disabled={page === 1}
-            className="mr-2 p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500"
-          >
-            Anterior
-          </button>
-          <button
-            onClick={() => setPage(page + 1)}
-            disabled={users.length === 0}
-            className="p-2 bg-blue-600 text-white rounded-lg hover:bg-blue-500"
-          >
-            Próximo
-          </button>
-        </div>
+        <div className="flex justify-between items-center mx-auto w-3/4">
+            <button
+              onClick={handlePreviousPage}
+              disabled={page === 1}
+              className="bg-slate-800 text-white px-4 py-2 rounded disabled:opacity-50"
+            >
+              Página Anterior
+            </button>
+            <span className="text-white">
+              Página {page} de {totalPages}
+            </span>
+            <button
+              onClick={handleNextPage}
+              disabled={page === totalPages}
+              className="bg-slate-800 text-white px-4 py-2 rounded disabled:opacity-50"
+            >
+              Próxima Página
+            </button>
+          </div>
       </div>
     </main>
   );

@@ -40,6 +40,9 @@ export default function PokemonCollectionPage() {
   const { fetchWithAuth } = useFetch();
   const { profile } = useNavbarContext();
 
+  // const profileOK = profile ? (profile.normalRolls > 0 ? true : false) : false;
+  const profileAdmin = profile ? (profile.role === ROLE.ADMIN ? false : true) : true;
+
   useEffect(() => {
     const fetchPokemons = async () => {
       try {
@@ -93,7 +96,7 @@ export default function PokemonCollectionPage() {
           <div className="flex flex-wrap">
             {pokemons.map((pokemon) => (
               <Link
-                href={ profile.role !== ROLE.ADMIN ? `/pokemon/details/${pokemon.id}`: `/pokemon/update/${pokemon.id}`}
+                href={ profileAdmin ? `/pokemon/details/${pokemon.id}`: `/pokemon/update/${pokemon.id}`}
                 className="mx-auto"
                 key={pokemon.id}
               >

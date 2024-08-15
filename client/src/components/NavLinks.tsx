@@ -10,7 +10,7 @@ import { useNavbarContext } from "./NavBarProviders";
 export default function NavLinks() {
   const { profile } = useNavbarContext();
 
-  if (profile.role === ROLE.ADMIN) {
+  if (profile?.role === ROLE.ADMIN) {
     return (
       <>
         <Link className="p-2" href="/home">
@@ -36,7 +36,7 @@ export default function NavLinks() {
         </>
       </>
     );
-  } else if (profile.role === ROLE.USER) {
+  } else if (profile?.role === ROLE.USER) {
     return (
       <>
         <Link className="p-2" href="/home">

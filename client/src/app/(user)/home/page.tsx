@@ -44,24 +44,32 @@ export default function AdminDashboard() {
 
   const fetchHomeBuilder = async () => {
     console.log("Fetching Home Builder");
-    const response = await fetchWithAuth(`/profile/home/builder/${profile.role !== ROLE.DEFAULT ? profile.id: ROLE.DEFAULT }`);
+    const response = await fetchWithAuth(
+      `/profile/home/builder/${
+        profile
+          ? profile.role !== ROLE.DEFAULT
+            ? profile.id
+            : ROLE.DEFAULT
+          : ROLE.DEFAULT
+      }`
+    );
     console.log("RESPONSE", response);
-      if (response!.status === 200 || response!.status === 201) {
-        const data: Response = await response!.data;
-        setNewPokemons(data.newPokemons!);
-        if (profile.role !== ROLE.DEFAULT) {
-          setNewUsers(data.newUsers!);
-        }
-        if (profile.role !== ROLE.DEFAULT) {
-          setNewRolls(data.rolls);
-        }
+    if (response!.status === 200 || response!.status === 201) {
+      const data: Response = await response!.data;
+      setNewPokemons(data.newPokemons!);
+      if (!profile || profile?.role !== ROLE.DEFAULT) {
+        setNewUsers(data.newUsers!);
       }
+      if (!profile || profile?.role !== ROLE.DEFAULT) {
+        setNewRolls(data.rolls);
+      }
+    }
   };
 
   useEffect(() => {
     if (newPokemons.length === 0) {
       fetchHomeBuilder();
-    }else {
+    } else {
       console.log(newPokemons);
     }
   });
@@ -79,46 +87,47 @@ export default function AdminDashboard() {
     <main className="flex flex-col min-h-screen">
       <div className="mx-auto mt-10 w-full max-w-6xl">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8">
-          {profile.role !== ROLE.DEFAULT && (
-            <div className="mt-4">
-              <div
-                className="bg-slate-700 text-white p-4 text-center shadow rounded-t-lg"
-                style={{ background: "rgba(40, 40, 40, 0.95)" }}
-              >
-                <h3 className="text-xl font-bold mb-2">
-                  {profile.role === ROLE.DEFAULT
-                    ? "Cadastre-se para ver seu perfil"
-                    : profile.role === ROLE.USER
-                    ? "Veja seu perfil"
-                    : "Novos usuários"}
-                </h3>
-              </div>
-              <div className="bg-white p-4 shadow rounded-b-lg max-h-[600px] overflow-y-auto">
-                {newUsers.map((user) => (
-                  <div
-                    key={user.id}
-                    className="flex justify-between items-center bg-gray-200 p-4 rounded-lg mt-4"
-                  >
-                    <div>
-                      <h2 className="text-xl font-bold">{user.name}</h2>
-                      {profile.role !== ROLE.DEFAULT &&
-                        profile.role !== ROLE.USER && (
-                          <p>Data: {formatDate(user.createdAt)}</p>
-                        )}
+          {!profile ||
+            (profile?.role !== ROLE.DEFAULT && (
+              <div className="mt-4">
+                <div
+                  className="bg-slate-700 text-white p-4 text-center shadow rounded-t-lg"
+                  style={{ background: "rgba(40, 40, 40, 0.95)" }}
+                >
+                  <h3 className="text-xl font-bold mb-2">
+                    {profile.role === ROLE.DEFAULT
+                      ? "Cadastre-se para ver seu perfil"
+                      : profile.role === ROLE.USER
+                      ? "Veja seu perfil"
+                      : "Novos usuários"}
+                  </h3>
+                </div>
+                <div className="bg-white p-4 shadow rounded-b-lg max-h-[600px] overflow-y-auto">
+                  {newUsers.map((user) => (
+                    <div
+                      key={user.id}
+                      className="flex justify-between items-center bg-gray-200 p-4 rounded-lg mt-4"
+                    >
+                      <div>
+                        <h2 className="text-xl font-bold">{user.name}</h2>
+                        {profile.role !== ROLE.DEFAULT &&
+                          profile.role !== ROLE.USER && (
+                            <p>Data: {formatDate(user.createdAt)}</p>
+                          )}
+                      </div>
+                      <div className="flex items-center">
+                        <Link
+                          href={`/profile/${user.id}`}
+                          className="p-2 text-md bg-blue-600 rounded-lg hover:bg-blue-500 text-white"
+                        >
+                          Ver Detalhes
+                        </Link>
+                      </div>
                     </div>
-                    <div className="flex items-center">
-                      <Link
-                        href={`/profile/${user.id}`}
-                        className="p-2 text-md bg-blue-600 rounded-lg hover:bg-blue-500 text-white"
-                      >
-                        Ver Detalhes
-                      </Link>
-                    </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
-            </div>
-          )}
+            ))}
 
           <div className="mt-4">
             <div
@@ -153,7 +162,7 @@ export default function AdminDashboard() {
             </div>
           </div>
 
-          {profile.role !== ROLE.DEFAULT && (
+          {profile && profile?.role !== ROLE.DEFAULT && (
             <div className="mt-4">
               <div
                 className="bg-slate-700 text-white p-4 text-center shadow rounded-t-lg"
