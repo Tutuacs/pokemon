@@ -8,8 +8,6 @@ export const ProfileAuth = createParamDecorator(
   (filterData: string, context: ExecutionContext) => {
     const request = context.switchToHttp().getRequest();
 
-    console.log(request.profile);
-
     if (request.profile) {
       if (filterData) {
         return request.profile[filterData];
