@@ -14,7 +14,7 @@ export default function NavLinks() {
     return (
       <>
         <Link className="p-2" href="/home">
-          Admin Home
+          Home
         </Link>
         <>
           <Link className="p-2" href="/roll">
@@ -40,7 +40,7 @@ export default function NavLinks() {
     return (
       <>
         <Link className="p-2" href="/home">
-          User Home
+          Home
         </Link>
         <>
           <Link className="p-2" href="/roll">
@@ -63,7 +63,7 @@ export default function NavLinks() {
     return (
       <>
         <Link className="p-2" href="/home">
-          Default Home
+          Home
         </Link>
         <Link className="p-2" href="/login">
           Login
