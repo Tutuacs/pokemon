@@ -4,7 +4,7 @@ export default function Home() {
 
   return (
     <main>
-      <div className="">
+      <div className="min-h-screen">
           <PokemonCard
             rarity="mythic"
             frontImage="https://cdn.pixabay.com/photo/2020/08/29/16/08/pikachu-5527377_960_720.jpg"
