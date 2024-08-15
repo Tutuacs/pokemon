@@ -99,7 +99,7 @@ export default function Home() {
               <PokemonCard
                 rarity="legendary"
                 frontImage="https://render.fineartamerica.com/images/images-profile-flow/400/images/artworkimages/mediumlarge/3/dragonite-watercolor-jo-kiwi.jpg"
-                backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
+                backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
                 flipOneTime={false}
                 isShiny={true}
               />

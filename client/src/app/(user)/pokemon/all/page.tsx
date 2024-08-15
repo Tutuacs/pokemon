@@ -117,7 +117,7 @@ export default function PokemonCollectionPage() {
                   flip={true}
                   fix={true}
                   txt={true}
-                  backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
+                  backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
                   titleText={pokemon.name}
                   subText={pokemon.description || ""}
                   isShiny={false}

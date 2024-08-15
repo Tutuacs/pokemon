@@ -10,7 +10,7 @@ export default function Navbar({ logged }: { logged: boolean; profile?: any }) {
       <div className="flex items-center">
         <Link className="p-0" href={logged ? "/home" : "/"}>
           <Image
-            src="https://img.artiz.ai/ai/20240729/66a7953cf0bff.jpg"
+            src="https://utfs.io/f/cd55894b-ddec-4b30-a538-5b0b5a5d62fd-1x5rt.jpg"
             alt="home"
             width={60}
             height={60}

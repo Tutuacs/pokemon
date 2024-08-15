@@ -4,7 +4,7 @@ export default function RollPage() {
 
   return (
     <div className="h-screen w-screen mt-[-112px]">
-      <BannerCard bannerImage="https://img.artiz.ai/ai/20240729/66a78275dd900.jpg">
+      <BannerCard bannerImage="https://utfs.io/f/61d0220d-007e-4590-966f-fec92c080720-n3ch5g.jpg">
       </BannerCard>
     </div>
   );

@@ -89,7 +89,7 @@ export default function StellarPage() {
                     ? pokemonData.Pokemon.shinyImage
                     : pokemonData.Pokemon.image
                 }
-                backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
+                backImage="https://utfs.io/f/04c1aab2-8510-46a6-9044-35a767385d5e-427qdm.jpg"
                 isShiny={pokemonData.shiny}
                 flip={invert}
                 fix={invert}
