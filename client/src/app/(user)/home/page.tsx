@@ -43,7 +43,6 @@ export default function AdminDashboard() {
   const { profile } = useNavbarContext();
 
   const fetchHomeBuilder = async () => {
-    console.log("Fetching Home Builder");
     const response = await fetchWithAuth(
       `/profile/home/builder/${
         profile
@@ -53,7 +52,6 @@ export default function AdminDashboard() {
           : ROLE.DEFAULT
       }`
     );
-    console.log("RESPONSE", response);
     if (response!.status === 200 || response!.status === 201) {
       const data: Response = await response!.data;
       setNewPokemons(data.newPokemons!);
@@ -70,7 +68,6 @@ export default function AdminDashboard() {
     if (newPokemons.length === 0) {
       fetchHomeBuilder();
     } else {
-      console.log(newPokemons);
     }
   });
 

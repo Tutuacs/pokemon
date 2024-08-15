@@ -1,8 +1,7 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { CardBody, CardContainer, CardItem } from "./ui/3d-card";
-import { usePathname } from "next/navigation";
 import "./cardShine.css";
 
 export interface PokemonCardProps {
@@ -43,7 +42,6 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
 }) => {
   const [flipped, setFlipped] = useState(flip);
   const [isFlipping, setIsFlipping] = useState(false);
-  const pathname = usePathname();
 
   const handleCardClick = () => {
     if (fix) return;
@@ -337,7 +335,7 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
                       borderRadius: "10px",
                     }}
                   />
-                  parte de tras/pokebola
+                  {/* parte de tras/pokebola */}
                 </div>
                 <div
                   className={`box-back card ${

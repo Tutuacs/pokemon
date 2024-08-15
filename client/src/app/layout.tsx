@@ -7,8 +7,8 @@ import { NavbarProvider } from "@/components/NavBarProviders";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "FullStack",
-  description: "Full-Stack Next&Nestjs",
+  title: "PokéRolls",
+  description: "Collect your favorite pokémons",
 };
 
 export default function RootLayout({

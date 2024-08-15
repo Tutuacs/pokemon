@@ -1,7 +1,10 @@
 "use client";
 
+import { ROLE } from "@/common/role.enums";
+import { useNavbarContext } from "@/components/NavBarProviders";
 import ProfileItem from "@/components/ProfileItem";
 import useFetch from "@/utils/useFetch";
+import { redirect } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type UserProfile = {
@@ -23,6 +26,11 @@ export default function AdminUsersPage() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const { fetchWithAuth } = useFetch();
+  const { profile } = useNavbarContext();
+
+  if (profile && profile.role !== ROLE.ADMIN) {
+    redirect("/home");
+  }
 
   // Função para buscar dados da API
   const fetchUsers = async (pageNumber: number) => {

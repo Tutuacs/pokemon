@@ -59,7 +59,7 @@ export default function StellarPage() {
     if (navbar) {
       navbar.classList.remove("visible");
     }
-  }, []);
+  });
 
   const toggleNavbar = () => {
     const navbar = document.querySelector(".navbar");
