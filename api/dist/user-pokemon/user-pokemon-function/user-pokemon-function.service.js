@@ -20,7 +20,7 @@ let UserPokemonFunctionService = class UserPokemonFunctionService extends prisma
             },
             include: {
                 Pokemon: true,
-            }
+            },
         });
     }
     list(profileId, page) {

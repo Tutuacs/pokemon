@@ -5,12 +5,10 @@ import { ValidationPipe } from '@nestjs/common';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.enableCors(
-    {
-      "origin": "*",
-      "methods": "GET,HEAD,PUT,PATCH,POST,DELETE",
-    }
-  );
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  });
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -20,7 +18,7 @@ async function bootstrap() {
     }),
   );
 
-  // await app.listen(3333);
-  await app.listen(3000);
+  await app.listen(3333);
+  // await app.listen(3000);
 }
 bootstrap();

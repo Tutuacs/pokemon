@@ -1,14 +1,13 @@
 import { Injectable } from '@nestjs/common';
-import { CreateProfileDto } from './dto/create-profile.dto';
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ROLE } from 'src/decorators';
+import { ROLE } from 'src/enums/role.enums';
 
 @Injectable()
 export class ProfileService {
   constructor(private readonly prisma: PrismaService) {}
 
-  async homeBuilder(param: {id: string}) {
+  async homeBuilder(param: { id: string }) {
     const newPokemons = await this.prisma.pokemon.findMany({
       orderBy: {
         createdAt: 'desc',
@@ -68,7 +67,7 @@ export class ProfileService {
 
     if (profile.role !== ROLE.ADMIN) {
       return {
-        newUsers: [{ ...profile, }],
+        newUsers: [{ ...profile }],
         rolls,
         newPokemons,
       };
@@ -129,7 +128,7 @@ export class ProfileService {
       pokeStars: number;
     },
   ) {
-    if (profile.role === ROLE.USER ) {
+    if (profile.role === ROLE.USER) {
       return await this.prisma.profile.findUnique({
         where: {
           id: profile.id,
@@ -181,6 +180,9 @@ export class ProfileService {
         mithycChance: true,
         legendaryChance: true,
         shinyChance: true,
+        toEpic: true,
+        toMithyc: true,
+        toLegendary: true,
         pokeStars: true,
         _count: {
           select: {
@@ -192,6 +194,7 @@ export class ProfileService {
   }
 
   update(id: string, data: UpdateProfileDto) {
+    console.log('updateData: ', data);
     return `This action updates a #${id} profile`;
   }
 }

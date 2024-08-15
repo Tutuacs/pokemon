@@ -33,7 +33,7 @@ let AuthFunctionsService = class AuthFunctionsService extends prisma_service_1.P
                 _count: {
                     select: {
                         Pokemon: true,
-                    }
+                    },
                 },
             },
         });
@@ -106,7 +106,7 @@ let AuthFunctionsService = class AuthFunctionsService extends prisma_service_1.P
                 _count: {
                     select: {
                         Pokemon: true,
-                    }
+                    },
                 },
             },
         });

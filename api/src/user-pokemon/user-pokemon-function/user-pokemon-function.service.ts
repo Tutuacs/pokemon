@@ -19,7 +19,7 @@ export class UserPokemonFunctionService extends PrismaService {
       },
       include: {
         Pokemon: true,
-      }
+      },
     });
   }
 
@@ -67,7 +67,12 @@ export class UserPokemonFunctionService extends PrismaService {
     });
   }
 
-  updatePokePoints(id: string, pokePoints: number, pokeStars: number, food: number) {
+  updatePokePoints(
+    id: string,
+    pokePoints: number,
+    pokeStars: number,
+    food: number,
+  ) {
     return this.profile.update({
       data: {
         pokePoints: {

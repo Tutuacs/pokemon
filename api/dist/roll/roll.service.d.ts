@@ -1,4 +1,4 @@
-import { RARITY } from 'src/decorators/rarity.enum';
+import { RARITY } from 'src/enums/rarity.enum';
 import { Chances } from 'src/decorators';
 import { UserPokemonService } from 'src/user-pokemon/user-pokemon.service';
 import { RollFunctionService } from './roll-function/roll-function.service';
@@ -15,7 +15,7 @@ export declare class RollService {
         rarity: RARITY;
     };
     increaseChances(chances: Chances, rollResult: {
-        shine: Boolean;
+        shine: boolean;
         rarity: RARITY;
     }): Chances;
     adjustChances(chances: Chances, increaseAmount: number): Chances;

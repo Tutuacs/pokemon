@@ -7,7 +7,7 @@ import { UserPokemonModule } from 'src/user-pokemon/user-pokemon.module';
 import { RollFunctionService } from './roll-function/roll-function.service';
 
 @Module({
-  imports: [ PrismaModule, AuthModule, UserPokemonModule],
+  imports: [PrismaModule, AuthModule, UserPokemonModule],
   controllers: [RollController],
   providers: [RollService, RollFunctionService],
 })

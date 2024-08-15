@@ -13,7 +13,7 @@ exports.AuthGuard = void 0;
 const common_1 = require("@nestjs/common");
 const auth_functions_service_1 = require("../auth/auth-functions/auth-functions.service");
 const auth_service_1 = require("../auth/auth.service");
-const rolls_enum_1 = require("../decorators/rolls.enum");
+const rolls_enum_1 = require("../enums/rolls.enum");
 let AuthGuard = class AuthGuard {
     constructor(authService, authFunctions) {
         this.authService = authService;
@@ -25,17 +25,18 @@ let AuthGuard = class AuthGuard {
             const token = this.extractTokenFromHeader(request);
             const data = await this.authService.checkToken(token);
             const profile = await this.authFunctions.profileInfo(data.id);
-            if (profile.normalRolls <= rolls_enum_1.ROLLS.TOTAL_NORMAL) {
-                const time = new Date().getTime() - profile.lastChargeNormalRoll.getTime();
-                const hour = time.valueOf() / 1000 / 60 / 60;
-                const rollsCharged = Math.floor(hour / 4);
-                if (rollsCharged < rolls_enum_1.ROLLS.TOTAL_NORMAL && rollsCharged > 0 && profile.normalRolls + rollsCharged <= rolls_enum_1.ROLLS.TOTAL_NORMAL) {
-                    await this.authFunctions.updateRolls(profile.id, profile.normalRolls + rollsCharged);
-                    profile.normalRolls += rollsCharged;
-                }
-                else if (rollsCharged >= rolls_enum_1.ROLLS.TOTAL_NORMAL && profile.normalRolls < rolls_enum_1.ROLLS.TOTAL_NORMAL) {
-                    profile.normalRolls = rolls_enum_1.ROLLS.TOTAL_NORMAL;
-                    await this.authFunctions.updateRolls(profile.id, rolls_enum_1.ROLLS.TOTAL_NORMAL);
+            if (profile.normalRolls < rolls_enum_1.ROLLS.TOTAL_NORMAL) {
+                const lastChargeTime = new Date(profile.lastChargeNormalRoll).getTime();
+                const currentTime = new Date().getTime();
+                const elapsedHours = (currentTime - lastChargeTime) / (1000 * 60 * 60);
+                const rollsCharged = Math.floor(elapsedHours / 4);
+                if (rollsCharged > 0) {
+                    const updatedRolls = Math.min(rolls_enum_1.ROLLS.TOTAL_NORMAL, profile.normalRolls + rollsCharged);
+                    if (updatedRolls !== profile.normalRolls) {
+                        profile.normalRolls = updatedRolls;
+                        profile.lastChargeNormalRoll = new Date();
+                        await this.authFunctions.updateRolls(profile.id, updatedRolls);
+                    }
                 }
             }
             request.profile = profile;

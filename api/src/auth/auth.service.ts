@@ -24,7 +24,7 @@ export class AuthService {
   }
 
   async register(register: RegisterDto) {
-    if (register.name){
+    if (register.name) {
       if (register.name.length === 0) {
         register.name = register.email.split('@')[0];
       }
@@ -59,7 +59,7 @@ export class AuthService {
           gold: profile.gold,
           pokePoints: profile.pokePoints,
           pokeStars: profile.pokeStars,
-          pokemons: profile.pokemons
+          pokemons: profile.pokemons,
         },
         {
           expiresIn: '7d',
@@ -98,7 +98,7 @@ export class AuthService {
           gold: profile.gold,
           pokePoints: profile.pokePoints,
           pokeStars: profile.pokeStars,
-          pokemons: profile.pokemons
+          pokemons: profile.pokemons,
         },
         {
           expiresIn: '7d',

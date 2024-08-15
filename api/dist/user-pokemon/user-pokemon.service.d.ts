@@ -1,6 +1,6 @@
 import { UpdateUserPokemonDto } from './dto/update-user-pokemon.dto';
 import { UserPokemonFunctionService } from './user-pokemon-function/user-pokemon-function.service';
-import { ROLE } from 'src/decorators';
+import { ROLE } from 'src/enums/role.enums';
 export declare class UserPokemonService {
     private readonly userPokemonFunction;
     constructor(userPokemonFunction: UserPokemonFunctionService);

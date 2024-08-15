@@ -1,10 +1,10 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { RARITY } from 'src/decorators/rarity.enum';
-import { CHANCES } from 'src/decorators/chances.enum';
+import { RARITY } from 'src/enums/rarity.enum';
+import { CHANCES } from 'src/enums/chances.enum';
 import { Chances } from 'src/decorators';
 import { UserPokemonService } from 'src/user-pokemon/user-pokemon.service';
 import { RollFunctionService } from './roll-function/roll-function.service';
-import { TO_RARITY } from 'src/decorators/toRarity.enum';
+import { TO_RARITY } from 'src/enums/toRarity.enum';
 
 @Injectable()
 export class RollService {
@@ -68,7 +68,7 @@ export class RollService {
 
   increaseChances(
     chances: Chances,
-    rollResult: { shine: Boolean; rarity: RARITY },
+    rollResult: { shine: boolean; rarity: RARITY },
   ): Chances {
     switch (rollResult.rarity) {
       case RARITY.NORMAL:
@@ -150,7 +150,7 @@ export class RollService {
   }
 
   async rollPokemon(profileId: string, chances: Chances, normalRolls: number) {
-    if(normalRolls <= 0){
+    if (normalRolls <= 0) {
       throw new NotFoundException('No rolls left');
     }
     const toRarity = await this.rollFunction.getProfileToRarity(profileId);
@@ -171,24 +171,24 @@ export class RollService {
         toRarity.toEpic = 0;
       }
     }
-    
+
     const newChances: Chances = this.increaseChances(chances, roll);
 
-    if(roll.rarity !== RARITY.LEGENDARY && newChances.legendaryChance == 1){
+    if (roll.rarity !== RARITY.LEGENDARY && newChances.legendaryChance == 1) {
       toRarity.toLegendary++;
-    }else if(roll.rarity === RARITY.LEGENDARY && toRarity.toLegendary > 0){
+    } else if (roll.rarity === RARITY.LEGENDARY && toRarity.toLegendary > 0) {
       toRarity.toLegendary = 0;
     }
 
     if (roll.rarity !== RARITY.MITHYC && newChances.mithycChance == 1) {
       toRarity.toMithyc++;
-    }else if (roll.rarity === RARITY.MITHYC && toRarity.toMithyc > 0){
+    } else if (roll.rarity === RARITY.MITHYC && toRarity.toMithyc > 0) {
       toRarity.toMithyc = 0;
     }
 
     if (roll.rarity !== RARITY.EPIC && newChances.epicChance == 1) {
       toRarity.toEpic++;
-    }else if (roll.rarity === RARITY.EPIC && toRarity.toEpic > 0){
+    } else if (roll.rarity === RARITY.EPIC && toRarity.toEpic > 0) {
       toRarity.toEpic = 0;
     }
 
@@ -202,4 +202,3 @@ export class RollService {
     });
   }
 }
-

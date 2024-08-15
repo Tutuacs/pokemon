@@ -1,6 +1,6 @@
 import { ProfileService } from './profile.service';
 import { UpdateProfileDto } from './dto/update-profile.dto';
-import { ROLE } from 'src/decorators';
+import { ROLE } from 'src/enums/role.enums';
 export declare class ProfileController {
     private readonly profileService;
     constructor(profileService: ProfileService);
@@ -57,6 +57,9 @@ export declare class ProfileController {
         pokePoints: number;
         pokeStars: number;
         gold: number;
+        toEpic: number;
+        toMithyc: number;
+        toLegendary: number;
         normalChance: number;
         rareChance: number;
         superRareChance: number;

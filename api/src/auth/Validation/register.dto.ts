@@ -1,5 +1,14 @@
 import { Type } from 'class-transformer';
-import { IsEmail, IsString, IsOptional, IsStrongPassword, IsNumber, Min, Max, IsBase64, IsEmpty, } from 'class-validator';
+import {
+  IsEmail,
+  IsString,
+  IsOptional,
+  IsStrongPassword,
+  IsNumber,
+  Min,
+  Max,
+  IsBase64,
+} from 'class-validator';
 
 export class RegisterDto {
   @IsEmail()
@@ -28,5 +37,4 @@ export class RegisterDto {
   @IsOptional()
   @IsBase64()
   image: string;
-
 }

@@ -18,6 +18,7 @@ const profile_service_1 = require("./profile.service");
 const update_profile_dto_1 = require("./dto/update-profile.dto");
 const guards_1 = require("../guards");
 const decorators_1 = require("../decorators");
+const role_enums_1 = require("../enums/role.enums");
 let ProfileController = class ProfileController {
     constructor(profileService) {
         this.profileService = profileService;
@@ -45,7 +46,7 @@ __decorate([
 ], ProfileController.prototype, "homeBuilder", null);
 __decorate([
     (0, common_1.UseGuards)(guards_1.AuthGuard, guards_1.RoleGuard),
-    (0, decorators_1.Access)(decorators_1.ROLE.ADMIN),
+    (0, decorators_1.Access)(role_enums_1.ROLE.ADMIN),
     (0, common_1.Get)('page/:page'),
     __param(0, (0, common_1.Param)('page')),
     __metadata("design:type", Function),

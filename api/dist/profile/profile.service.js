@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ProfileService = void 0;
 const common_1 = require("@nestjs/common");
 const prisma_service_1 = require("../prisma/prisma.service");
-const decorators_1 = require("../decorators");
+const role_enums_1 = require("../enums/role.enums");
 let ProfileService = class ProfileService {
     constructor(prisma) {
         this.prisma = prisma;
@@ -30,7 +30,7 @@ let ProfileService = class ProfileService {
             },
             take: 10,
         });
-        if (Number(param.id) === decorators_1.ROLE.DEFAULT) {
+        if (Number(param.id) === role_enums_1.ROLE.DEFAULT) {
             return {
                 newUsers: [],
                 rolls: [],
@@ -71,9 +71,9 @@ let ProfileService = class ProfileService {
                 role: true,
             },
         });
-        if (profile.role !== decorators_1.ROLE.ADMIN) {
+        if (profile.role !== role_enums_1.ROLE.ADMIN) {
             return {
-                newUsers: [{ ...profile, }],
+                newUsers: [{ ...profile }],
                 rolls,
                 newPokemons,
             };
@@ -118,7 +118,7 @@ let ProfileService = class ProfileService {
         };
     }
     async findOne(id, profile) {
-        if (profile.role === decorators_1.ROLE.USER) {
+        if (profile.role === role_enums_1.ROLE.USER) {
             return await this.prisma.profile.findUnique({
                 where: {
                     id: profile.id,
@@ -169,6 +169,9 @@ let ProfileService = class ProfileService {
                 mithycChance: true,
                 legendaryChance: true,
                 shinyChance: true,
+                toEpic: true,
+                toMithyc: true,
+                toLegendary: true,
                 pokeStars: true,
                 _count: {
                     select: {
@@ -179,6 +182,7 @@ let ProfileService = class ProfileService {
         });
     }
     update(id, data) {
+        console.log('updateData: ', data);
         return `This action updates a #${id} profile`;
     }
 };

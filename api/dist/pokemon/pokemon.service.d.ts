@@ -1,6 +1,6 @@
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
-import { RARITY } from 'src/decorators/rarity.enum';
+import { RARITY } from 'src/enums/rarity.enum';
 import { PokemonFunctionService } from './pokemon-function/pokemon-function.service.ts.service';
 export declare class PokemonService {
     private readonly pokemonFunction;

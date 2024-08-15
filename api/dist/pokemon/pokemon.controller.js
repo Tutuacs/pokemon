@@ -56,7 +56,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], PokemonController.prototype, "findAll", null);
 __decorate([
-    (0, common_1.Get)("rarity/:rarity"),
+    (0, common_1.Get)('rarity/:rarity'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),

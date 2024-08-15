@@ -13,7 +13,7 @@ exports.RefreshJwtGuard = void 0;
 const common_1 = require("@nestjs/common");
 const auth_functions_service_1 = require("../auth/auth-functions/auth-functions.service");
 const auth_service_1 = require("../auth/auth.service");
-const rolls_enum_1 = require("../decorators/rolls.enum");
+const rolls_enum_1 = require("../enums/rolls.enum");
 let RefreshJwtGuard = class RefreshJwtGuard {
     constructor(authService, authFunctions) {
         this.authService = authService;

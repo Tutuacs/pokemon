@@ -7,7 +7,7 @@ import {
 import { Request } from 'express';
 import { AuthFunctionsService } from 'src/auth/auth-functions/auth-functions.service';
 import { AuthService } from 'src/auth/auth.service';
-import { ROLLS } from 'src/decorators/rolls.enum';
+import { ROLLS } from 'src/enums/rolls.enum';
 
 @Injectable()
 export class RefreshJwtGuard implements CanActivate {
@@ -35,9 +35,11 @@ export class RefreshJwtGuard implements CanActivate {
 
         const rollsCharged = Math.floor(hour / 4);
 
-
         if (rollsCharged > 0) {
-          const newRolls = Math.min(ROLLS.TOTAL_NORMAL, profile.normalRolls + rollsCharged);
+          const newRolls = Math.min(
+            ROLLS.TOTAL_NORMAL,
+            profile.normalRolls + rollsCharged,
+          );
 
           if (newRolls > profile.normalRolls) {
             await this.authFunctions.updateRolls(profile.id, newRolls);

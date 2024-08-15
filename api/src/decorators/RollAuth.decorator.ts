@@ -10,10 +10,10 @@ export const RollAuth = createParamDecorator(
 
     if (request.rolls) {
       if (filterData) {
-        if(filterData === 'chances'){
+        if (filterData === 'chances') {
           const chances: Chances = {
-            ...request.rolls
-          }
+            ...request.rolls,
+          };
           return chances;
         }
         return request.rolls[filterData];

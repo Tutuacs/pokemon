@@ -1,6 +1,6 @@
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePokemonDto } from '../dto/create-pokemon.dto';
-import { RARITY } from 'src/decorators/rarity.enum';
+import { RARITY } from 'src/enums/rarity.enum';
 import { UpdatePokemonDto } from '../dto/update-pokemon.dto';
 export declare class PokemonFunctionService extends PrismaService {
     create(data: CreatePokemonDto): import("@prisma/client").Prisma.Prisma__PokemonClient<{

@@ -8,7 +8,6 @@ import {
 } from 'class-validator';
 
 export class CreateUserPokemonDto {
-  
   @IsNotEmpty()
   @IsString()
   name: string;
@@ -17,10 +16,10 @@ export class CreateUserPokemonDto {
   @Type(() => Number)
   @IsNumber()
   evolveFood: number;
-  
+
   @IsOptional()
   shiny: boolean;
-  
+
   @IsNotEmpty()
   @Type(() => Number)
   @IsNumber()

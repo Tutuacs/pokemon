@@ -17,5 +17,4 @@ Object.defineProperty(exports, "__esModule", { value: true });
 __exportStar(require("./Access.decorator"), exports);
 __exportStar(require("./ProfileAtuh.decorator"), exports);
 __exportStar(require("./RollAuth.decorator"), exports);
-__exportStar(require("./role.enums"), exports);
 //# sourceMappingURL=index.js.map

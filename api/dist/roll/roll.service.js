@@ -11,11 +11,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.RollService = void 0;
 const common_1 = require("@nestjs/common");
-const rarity_enum_1 = require("../decorators/rarity.enum");
-const chances_enum_1 = require("../decorators/chances.enum");
+const rarity_enum_1 = require("../enums/rarity.enum");
+const chances_enum_1 = require("../enums/chances.enum");
 const user_pokemon_service_1 = require("../user-pokemon/user-pokemon.service");
 const roll_function_service_1 = require("./roll-function/roll-function.service");
-const toRarity_enum_1 = require("../decorators/toRarity.enum");
+const toRarity_enum_1 = require("../enums/toRarity.enum");
 let RollService = class RollService {
     constructor(userPokemon, rollFunction) {
         this.userPokemon = userPokemon;

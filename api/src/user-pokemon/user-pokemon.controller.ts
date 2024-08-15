@@ -1,7 +1,6 @@
 import {
   Controller,
   Get,
-  Post,
   Body,
   Patch,
   Param,
@@ -11,7 +10,8 @@ import {
 import { UserPokemonService } from './user-pokemon.service';
 import { UpdateUserPokemonDto } from './dto/update-user-pokemon.dto';
 import { AuthGuard, RoleGuard } from 'src/guards';
-import { ProfileAuth, ROLE } from 'src/decorators';
+import { ProfileAuth } from 'src/decorators';
+import { ROLE } from 'src/enums/role.enums';
 
 @UseGuards(AuthGuard, RoleGuard)
 @Controller('user-pokemon')

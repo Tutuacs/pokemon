@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserPokemonService = void 0;
 const common_1 = require("@nestjs/common");
 const user_pokemon_function_service_1 = require("./user-pokemon-function/user-pokemon-function.service");
-const decorators_1 = require("../decorators");
+const role_enums_1 = require("../enums/role.enums");
 let UserPokemonService = class UserPokemonService {
     constructor(userPokemonFunction) {
         this.userPokemonFunction = userPokemonFunction;
@@ -25,7 +25,7 @@ let UserPokemonService = class UserPokemonService {
     }
     async findOne(id, profile) {
         const pokemon = await this.userPokemonFunction.findById(id);
-        if (profile.role !== decorators_1.ROLE.ADMIN && pokemon.profileId !== profile.id) {
+        if (profile.role !== role_enums_1.ROLE.ADMIN && pokemon.profileId !== profile.id) {
             throw new common_1.NotFoundException('You do not have permission to access this resource');
         }
         return pokemon;

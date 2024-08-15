@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreatePokemonDto } from '../dto/create-pokemon.dto';
-import { RARITY } from 'src/decorators/rarity.enum';
+import { RARITY } from 'src/enums/rarity.enum';
 import { UpdatePokemonDto } from '../dto/update-pokemon.dto';
 
 @Injectable()
@@ -23,7 +23,7 @@ export class PokemonFunctionService extends PrismaService {
     return {
       pokemons,
       count,
-    }
+    };
   }
 
   findByRarity(rarity: RARITY) {

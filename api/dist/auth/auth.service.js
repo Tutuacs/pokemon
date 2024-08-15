@@ -50,7 +50,7 @@ let AuthService = class AuthService {
                 gold: profile.gold,
                 pokePoints: profile.pokePoints,
                 pokeStars: profile.pokeStars,
-                pokemons: profile.pokemons
+                pokemons: profile.pokemons,
             }, {
                 expiresIn: '7d',
                 subject: profile.id,
@@ -73,7 +73,7 @@ let AuthService = class AuthService {
                 gold: profile.gold,
                 pokePoints: profile.pokePoints,
                 pokeStars: profile.pokeStars,
-                pokemons: profile.pokemons
+                pokemons: profile.pokemons,
             }, {
                 expiresIn: '7d',
                 subject: profile.id,

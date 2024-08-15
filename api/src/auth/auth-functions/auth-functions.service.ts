@@ -10,7 +10,6 @@ import * as bcrypt from 'bcrypt';
 @Injectable()
 export class AuthFunctionsService extends PrismaService {
   async findLogin(login: LoginDto) {
-
     const profile = await this.profile.findFirst({
       where: {
         email: login.email,
@@ -32,7 +31,7 @@ export class AuthFunctionsService extends PrismaService {
         _count: {
           select: {
             Pokemon: true,
-          }
+          },
         },
       },
     });
@@ -106,7 +105,7 @@ export class AuthFunctionsService extends PrismaService {
         _count: {
           select: {
             Pokemon: true,
-          }
+          },
         },
       },
     });

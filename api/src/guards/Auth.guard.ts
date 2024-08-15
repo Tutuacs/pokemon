@@ -2,7 +2,7 @@ import { CanActivate, Injectable, ExecutionContext } from '@nestjs/common';
 import { Request } from 'express';
 import { AuthFunctionsService } from 'src/auth/auth-functions/auth-functions.service';
 import { AuthService } from 'src/auth/auth.service';
-import { ROLLS } from 'src/decorators/rolls.enum';
+import { ROLLS } from 'src/enums/rolls.enum';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -19,23 +19,28 @@ export class AuthGuard implements CanActivate {
       const data = await this.authService.checkToken(token);
       const profile = await this.authFunctions.profileInfo(data.id);
 
-      
-      if (profile.normalRolls <= ROLLS.TOTAL_NORMAL) {
-        // const time is the time btween the last roll and now
-        const time = new Date().getTime() - profile.lastChargeNormalRoll.getTime();
-        const hour = time.valueOf() / 1000 / 60 / 60;
-        
-        const rollsCharged = Math.floor(hour / 4);
-        
-        if (rollsCharged < ROLLS.TOTAL_NORMAL && rollsCharged > 0 && profile.normalRolls + rollsCharged <= ROLLS.TOTAL_NORMAL) {
-          await this.authFunctions.updateRolls(profile.id, profile.normalRolls + rollsCharged);
-          profile.normalRolls += rollsCharged;
-        } else if (rollsCharged >= ROLLS.TOTAL_NORMAL && profile.normalRolls < ROLLS.TOTAL_NORMAL) {
-          profile.normalRolls = ROLLS.TOTAL_NORMAL;
-          await this.authFunctions.updateRolls(profile.id, ROLLS.TOTAL_NORMAL);
+      if (profile.normalRolls < ROLLS.TOTAL_NORMAL) {
+        const lastChargeTime = new Date(profile.lastChargeNormalRoll).getTime();
+        const currentTime = new Date().getTime();
+        const elapsedHours = (currentTime - lastChargeTime) / (1000 * 60 * 60);
+
+        const rollsCharged = Math.floor(elapsedHours / 4); // 1 roll a cada 4 horas
+
+        // Verifica se é possível adicionar rolls e se estamos dentro do limite
+        if (rollsCharged > 0) {
+          const updatedRolls = Math.min(
+            ROLLS.TOTAL_NORMAL,
+            profile.normalRolls + rollsCharged,
+          );
+
+          if (updatedRolls !== profile.normalRolls) {
+            profile.normalRolls = updatedRolls;
+            profile.lastChargeNormalRoll = new Date(); // Atualiza a última data de carga
+            await this.authFunctions.updateRolls(profile.id, updatedRolls);
+          }
         }
       }
-      
+
       request.profile = profile;
       request.rolls = {
         profileId: profile.id,
@@ -47,7 +52,7 @@ export class AuthGuard implements CanActivate {
         legendaryChance: profile.legendaryChance,
         shinyChance: profile.shinyChance,
         normalRolls: profile.normalRolls,
-      }
+      };
 
       return true;
     } catch {

@@ -8,7 +8,7 @@ exports.RollAuth = (0, common_1.createParamDecorator)((filterData, context) => {
         if (filterData) {
             if (filterData === 'chances') {
                 const chances = {
-                    ...request.rolls
+                    ...request.rolls,
                 };
                 return chances;
             }

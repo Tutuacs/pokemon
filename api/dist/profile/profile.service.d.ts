@@ -1,6 +1,6 @@
 import { UpdateProfileDto } from './dto/update-profile.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { ROLE } from 'src/decorators';
+import { ROLE } from 'src/enums/role.enums';
 export declare class ProfileService {
     private readonly prisma;
     constructor(prisma: PrismaService);
@@ -57,6 +57,9 @@ export declare class ProfileService {
         pokePoints: number;
         pokeStars: number;
         gold: number;
+        toEpic: number;
+        toMithyc: number;
+        toLegendary: number;
         normalChance: number;
         rareChance: number;
         superRareChance: number;

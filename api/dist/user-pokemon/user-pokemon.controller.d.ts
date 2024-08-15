@@ -1,6 +1,6 @@
 import { UserPokemonService } from './user-pokemon.service';
 import { UpdateUserPokemonDto } from './dto/update-user-pokemon.dto';
-import { ROLE } from 'src/decorators';
+import { ROLE } from 'src/enums/role.enums';
 export declare class UserPokemonController {
     private readonly userPokemonService;
     constructor(userPokemonService: UserPokemonService);

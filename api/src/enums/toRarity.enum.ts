@@ -1,4 +1,3 @@
 export enum TO_RARITY {
-    DEFAULT = 10,
-  }
-  
+  DEFAULT = 10,
+}

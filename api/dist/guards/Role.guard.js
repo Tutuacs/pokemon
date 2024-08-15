@@ -12,13 +12,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.RoleGuard = void 0;
 const common_1 = require("@nestjs/common");
 const core_1 = require("@nestjs/core");
-const decorators_1 = require("../decorators");
+const role_enums_1 = require("../enums/role.enums");
 let RoleGuard = class RoleGuard {
     constructor(reflector) {
         this.reflector = reflector;
     }
     async canActivate(context) {
-        const requeridRoles = this.reflector.getAllAndOverride(decorators_1.ROLE, [
+        const requeridRoles = this.reflector.getAllAndOverride(role_enums_1.ROLE, [
             context.getHandler(),
             context.getClass(),
         ]);
