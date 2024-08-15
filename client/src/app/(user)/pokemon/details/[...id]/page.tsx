@@ -125,7 +125,7 @@ export default function PokemonDetailPage({ params }: Props) {
           <div className="col-span-1 flex justify-center">
             <PokemonCard
               rarity={rarityOptions[pokemon.Evolution.rarity].label}
-              frontImage={pokemon.Evolution.image}
+              frontImage={isShiny ? pokemon.Evolution.shinyImage : pokemon.Evolution.image}
               backImage="https://tcg.pokemon.com/assets/img/global/tcg-card-back-2x.jpg"
               titleText={pokemon.Evolution.name}
               subText={pokemon.Evolution.description}
