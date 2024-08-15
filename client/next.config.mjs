@@ -4,6 +4,8 @@ const nextConfig = {
       remotePatterns: [
         { protocol: 'https', hostname: 'img.artiz.ai' },
         { protocol: 'http', hostname: 'img.artiz.ai' },
+        { protocol: 'https', hostname: 'utfs.io' },
+        { protocol: 'http', hostname: 'utfs.io' },
         // { protocol: 'http', hostname: 'render.fineartamerica' },
         // { protocol: 'https', hostname: 'render.fineartamerica' },
         // { protocol: 'http', hostname: 'render.fineartamerica.com' },
