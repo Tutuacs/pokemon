@@ -19,24 +19,25 @@ export class AuthGuard implements CanActivate {
       const data = await this.authService.checkToken(token);
       const profile = await this.authFunctions.profileInfo(data.id);
 
-      if (profile.normalRolls < ROLLS.TOTAL_NORMAL) {
-        const lastChargeTime = new Date(profile.lastChargeNormalRoll).getTime();
-        const currentTime = new Date().getTime();
-        const elapsedHours = (currentTime - lastChargeTime) / (1000 * 60 * 60);
+      const lastChargeNormalRollDate = new Date(profile.lastChargeNormalRoll);
 
-        const rollsCharged = Math.floor(elapsedHours / 4); // 1 roll a cada 4 horas
+      if (profile.normalRolls <= ROLLS.TOTAL_NORMAL) {
+        // Calcular o tempo entre a última carga e agora
+        const time = new Date().getTime() - lastChargeNormalRollDate.getTime();
+        const hour = time / (1000 * 60 * 60);
 
-        // Verifica se é possível adicionar rolls e se estamos dentro do limite
+        const rollsCharged = Math.floor(hour / 4);
+
         if (rollsCharged > 0) {
-          const updatedRolls = Math.min(
+          const newRolls = Math.min(
             ROLLS.TOTAL_NORMAL,
             profile.normalRolls + rollsCharged,
           );
 
-          if (updatedRolls !== profile.normalRolls) {
-            profile.normalRolls = updatedRolls;
-            profile.lastChargeNormalRoll = new Date(); // Atualiza a última data de carga
-            await this.authFunctions.updateRolls(profile.id, updatedRolls);
+          if (newRolls > profile.normalRolls) {
+            await this.authFunctions.updateRolls(profile.id, newRolls);
+            profile.normalRolls = newRolls;
+            profile.lastChargeNormalRoll = new Date();
           }
         }
       }
