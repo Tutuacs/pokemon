@@ -344,16 +344,16 @@ const PokemonCard: React.FC<PokemonCardProps> = ({
                   style={{
                     width: `${width}px`,
                     height: `${height}px`,
-                    backgroundImage: `${isShiny ? frontImage : ""}`,
                   }}
                 >
                   <div
                     style={{
-                      width: "100%",
-                      height: "100%",
+                      width: `${width}px`,
+                      height: `${height}px`,
                       borderRadius: "10px",
                       backgroundImage: `url(${frontImage})`,
                       backgroundSize: "cover",
+                      backgroundPosition: "center",
                       mixBlendMode: "color-dodge",
                     }}
                   >
