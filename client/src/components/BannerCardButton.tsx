@@ -1,22 +1,29 @@
 "use client";
 
-import Link from "next/link";
 import { useNavbarContext } from "./NavBarProviders";
+import { redirect } from "next/navigation";
 
 export default function BannerCardButton() {
   const { profile } = useNavbarContext();
 
-  const profileOK = profile ? (profile.normalRolls > 0 ? true : false) : false;
+  const onClick = () => {
+    if (profile) {
+      if (profile.normalRolls > 0) {
+        redirect("/roll/stellar");
+      }
+    }
+    alert("You don't have enough rolls to roll a pokemon");
+  };
 
   return (
     <main>
       <div className="flex justify-end p-4">
-        <Link
-          href={profileOK ? "/roll/stellar" : ""}
+        <button
+          onClick={onClick}
           className="custom-button text-white rounded-lg button"
         >
           <span>Roletar pokemon</span>
-        </Link>
+        </button>
       </div>
     </main>
   );
