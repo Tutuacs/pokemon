@@ -17,12 +17,14 @@ export default function BannerCardButton() {
 
   return (
     <main>
+      <div className="flex justify-end p-4">
         <button
           onClick={onClick}
-          className="custom-button text-white rounded-lg button flex justify-end p-4"
+          className="custom-button text-white rounded-lg button "
           >
           Roletar pokemon
         </button>
+      </div>
     </main>
   );
 }
