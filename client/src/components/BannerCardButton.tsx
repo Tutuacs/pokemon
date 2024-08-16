@@ -21,7 +21,7 @@ export default function BannerCardButton() {
         alert("You don't have enough rolls to roll a pokemon");
       }
     }else {
-      alert("You don't have enough rolls to roll a pokemon");
+      alert("Faça login para roletar!");
     }
   };
 
