@@ -1,18 +1,28 @@
 "use client";
 
 import { useNavbarContext } from "./NavBarProviders";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 export default function BannerCardButton() {
   const { profile } = useNavbarContext();
+  const router = useRouter();
 
   const onClick = () => {
+    console.log("profile", profile);
     if (profile) {
+      console.log("profileRolls", profile.normalRolls);
       if (profile.normalRolls > 0) {
-        redirect("/roll/stellar");
+        router.prefetch("/roll/stellar");
+        // wait 1 second before redirecting
+        setTimeout(() => {
+          router.push("/roll/stellar");
+        }, 500);
+      }else {
+        alert("You don't have enough rolls to roll a pokemon");
       }
+    }else {
+      alert("You don't have enough rolls to roll a pokemon");
     }
-    alert("You don't have enough rolls to roll a pokemon");
   };
 
   return (
